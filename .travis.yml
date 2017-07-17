@@ -1,0 +1,9 @@
+language: node_js
+node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: DMo8865cmWCpbRx43AQAIxvLp7XeDoEQEUwRD8swjZCDyml6th6ku/fusPvIk7Xa6qJ6yt0sTTfWNUkGFb9h8pUG4EpFmnUbDCj7/2iRbSepvXrl92qmQWw7ELa/7A/1iyQJU9551+v3zzJCB0QJApPmYbHvHbbww6PLlJ7jWXSpSPVwTqLmMdyAAsSkrqyto8yAuv+xARHrZdLJddiIZqlEcIF1TXZpcY0HEwoAZVmlfO8ma6V0QVTUATz4sb+yiouecxsuhFAKGLaKYhv55uTYxukUsMrFIKGr0BKIly/G9ddiiG6kM3wejzACvjG6pS1UTXTqbYZu+nEf5K56GZMpZQSJ6zd+6Q0k3b8rO4SRUWXRQ8RD/3Z7LrywgOAnxXyoDA7ydIC1xCiI33yeRgYEOkEAyFmKzZU6n9a5HRwJA8yyuaa438+vCb2EL36THRJU9CCOK92aMTlp63dZqmqa/4DIG+MgWBMb/Ax8fnKUrTF+yXQMBKUaqvt5sG65PBkBLLPV237O6C10tb4IBSFVBJbnx2vesIcy/PcooL4im3c+BSqAoiZq6cIHCnlXLa5jiwAhILm87dtKn3USFWcxBYbijG8/dDvgsRMY0fGl0quRBiCm1VKBAP9yNH3dvlv2tHryj8NHolD/BCTzykKyV3xKb4WybFTmaJmxWtg=
+  app: chime-in
+  on:
+    repo: htwright/chime-in
