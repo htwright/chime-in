@@ -1,10 +1,10 @@
 const path = require('path');
 const express = require('express');
-const {DATABASE_URL} = require('./config');
+// const {DATABASE_URL} = require('./config.js').DATABASE_URL;
 const app = express();
 const knex = require('knex')({
   client: 'pg',
-  connection: DATABASE_URL
+  connection: process.env.DATABASE_URL
 });
 // API endpoints go here!
 
