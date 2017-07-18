@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-// const {DATABASE_URL} = require('./config.js').DATABASE_URL;
+require('dotenv').config()
 const app = express();
 const knex = require('knex')({
   client: 'pg',
