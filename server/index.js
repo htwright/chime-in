@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+let routes = require("./routes/messages");
 require('dotenv').config()
 const app = express();
 const knex = require('knex')({
@@ -8,10 +9,14 @@ const knex = require('knex')({
 });
 // API endpoints go here!
 
+app.use("/api/messages", routes);
+
 app.get('/api/hello', (req, res) => {
   knex('test').insert({column1: 'c', column2: 5}).then(() =>
-  res.json('ok').catch(err => console.error(err)));
+  res.json('yup')).catch(err => console.error(err));
 });
+
+
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
