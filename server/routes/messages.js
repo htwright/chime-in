@@ -13,7 +13,6 @@ mRoutes.get('/', (req, res) => {
 });
 
 mRoutes.post("/send",(req,res,next)=>{
-
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
