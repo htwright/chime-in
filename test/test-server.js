@@ -17,6 +17,7 @@ chai.use(chaiHttp);
 describe('Backend unit tests', function() {
 
   before(function() {
+    
     return runServer(process.env.PORT || 8080);
   });
 
@@ -29,6 +30,10 @@ describe('Backend unit tests', function() {
   //   1. make request to `/api/hello`
   //   2. check response object keys
   it('should list all messages on GET', function() {
+    // const knex = require('knex')({
+    //   client: 'pg',
+    //   connection: process.env.DATABASE_URL
+    // });
     return chai.request(app)
       .get('/api/hello')
       .then(function(res) {

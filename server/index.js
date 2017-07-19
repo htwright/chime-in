@@ -13,7 +13,7 @@ app.use("/api/messages", routes);
 
 app.get('/api/hello', (req, res) => {
   knex('test').insert({column1: 'c', column2: 5}).then(() =>
-  res.json({message:'yup'})).catch(err => console.error(err));
+  res.status(200).json({message:'yup'})).catch(err => console.error(err));
 });
 
 
@@ -38,6 +38,7 @@ function runServer(port=3001) {
 }
 
 function closeServer() {
+
   return new Promise((resolve, reject) => {
     server.close(err => {
       if (err) {
