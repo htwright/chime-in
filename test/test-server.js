@@ -7,16 +7,11 @@ const chaiHttp = require('chai-http');
 const jsonParser = require('body-parser').json();
 const should = chai.should();
 
-
 const { app, runServer, closeServer } = require('../server/index');
 runServer(process.env.PORT || 8080);
 
 app.use(jsonParser);
 chai.use(chaiHttp);
-//const { DATABASE_URL, TEST_DATABASE_URL, PORT } = require('../server/config');
-//console.log(TEST_DATABASE_URL);
-//runServer(TEST_DATABASE_URL);
-
 
 //PARENT DESCRIBE Function runs & closes Server
 describe('Backend unit tests', function() {
