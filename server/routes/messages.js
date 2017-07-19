@@ -38,8 +38,8 @@ mRoutes.post("/send",(req,res,next)=>{
   })
 });
 
-mRoutes.post('/post/messages', (req, res) => {
-  console.log(req.body)
+mRoutes.post('/post', (req, res) => {
+  console.log(req.body);
   res.status(200).json({message: 'ok'});
 });
 
