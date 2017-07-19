@@ -13,7 +13,7 @@ app.use("/api/messages", routes);
 
 app.get('/api/hello', (req, res) => {
   knex('test').insert({column1: 'c', column2: 5}).then(() =>
-  res.json('yup')).catch(err => console.error(err));
+  res.json({message:'yup'})).catch(err => console.error(err));
 });
 
 
