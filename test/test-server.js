@@ -8,7 +8,7 @@ const jsonParser = require('body-parser').json();
 const should = chai.should();
 
 const { app, runServer, closeServer } = require('../server/index');
-runServer(process.env.PORT || 8080);
+//runServer(process.env.PORT || 8080);
 
 app.use(jsonParser);
 chai.use(chaiHttp);
@@ -17,7 +17,7 @@ chai.use(chaiHttp);
 describe('Backend unit tests', function() {
 
   before(function() {
-    return runServer();
+    return runServer(process.env.PORT || 8080);
   });
 
   after(function() {
