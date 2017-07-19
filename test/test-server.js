@@ -1,3 +1,7 @@
+require('dotenv').config();
+let Twilio = require("twilio")
+let client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jsonParser = require('body-parser').json();
@@ -5,7 +9,7 @@ const jsonParser = require('body-parser').json();
 const should = chai.should();
 
 const { app, runServer, closeServer } = require('../server/index');
-const { TEST_DATABASE_URL, PORT } = require('../server/config');
+const { DATABASE_URL, TEST_DATABASE_URL, PORT } = require('../server/config');
 
 app.use(jsonParser);
 chai.use(chaiHttp);
