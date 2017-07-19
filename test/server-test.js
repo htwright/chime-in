@@ -10,13 +10,12 @@ const { TEST_DATABASE_URL, PORT } = require('../server/config');
 app.use(jsonParser);
 chai.use(chaiHttp);
 console.log(TEST_DATABASE_URL);
-runServer(TEST_DATABASE_URL);
 
 //PARENT DESCRIBE Function runs & closes Server
 describe('Backend unit tests', function() {
 
   before(function() {
-    return runServer();
+    return runServer(process.env.PORT || 8080);
   });
 
   after(function() {
