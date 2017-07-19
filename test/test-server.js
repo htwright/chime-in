@@ -1,6 +1,6 @@
 require('dotenv').config();
 let Twilio = require("twilio")
-let client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
