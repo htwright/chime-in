@@ -1,5 +1,5 @@
 require('dotenv').config();
-let Twilio = require("twilio")
+let Twilio = require('twilio');
 let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 
 const chai = require('chai');
@@ -37,11 +37,7 @@ describe('Backend unit tests', function() {
         res.should.be.json;
         res.body.should.be.a('string');
         res.body.length.should.be.at.least(1);
-        // each item should be an object with key/value pairs
-        //const expectedKeys = ['id', 'name', 'checked'];
-        //res.body.forEach(function(item) {
-          //item.should.be.a('object');
-          //item.should.include.keys(expectedKeys);
+        done();
       });
   });
 });
