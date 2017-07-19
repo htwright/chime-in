@@ -38,6 +38,11 @@ mRoutes.post("/send",(req,res,next)=>{
   })
 });
 
+mRoutes.post('/post', (req, res) => {
+  console.log(req.body);
+  res.status(200).json({message: 'ok'});
+});
+
 mRoutes.get("/get/:messageID", (req,res,next)=>{
   client.messages(req.params.messageID).fetch().then(msg=>{
     console.log(msg.body)
