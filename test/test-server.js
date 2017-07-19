@@ -37,7 +37,6 @@ describe('Backend unit tests', function() {
         res.should.be.json;
         res.body.should.be.a('string');
         res.body.length.should.be.at.least(1);
-        done();
       });
   });
 });

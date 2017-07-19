@@ -32,7 +32,7 @@ let server;
 function runServer(port=3001) {
   return new Promise((resolve, reject) => {
     server = app.listen(port, () => {
-      resolve();
+      resolve(server);
     }).on('error', reject);
   });
 }
