@@ -1,10 +1,12 @@
 const path = require('path');
 const express = require('express');
+let cors = require('cors');
 let messageRoutes = require("./routes/messages");
 let userRoutes = require("./routes/users");
 let questionRoutes = require("./routes/questions");
 require('dotenv').config()
 const app = express();
+app.use(cors());
 const knex = require('knex')({
   client: 'pg',
   connection: process.env.DATABASE_URL

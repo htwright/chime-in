@@ -3,9 +3,7 @@ const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 
 uRoutes.use(bodyParser.json());
-uRoutes.use(bodyParser.urlencoded({
-  extended: true
-}));
+
 const knex = require('knex')({
   client: 'pg',
   connection: process.env.DATABASE_URL
@@ -43,8 +41,16 @@ uRoutes.get("/get/:users",(req,res)=>{
   let users = req.params.users.split(",");
 
   knex("users").select().whereIn("id",users).then(list=>{
-    res.send(list.map(el=>el.phonenumber));
+    if(list.length > 1){
+      res.send(list.map(el=>el.phonenumber.toString()));
+    }else{
+      res.send(list[0].phonenumber);
+    }
+
   })
 })
+
+//add the questions to the users
+//uRoutes.post("/addQuestion/:users")
 
 module.exports=uRoutes;

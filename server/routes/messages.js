@@ -17,6 +17,7 @@ mRoutes.get('/', (req, res) => {
 });
 
 mRoutes.post("/send",(req,res,next)=>{
+  console.log(req.body)
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
