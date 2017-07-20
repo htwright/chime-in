@@ -17,15 +17,15 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      phone: null,
+      id: null,
       message: null
     }
     this.manageState = this.manageState.bind(this);
   }
 
-  doPhoneStuff(event,phone, message){
+  doPhoneStuff(event,id, message){
     event.preventDefault();
-    this.props.dispatch(sendPhoneMessage(phone, message));
+    this.props.dispatch(sendPhoneMessage(id, message));
   }
 
   manageState(target,value){
@@ -43,11 +43,11 @@ class App extends Component {
         </div>
           <div>
             <h1>Create a Message</h1>
-            <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.phone,this.state.message)} inline>
+            <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
               <FormGroup controlId="formInlinePassword">
                 <ControlLabel>Phone #</ControlLabel>
                 {' '}
-                <FormControl onChange={e=>this.manageState("phone",e.target.value)} type="text" placeholder="US Phone Number"/>
+                <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
                 </FormGroup>
                 {' '}
               <FormGroup controlId="formInlineName">
