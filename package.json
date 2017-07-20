@@ -22,12 +22,9 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
-
     "bootstrap": "^4.0.0-alpha.6",
-
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
-
     "cross-env": "^3.1.4",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",
@@ -39,7 +36,10 @@
     "react-addons-transition-group": "^15.6.0",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
     "reactstrap": "^4.8.0",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "twilio": "^3.5.0",
     "xp": "^1.0.1"
   }

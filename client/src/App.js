@@ -1,50 +1,63 @@
 import React, { Component } from 'react';
-
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-
-
+import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
+import { sendPhoneMessage } from "./actions/action";
 
 
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      phone: null,
+      message: null
+    }
+    this.manageState = this.manageState.bind(this);
+  }
+
+  doPhoneStuff(event,phone, message){
+    event.preventDefault();
+    this.props.dispatch(sendPhoneMessage(phone, message));
+  }
+
+  manageState(target,value){
+    this.setState({...this.state,[target]:value});
+    console.log(this.state)
+  }
+
   render() {
     return (
       <div className="App">
 
         <div className="App-header">
-          <Button className="logout">LogOut</Button>            
+          <Button className="logout">LogOut</Button>
           <h2>Chime-In</h2>
         </div>
           <div>
             <h1>Create a Message</h1>
-            <Form inline>
+            <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.phone,this.state.message)} inline>
               <FormGroup controlId="formInlinePassword">
                 <ControlLabel>Phone #</ControlLabel>
                 {' '}
-                <FormControl type="text" placeholder="US Phone Number"/>
+                <FormControl onChange={e=>this.manageState("phone",e.target.value)} type="text" placeholder="US Phone Number"/>
                 </FormGroup>
                 {' '}
               <FormGroup controlId="formInlineName">
                 <ControlLabel></ControlLabel>
                 {' '}
-                <FormControl type="text" placeholder="Enter message here" />
+                <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
               </FormGroup>
               {' '}
                 <Button type="submit">Enter</Button>
             </Form>
-            {/* <Form className="input-field">
-              <input placeholder="US Phone #" />
-              <input placeholder="Message" />
-                <Button>Send Message</Button>
-            </Form> */}
           </div>
 
           <div className='column' id="admin-col-one">
@@ -71,4 +84,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);

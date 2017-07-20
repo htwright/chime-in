@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import Welcome from './Welcome';
 import App from './App';
 import './index.css';
+import store from './store';
+import {Provider} from 'react-redux';
 
 ReactDOM.render(
-  //Swap out Welcome & App to see the two components 
+  //Swap out Welcome & App to see the two components
   //<Welcome/>,
-  <App/>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root')
 );
