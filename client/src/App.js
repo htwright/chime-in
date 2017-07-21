@@ -7,9 +7,8 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
-import { sendPhoneMessage } from "./actions/action";
-
+import { sendPhoneMessage } from './actions/action';
+import {  displayQuestions } from './actions/action';
 
 import './App.css';
 
@@ -20,6 +19,7 @@ class App extends Component {
       id: null,
       message: null
     }
+    
     this.manageState = this.manageState.bind(this);
   }
 
@@ -31,6 +31,9 @@ class App extends Component {
   manageState(target,value){
     this.setState({...this.state,[target]:value});
     console.log(this.state)
+  }
+  showMessage(questions){
+    this.props.dispatch(displayQuestions(questions));
   }
 
   render() {

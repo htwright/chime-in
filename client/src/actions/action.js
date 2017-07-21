@@ -4,3 +4,9 @@ export const sendPhoneMessage = (id, message) => ({
   id,
   message
 });
+
+export const DISPLAY_QUESTIONS = 'DISPLAY_QUESTION';
+export const displayQuestions = (questions) => ({
+  type: DISPLAY_QUESTIONS,
+  questions
+});
