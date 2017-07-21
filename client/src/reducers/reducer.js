@@ -12,11 +12,11 @@ export default function reducer(state=initialState, action){
     let sendMessage = (targetID, message) =>{
       console.log(targetID);
 
-      fetch('http://localhost:8080/api/users/get/'+targetID)
+      fetch('http://chime-in.herokuapp.com/api/users/get/'+targetID)
           .then(el=>el.text())
           .then(el=>{
 
-            fetch('http://localhost:8080/api/messages/send', {
+            fetch('http://chime-in.herokuapp.com/api/messages/send', {
               method: 'POST',
               body: JSON.stringify({
                 'phone': el,
@@ -37,7 +37,7 @@ export default function reducer(state=initialState, action){
     let displayQuestions = (questions) =>{
       console.log(questions);
 
-      fetch('http://localhost:8080/api/questions/questionsList')
+      fetch('http://chime-in.herokuapp.com/api/questions/questionsList')
       .then(result => result.text());
   }
   }

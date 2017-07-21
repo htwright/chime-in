@@ -27,8 +27,8 @@ mRoutes.post("/send",(req,res,next)=>{
     from: "+12409863225",
     statusCallback: "http://chime-in.herokuapp.com/messages"
   }).then(msgID => {
-    knex('messages')
-      .insert({body: req.body.message, sender: process.env.TWILIO_SID})
+    knex('questions')
+      .insert({admin: 1, question: req.body.message, users:req.body.phone, msgSid: msgID.sid})
       .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{
@@ -46,6 +46,7 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log(sms);
+    knex('questions').update({})
   }).then(()=> res.status(200).json({message: 'ok'}))
   .catch(err => console.error(err));
 
