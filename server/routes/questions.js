@@ -11,6 +11,16 @@ const knex = require('knex')({
   connection: process.env.DATABASE_URL
 });
 
+
+//GET questions
+qRoutes.get('/questionsList', (req, res)=>{
+  knex('questions')
+  .select('id', 'question', 'responses', 'users')
+  .then(results=>{
+    res.send(results);
+  })
+});
+
 qRoutes.post("/new", (req,res)=>{
   knex("questions").select("admin","question", "responses").insert(req.body).then(list=>{
     //now we need to actually send the question to the related people.  So we need a function to grab the users from an array
