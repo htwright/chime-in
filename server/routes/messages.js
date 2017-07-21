@@ -10,7 +10,11 @@ mRoutes.use(bodyParser.urlencoded({
 }));
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL
+  connection: process.env.DATABASE_URL,
+  pool: {
+    min:0,
+    max:2
+  }
 });
 mRoutes.get('/', (req, res) => {
   res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });

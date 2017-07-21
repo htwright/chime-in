@@ -7,7 +7,11 @@ require('dotenv').config()
 const app = express();
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL
+  connection: process.env.DATABASE_URL,
+  pool: {
+    min:0,
+    max:2
+  }
 });
 // API endpoints go here!
 app.use("/api/messages", messageRoutes);

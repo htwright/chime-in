@@ -8,7 +8,11 @@ uRoutes.use(bodyParser.urlencoded({
 }));
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL
+  connection: process.env.DATABASE_URL,
+  pool: {
+    min:0,
+    max:2
+  }
 });
 
 //function to add a user
