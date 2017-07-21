@@ -40,11 +40,6 @@ class App extends Component {
               {' '}
                 <Button type="submit">Enter</Button>
             </Form>
-            {/* <Form className="input-field">
-              <input placeholder="US Phone #" />
-              <input placeholder="Message" />
-                <Button>Send Message</Button>
-            </Form> */}
           </div>
 
           <div className='column' id="admin-col-one">
