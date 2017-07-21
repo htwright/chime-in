@@ -13,7 +13,7 @@ const knex = require('knex')({
 
 
 //GET questions
-qRoutes.get('/questions/questionsList', (req, res)=>{
+qRoutes.get('/questionsList', (req, res)=>{
   knex('questions')
   .select('id', 'question', 'responses', 'users')
   .then(results=>{
