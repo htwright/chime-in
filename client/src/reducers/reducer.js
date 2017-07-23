@@ -1,8 +1,10 @@
 import { SEND_PHONE_MESSAGE } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
+import { CREATE_USER } from '../actions/action';
 
 const initialState = {
-  questions: []
+  questions: [],
+  currentUser: null
 };
 
 export default function reducer(state=initialState, action){
@@ -41,4 +43,9 @@ export default function reducer(state=initialState, action){
       .then(result => result.text());
   }
   }
+  if(action.type === CREATE_USER) {
+    return {
+      ...state,
+      currentUser: action.currentUser
+    };
 }

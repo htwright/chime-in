@@ -10,3 +10,9 @@ export const displayQuestions = (questions) => ({
   type: DISPLAY_QUESTIONS,
   questions
 });
+
+export const CREATE_USER = 'CREATE_USER';
+export const createUser = (currentUser) => ({
+  type: CREATE_USER,
+  currentUser
+});
