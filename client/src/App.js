@@ -9,6 +9,7 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendPhoneMessage } from './actions/action';
 import {  displayQuestions } from './actions/action';
+import Login from './components/login';
 
 import './App.css';
 
@@ -17,10 +18,38 @@ class App extends Component {
     super(props);
     this.state = {
       id: null,
-      message: null
+      message: null,
+      currentUser: null
     }
-    
+
     this.manageState = this.manageState.bind(this);
+  }
+
+  componentDidMount() {
+        // Job 4: Redux-ify all of the state and fetch calls to async actions.
+        const accessToken = Cookies.get('accessToken');
+        if (accessToken) {
+            fetch('/api/me', {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+              })
+              .then(res => {
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        // Unauthorized, clear the cookie and go to
+                        // the login page
+                        Cookies.remove('accessToken');
+                        return;
+                    }
+                    throw new Error(res.statusText);
+                }
+                return res.json();
+              })
+              .then(currentUser =>
+                this.props.dispatch(createUser(currentUser))
+            );
+        }
   }
 
   doPhoneStuff(event,id, message){
@@ -37,6 +66,9 @@ class App extends Component {
   }
 
   render() {
+    if (!this.props.currentUser) {
+      return <Login />;
+    }
     return (
       <div className="App">
 
@@ -86,5 +118,9 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser
+});
 
 export default connect()(App);
