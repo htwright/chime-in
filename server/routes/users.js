@@ -47,7 +47,7 @@ uRoutes.get("/get/:users",(req,res)=>{
   let users = req.params.users.split(",");
 
   knex("users").select().whereIn("id",users).then(list=>{
-    res.send(list.map(el=>el.phonenumber));
+    res.send(list.map(el=>el));
   })
 })
 
