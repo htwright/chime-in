@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Cookies from 'js-cookie';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -9,7 +10,8 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendPhoneMessage } from './actions/action';
 import {  displayQuestions } from './actions/action';
-import Login from './components/login';
+import { createUser } from './actions/action';
+import Login from './components/Login';
 
 import './App.css';
 
