@@ -25,3 +25,13 @@ export const displayQuestions = (questions) => ({
 //         return result;
 //       });
 // };
+export const fetchQuestion = () => dispatch => {
+  return fetch('http://localhost:8080/api/questions/questionsList')
+  .then(res =>{
+    return res.json();
+  })
+  .then(res =>{
+    //console.log(res);
+    return res;
+  });
+};
