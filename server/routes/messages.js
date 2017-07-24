@@ -8,6 +8,10 @@ mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
+let url = 'http://localhost:8080';
+if (process.env.NODE_ENV === 'production'){
+  url = 'http://chime-in.herokuapp.com';
+}
 const knex = require('knex')({
   client: 'pg',
   connection: process.env.DATABASE_URL,
@@ -21,18 +25,22 @@ mRoutes.get('/', (req, res) => {
 });
 
 mRoutes.post("/send",(req,res,next)=>{
+  let arr = JSON.parse(req.body.phone);
+  let phone = parseInt(arr[0]);
+  console.log(phone);
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
     from: "+12409863225",
-    statusCallback: "http://chime-in.herokuapp.com/messages"
+    statusCallback: 'http://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
+    console.log('inside knex write', msgID);
     knex('questions')
-      .insert({admin: 1, question: req.body.message, users:req.body.phone, msgSid: msgID.sid})
+      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
       .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{
-    console.log(msgID)
+    // console.log(msgID)
     res.status(200).json({
       message: 'Sent the message "' + req.body.message + '", good job!',
       messageID: msgID.sid
@@ -46,7 +54,7 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log(sms);
-    knex('questions').update({})
+    knex('questions').where("")
   }).then(()=> res.status(200).json({message: 'ok'}))
   .catch(err => console.error(err));
 

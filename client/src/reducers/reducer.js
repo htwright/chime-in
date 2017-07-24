@@ -1,6 +1,9 @@
 import { SEND_PHONE_MESSAGE } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
-
+let url = 'http://localhost:8080';
+if (process.env.NODE_ENV === 'production'){
+  url = 'http://chime-in.herokuapp.com';
+}
 const initialState = {
   questions: []
 };
@@ -12,14 +15,15 @@ export default function reducer(state=initialState, action){
     let sendMessage = (targetID, message) =>{
       console.log(targetID);
 
-      fetch('http://chime-in.herokuapp.com/api/users/get/'+targetID)
-          .then(el=>el.text())
+      fetch(`${url}/api/users/get/${targetID}`)
+          .then(el=> el.text())
           .then(el=>{
-
-            fetch('http://chime-in.herokuapp.com/api/messages/send', {
+            let elem = JSON.parse(el);
+            fetch(`${url}/api/messages/send`, {
               method: 'POST',
               body: JSON.stringify({
-                'phone': el,
+                'phone': elem[0].phonenumber,
+                'id': elem[0].id,
                 'message':message
               }),
               headers:{'content-type': 'application/json'}
@@ -37,7 +41,7 @@ export default function reducer(state=initialState, action){
     let displayQuestions = (questions) =>{
       console.log(questions);
 
-      fetch('http://chime-in.herokuapp.com/api/questions/questionsList')
+      fetch(`${url}/api/questions/questionsList`)
       .then(result => result.text());
   }
   }
