@@ -1,43 +1,45 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import {fetchQuestion} from '../actions/action';
 
-class QuestionEntry extends Component {
+
+export class QuestionEntry extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      question: props.question,
-      targets: props.targets,
-      responses: props.responses
-    }
+    this.getQuestions = this.getQuestions.bind(this);
+  }
+
+  //get questionsList prop & maps over each question as a listGroupItem
+  getQuestions(){
+    console.log('Is this working?');
+    this.props.dispatch(fetchQuestion())
+    .then(result => {
+      const questionsList =  this.props.questions.map((question, index) => {
+        console.log(question);
+        return (
+          <ListGroupItem> {question} </ListGroupItem>
+        )
+      }) 
+      console.log(questionsList);
+      return questionsList;
+    }) 
+    
   }
 
   render() {
     return (
-      <div className="question">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-            <h2>{this.state.question}</h2>
-            </td>
-            <td>
-              <h3>{this.state.targets.join("")}</h3>
-            </td>
-            <td>
-              <p>{this.state.responses}</p>
-            </td>
-            <td>
-              <button onClick={()=>this.props.buttonPressHandler(this.state.question,this.state.targets)}>Send to users</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
-
+      <div className="questionXYZ">
+        <ListGroup> {() => this.getQuestions()} </ListGroup>
       </div>
     );
   }
 }
 
-export default QuestionEntry;
+//this pulls in the questions to the component
+export const mapStateToProps = state => ({
+  questions: state.questions
+});
+
+export default connect(mapStateToProps)(QuestionEntry);

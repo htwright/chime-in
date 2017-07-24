@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import QuestionEntry from './components/questionEntry';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -8,7 +9,6 @@ import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendPhoneMessage } from './actions/action';
-import {  displayQuestions } from './actions/action';
 
 import './App.css';
 
@@ -31,9 +31,6 @@ class App extends Component {
   manageState(target,value){
     this.setState({...this.state,[target]:value});
     console.log(this.state)
-  }
-  showMessage(questions){
-    this.props.dispatch(displayQuestions(questions));
   }
 
   render() {
@@ -65,11 +62,7 @@ class App extends Component {
 
           <div className='column' id="admin-col-one">
             <h1>Questions</h1>
-            <ListGroup>
-              <ListGroupItem href="#linkA">Bob ate what?</ListGroupItem>
-              <ListGroupItem href="#linkB">Who let the dogs out?</ListGroupItem>
-              <ListGroupItem href="#linkC">huh?</ListGroupItem>
-            </ListGroup>
+            <QuestionEntry/>
           </div>
 
           <div className='column' id="admin-col-two">
@@ -87,4 +80,10 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({
+  questions: state.questions
+});
+
+export default connect(mapStateToProps)(App);
+
+
