@@ -11,6 +11,22 @@ export const displayQuestions = (questions) => ({
   questions
 });
 
+export const FETCH_QUESTION_REQUEST = 'FETCH_QUESTION_REQUEST';
+export const fetchQuestionRequest = () => ({
+  type: FETCH_QUESTION_REQUEST
+});
+
+export const FETCH_QUESTION_SUCCESS = 'FETCH_QUESTION_SUCCESS';
+export const fetchQuestionSuccess = (questions) => ({
+  type: FETCH_QUESTION_SUCCESS,
+  questions
+});
+
+export const FETCH_QUESTION_FAILURE = 'FETCH_QUESTION_FAILURE';
+export const fetchQuestionFailure = () => ({
+  type: FETCH_QUESTION_FAILURE
+});
+
 // export const fetchQuestion = (questions) => dispatch => {
 //   return fetch('http://localhost:8080/api/questions/questionsList', {
 //     method: 'GET',
@@ -20,18 +36,20 @@ export const displayQuestions = (questions) => ({
 //     }
 //   })
 //       .then(result => result.json())
-//       .then(result => { 
+//       .then(result => {
 //         console.log(result);
 //         return result;
 //       });
 // };
 export const fetchQuestion = () => dispatch => {
+  dispatch(fetchQuestionRequest());
   return fetch('http://localhost:8080/api/questions/questionsList')
-  .then(res =>{
-    return res.json();
-  })
-  .then(res =>{
-    //console.log(res);
-    return res;
-  });
+      .then(data => {
+        if (!data.ok) {
+          return dispatch(fetchQuestionFailure());
+        }
+        return data.json();
+      }).then(response => {
+        return dispatch(fetchQuestionSuccess(response));
+      });
 };
