@@ -47,8 +47,8 @@ uRoutes.get('/',(req,res)=>{
   let users = req.params.users;
 
   knex('users').then(list=>{
-    res.send(list.map(el=>el));
-  });
+    res.send(list.map(el=>el))
+  }).catch(err => console.error(err));
 });
 
 uRoutes.get('/get/:users',(req,res)=>{
