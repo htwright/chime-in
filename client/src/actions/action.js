@@ -26,7 +26,13 @@ export const displayQuestions = (questions) => ({
 //       });
 // };
 export const fetchQuestion = () => dispatch => {
-  return fetch('http://localhost:8080/api/questions/questionsList')
+
+  let url = 'http://localhost:8080';
+  if (process.env.NODE_ENV === 'production'){
+    url = 'http://chime-in.herokuapp.com';
+  }
+  
+  return fetch(`${url}/api/questions/questionsList`)
   .then(res =>{
     return res.json();
   })
@@ -35,3 +41,19 @@ export const fetchQuestion = () => dispatch => {
     return res;
   });
 };
+
+export const fetchUsers = () => dispatch => {
+    let url = 'http://localhost:8080';
+  if (process.env.NODE_ENV === 'production'){
+    url = 'http://chime-in.herokuapp.com';
+  }
+
+  return fetch(`${url}/api/users`)
+  .then(response => {
+    return response.json();
+  })
+  .then(response => {
+    console.log(response);
+    return response;
+  })
+}
