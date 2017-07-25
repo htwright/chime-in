@@ -7,6 +7,15 @@ const chaiHttp = require('chai-http');
 const jsonParser = require('body-parser').json();
 const should = chai.should();
 
+const knex = require('knex')({
+  client: 'pg',
+  connection: 'postgres://qngtezbe:23PPRvLs82vehByYKZUMRd0cGBKdweYc@stampy.db.elephantsql.com:5432/qngtezbe',
+  pool: {
+    min: 0,
+    max: 2
+  }
+});
+
 const { app, runServer, closeServer } = require('../server/index');
 //runServer(process.env.PORT || 8080);
 
@@ -25,21 +34,28 @@ describe('Backend unit tests', function() {
     return closeServer();
   });
 
-//Test Get Endpoint 
-  // test strategy:
-  //   1. make request to `/api/hello`
-  //   2. check response object keys
-  it('should list all messages on GET', function() {
-    // const knex = require('knex')({
-    //   client: 'pg',
-    //   connection: process.env.DATABASE_URL
-    // });
-    return chai.request(app)
-      .get('/api/hello')
-      .then(function(res) {
-        res.should.be.ok;
-        res.should.have.status(200);
-        res.should.be.json;
-      });
+
+  describe('User endpoint tests', function(){
+
+    it('should write new users to the database', function(){
+      let userData = {
+        name: 'test',
+        phonenumber: 'test',
+        email: 'test',
+        slack: 'test',
+        type: 'admin'
+      };
+      let returnData;
+      knex('users').insert(userData).returning('*').then(data => {
+        returnData = data;
+        chai.request(app)
+        .get(`/api/users/get/${data.id}`);
+      })
+      .then(apiItem => {
+        apiItem.id.should().equal(returnData.id);
+      })
+      .catch(err => console.error(err));
+    });
+
   });
 });
