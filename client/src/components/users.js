@@ -6,29 +6,29 @@ import {fetchUsers} from '../actions/action';
 
 
 export class Users extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      users: []
-    }
-  }
+  // constructor(props){
+  //   super(props);
+  //   this.state = {
+  //     users: []
+  //   }
+  // }
 
   componentDidMount(){
-   let q = this.props.dispatch(fetchUsers()).then(res=>{
-    console.log(res);
-    this.setState({users: res});
-    console.log(this.state);
-   });
-   
+  //  let q = this.props.dispatch(fetchUsers()).then(res=>{
+  //   console.log(res);
+  //   this.setState({users: res});
+  //   console.log(this.state);
+  //  });
+    this.props.dispatch(fetchUsers());
   }
 
   render() {
-        const usersList =  this.state.users.map((user, index) => {
+        const usersList = this.props.users.map((user, index) => {
         console.log(user);
         return (
-          <ListGroupItem> {user.name} </ListGroupItem>
+          <ListGroupItem key={index}> {user.name} </ListGroupItem>
         )
-      }) 
+      })
 
     return (
       <div className="userList">

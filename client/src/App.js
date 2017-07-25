@@ -9,12 +9,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-<<<<<<< HEAD
 import { sendMessage } from './actions/action';
-
-=======
-import { sendPhoneMessage } from './actions/action';
->>>>>>> origin/master
 import './App.css';
 
 class App extends Component {

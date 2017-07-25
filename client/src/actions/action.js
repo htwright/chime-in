@@ -32,6 +32,21 @@ export const fetchQuestionFailure = () => ({
   type: FETCH_QUESTION_FAILURE
 });
 
+export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
+export const fetchUsersRequest = () => ({
+  type: FETCH_USERS_REQUEST
+});
+
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const fetchUsersSuccess = (users) => ({
+  type: FETCH_USERS_SUCCESS,
+  users
+});
+
+export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
+export const fetchUsersFailure = () => ({
+  type: FETCH_USERS_FAILURE
+});
 // export const fetchQuestion = (questions) => dispatch => {
 //   return fetch('http://localhost:8080/api/questions/questionsList', {
 //     method: 'GET',
@@ -46,18 +61,6 @@ export const fetchQuestionFailure = () => ({
 //         return result;
 //       });
 // };
-export const fetchQuestion = () => dispatch => {
-  dispatch(fetchQuestionRequest());
-  return fetch('http://localhost:8080/api/questions/questionsList')
-      .then(data => {
-        if (!data.ok) {
-          return dispatch(fetchQuestionFailure());
-        }
-        return data.json();
-      }).then(response => {
-        return dispatch(fetchQuestionSuccess(response));
-      });
-};
 
 export const sendMessage = (targetID, message) => dispatch => {
     console.log(targetID);
@@ -76,27 +79,37 @@ export const sendMessage = (targetID, message) => dispatch => {
           }).then(el=>console.log(el));
         });
   };
-//   console.log('hooray!');
-//   console.log(action);
-//   //now for the serious stuff: actually send the message.
-//   action.id.forEach(el => {
-//     sendMessage(el, action.message);
-//   });
-// }
 
+export const fetchQuestion = () => dispatch => {
+  dispatch(fetchQuestionRequest());
+  return fetch('http://localhost:8080/api/questions/questionsList')
+      .then(data => {
+        if (!data.ok) {
+          return dispatch(fetchQuestionFailure());
+        }
+        return data.json();
+      }).then(response => {
+        return dispatch(fetchQuestionSuccess(response));
+      });
+};
 
 export const fetchUsers = () => dispatch => {
-    let url = 'http://localhost:8080';
-  if (process.env.NODE_ENV === 'production'){
-    url = 'http://chime-in.herokuapp.com';
-  }
-
+  dispatch(fetchUsersRequest());
   return fetch(`${url}/api/users`)
-  .then(response => {
-    return response.json();
-  })
-  .then(response => {
-    console.log(response);
-    return response;
+    .then(data => {
+      if (!data.ok) {
+        return dispatch(fetchUsersFailure());
+      }
+      return data.json();
+    })
+    .then(response => {
+      return dispatch(fetchUsersSuccess(response));
   })
 }
+
+// console.log(action.users);
+//   fetch(`${url}/api/users`)
+//   .then(result => result.text())
+//   .then(result => {
+//     console.log(result);
+//   });
