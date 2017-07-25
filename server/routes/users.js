@@ -55,12 +55,10 @@ uRoutes.get('/get/:users',(req,res)=>{
   let users = req.params.users.split(',');
 
   knex('users').select().whereIn('id',users).then(list=>{
-    res.send(list.map(el=>el));
-  });
-
-  })
-  .catch(err => console.error(err));
+    res.send(list.map(el=>el))
+  }).catch(err => console.error(err));
 });
+
 
 uRoutes.put('/update/:id', (req, res) => {
   knex('users').where('id', req.params.id).update(req.body.user).returning('*').then((data) =>{
