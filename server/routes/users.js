@@ -57,6 +57,20 @@ uRoutes.get('/get/:users',(req,res)=>{
   knex('users').select().whereIn('id',users).then(list=>{
     res.send(list.map(el=>el));
   });
+
+  })
+  .catch(err => console.error(err));
+});
+
+uRoutes.put('/update/:id', (req, res) => {
+  knex('users').where('id', req.params.id).update(req.body.user).returning('*').then((data) =>{
+    res.status('200').json(data);
+  }).catch(err => console.error(err));
+});
+
+uRoutes.delete('/:id', (req, res) => {
+  knex('users').where('id', req.params.id).del().then(() => res.status('200').json('ok'))
+  .catch(err => console.error(err));
 });
 
 module.exports=uRoutes;
