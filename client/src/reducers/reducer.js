@@ -1,13 +1,15 @@
 import { SEND_PHONE_MESSAGE } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
 import { fetchQuestion } from '../actions/action';
+import { fetchUsers } from '../actions/action';
 
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   url = 'http://chime-in.herokuapp.com';
 }
 const initialState = {
-  questions: []
+  questions: [], 
+  users: []
 };
 
 export default function reducer(state=initialState, action){
@@ -47,6 +49,18 @@ console.log(state);
       });
     
     return ({ ...state, questions: action.questions})
+    }
+
+    else if(action.type === fetchUsers){
+
+    console.log(action.users);
+      fetch(`${url}/api/users`)
+      .then(result => result.text())
+      .then(result => {
+        console.log(result);
+      });
+    
+    return ({ ...state, users: action.users})
     }
   
   else 
