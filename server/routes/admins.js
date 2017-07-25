@@ -25,6 +25,7 @@ const knex = require('knex')({
 });
 
 aRoutes.post("/login", (req,res, next)=>{
+  //redirect to the create verify token.  Flushes all active tokens for the user number.
   let redirect = () => {
     res.status(409)
       .redirect(307,"./gettoken");
@@ -42,17 +43,20 @@ aRoutes.post("/login", (req,res, next)=>{
       //check if code matches what you were Sent
       let id = result.id
       knex("tokens").select("tokenstring").where({userid: id,type: "verify"}).then(result=>{
-        let token = result[0].tokenstring;
-        console.log("result token: " +token)
-        console.log("token: " + req.body.token)
+        let token = result[0].hasOwnProperty("tokenstring") ? result[0].tokenstring : null;
+        console.log(token)
+
         if(token === req.body.token){
           //the code matches the token you were sent, so generate an actual token.
           console.log("yup, generate a real token and flush the verify token.");
           let Token = new Tokens();
           let authToken = Token.makeToken();
-          knex("tokens").insert({userid: id,tokenstring: authToken,type: "auth"}).then(result=>{
-            res.status(200).json({token:authToken});
+          knex("tokens").where({userid:id}).delete().then(()=>{
+            knex("tokens").insert({userid: id,tokenstring: authToken,type: "auth"}).then(result=>{
+              res.status(200).json({token:authToken});
+            })
           })
+
         }else{
           console.log("nope.");
           redirect();
@@ -77,8 +81,8 @@ aRoutes.post("/gettoken", (req,res,next)=>{
       userID = searchResult[0].id;
       //dump all existing tokens
       knex("tokens").where({userid: userID}).delete().then(thingie=>{
-        MessageManager.send(`Your code is ${verification}`, "+15408459811");
-        //console.log(`userID: ${searchResult[0].id}`);
+        MessageManager.send(`Your code is ${verification}`, searchResult[0].phonenumber);
+
         knex("tokens").insert({userid: userID,tokenstring: verification}).then(res=>console.log(res));
       });
 
