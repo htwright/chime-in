@@ -39,7 +39,6 @@ switch (action.type) {
       sendMessage(el, action.message);
     });
     return ({...state})
-
   default:
     return state;
   }
