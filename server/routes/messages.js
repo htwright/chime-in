@@ -54,7 +54,7 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log(sms);
-    knex('questions').where("")
+    knex('questions').where('id', 1).update({responses: sms.body});
   }).then(()=> res.status(200).json({message: 'ok'}))
   .catch(err => console.error(err));
 
