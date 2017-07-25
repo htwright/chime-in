@@ -1,3 +1,8 @@
+let url = 'http://localhost:8080';
+if (process.env.NODE_ENV === 'production'){
+  url = 'http://chime-in.herokuapp.com';
+}
+
 export const SEND_PHONE_MESSAGE = 'SEND_PHONE_MESSAGE';
 export const sendPhoneMessage = (id, message) => ({
   type: SEND_PHONE_MESSAGE,
@@ -53,3 +58,28 @@ export const fetchQuestion = () => dispatch => {
         return dispatch(fetchQuestionSuccess(response));
       });
 };
+
+export const sendMessage = (targetID, message) => dispatch => {
+    console.log(targetID);
+    fetch(`${url}/api/users/get/${targetID}`)
+        .then(el=> el.text())
+        .then(el=>{
+          let elem = JSON.parse(el);
+          fetch(`${url}/api/messages/send`, {
+            method: 'POST',
+            body: JSON.stringify({
+              'phone': elem[0].phonenumber,
+              'id': elem[0].id,
+              'message':message
+            }),
+            headers:{'content-type': 'application/json'}
+          }).then(el=>console.log(el));
+        });
+  };
+//   console.log('hooray!');
+//   console.log(action);
+//   //now for the serious stuff: actually send the message.
+//   action.id.forEach(el => {
+//     sendMessage(el, action.message);
+//   });
+// }

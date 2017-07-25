@@ -44,7 +44,7 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <ListGroupItem> {question.question} </ListGroupItem>
+          <ListGroupItem key={index}> {question.question} </ListGroupItem>
         )
       })
 

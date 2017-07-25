@@ -8,7 +8,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import { sendPhoneMessage } from './actions/action';
+import { sendMessage } from './actions/action';
 
 import './App.css';
 
@@ -19,13 +19,13 @@ class App extends Component {
       id: null,
       message: null
     }
-    
+
     this.manageState = this.manageState.bind(this);
   }
 
   doPhoneStuff(event,id, message){
     event.preventDefault();
-    this.props.dispatch(sendPhoneMessage(id, message));
+    this.props.dispatch(sendMessage(id, message));
   }
 
   manageState(target,value){
@@ -85,5 +85,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(App);
-
-
