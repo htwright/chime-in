@@ -6,18 +6,21 @@ import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
 
 export class QuestionEntry extends Component {
-   constructor(props){
+  constructor(props){
      super(props);
-        //this.showDetails = this.showDetails.bind(this);
-    }
-
-    //show handler that changes showDetails in the state
-    toggleQuestionDetails(e){
-    e.preventDefault();
-    this.setState({
-      showDetails: !this.state.showDetails
-    })
+     this.toggleQuestionDetails = this.toggleQuestionDetails.bind(this);
+     this.state = {
+       showDetails: true
+     }
   }
+
+    //handler changes showDetails in state
+    toggleQuestionDetails(e){
+      e.preventDefault();
+      this.setState({
+        showDetails: !this.state.showDetails
+      })
+    }
 
   componentDidMount(){
   //  let q = this.props.dispatch(fetchQuestion()).then(res=>{
@@ -26,7 +29,6 @@ export class QuestionEntry extends Component {
   //   console.log(this.state);
   //  });
   this.props.dispatch(fetchQuestion());
-
   }
 
   //get questionsList prop & maps over each question as a listGroupItem
@@ -49,11 +51,9 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <ListGroupItem onClick={this.toggleQuestionDetails.bind()} 
+          <ListGroupItem onClick={this.toggleQuestionDetails} 
                          href={<QuestionsTable/>}
                          key={index}> {question.question} </ListGroupItem>
-                         //key={index}> {question.question && <QuestionsTable/>} </ListGroupItem>
-
         )
       })
     return (

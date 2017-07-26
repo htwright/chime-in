@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import {Table, Column, Cell} from 'fixed-data-table';
 
 export class QuestionsTable extends Component {
-   constructor(props){
-     super(props);
-    }
-  //   //this.getQuestions = this.getQuestions.bind(this);
-
 
   render() {
     return (
