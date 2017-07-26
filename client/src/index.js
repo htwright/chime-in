@@ -11,7 +11,7 @@ ReactDOM.render(
   //Swap out Welcome & App to see the two components
   //<Welcome/>,
   <Provider store={store}>
-     <Login/>
+     <App/>
   </Provider>,
   document.getElementById('root')
 );
