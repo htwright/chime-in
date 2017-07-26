@@ -36,7 +36,6 @@ switch (action.type) {
       sendMessage(el, action.message);
     });
     return ({...state})
-  }
   case FETCH_USERS_REQUEST:
     return {
       ...state,
