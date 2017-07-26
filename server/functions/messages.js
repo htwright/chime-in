@@ -9,7 +9,7 @@ class messages{
     client.messages.create({
       to:target,
       body: message,
-      from: "+12409863225",
+      from: process.env.TWILIO_PHONE,
       statusCallback: 'http://chime-in.herokuapp.com/api/messages'
     }).then(res=>{
       console.log("After sending message");
