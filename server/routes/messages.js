@@ -5,6 +5,7 @@ let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 const Auth = require("../functions/auth");
+const fetchUserQuestions = require('../functions/fetchUserQuestions');
 mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
@@ -23,7 +24,11 @@ const knex = require('knex')({
   }
 });
 mRoutes.get('/', (req, res) => {
-  res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });
+  // console.log(fetchUsers([1, 2]));
+  return fetchUserQuestions([1, 2, 3, 4, 5, 6]).then(j => res.status(200).json(j))
+  .catch(err => console.error(err));
+  // res.status(200).json(fetchUsers([1, 2]));
+  // res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });
 });
 
 mRoutes.post("/send",(req,res,next)=>{
@@ -51,6 +56,10 @@ mRoutes.post("/send",(req,res,next)=>{
     console.log(err);
   })
 });
+
+  // knex('users').select().then(list => {
+  //   res.send(list.map(el => el));
+  // })
 
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
