@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import QuestionEntry from './components/questionEntry';
+import Users from './components/users';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+// import ListGroup from 'react-bootstrap/lib/ListGroup';
+// import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendMessage } from './actions/action';
 import './App.css';
 
@@ -68,11 +69,7 @@ class App extends Component {
             <h1>Users</h1>
             {/* function alertClicked() {
               alert('You clicked the third ListGroupItem');} */}
-            <ListGroup>
-              <ListGroupItem href="#link1">Joe</ListGroupItem>
-              <ListGroupItem href="#link2">Jane</ListGroupItem>
-              <ListGroupItem href="#link2">George</ListGroupItem>
-            </ListGroup>
+            <Users/>
           </div>
     </div>
     );
