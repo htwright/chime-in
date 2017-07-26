@@ -4,12 +4,15 @@ let Twilio = require("twilio")
 let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
 const Auth = require("../functions/auth");
-mRoutes.use(bodyParser.json());
+mRoutes.use("/send",bodyParser.json());
+mRoutes.use("/get",bodyParser.json());
+mRoutes.use("/post",bodyParser.xml());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-mRoutes.use(Auth);
+mRoutes.use("/send",Auth);
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   url = 'http://chime-in.herokuapp.com';
