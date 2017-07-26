@@ -7,8 +7,9 @@ const knex = require('knex')({
   }
 });
 
-let fetchUserQuestions = (arr = []) => {
-  if (arr.length){
+let fetchAdminQuestions = (id = 0) => {
+  let arr = [id];
+  if (id > 0){
     return Promise.all(arr)
     .then(val => knexFetch(parseInt(val)))
     .catch(err => {
@@ -24,4 +25,4 @@ let knexFetch = id => {
   return knex.select().from('questions').where('admin', id).then(data => data).catch(err => console.error(err));
 };
 
-module.exports = fetchUserQuestions;
+module.exports = fetchAdminQuestions;
