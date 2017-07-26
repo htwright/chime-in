@@ -32,6 +32,7 @@ mRoutes.get('/', (req, res) => {
 mRoutes.post("/send",(req,res,next)=>{
   let arr = JSON.parse(req.body.phone);
   let phone = parseInt(arr[0]);
+
   console.log(phone);
   client.messages.create({
     to:req.body.phone,
@@ -58,6 +59,7 @@ mRoutes.post("/send",(req,res,next)=>{
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
+    console.log("sms is...")
     console.log(sms);
     knex('questions').where('id', 1).update({responses: sms.body});
   }).then(()=> res.status(200).json({message: 'ok'}))
