@@ -9,7 +9,7 @@ mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-mRoutes.use(Auth);
+// mRoutes.use(Auth);
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   url = 'http://chime-in.herokuapp.com';
