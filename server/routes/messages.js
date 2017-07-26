@@ -18,7 +18,7 @@ mRoutes.use(bodyParser.urlencoded({
 // mRoutes.use(Auth);
 let url = 'http://localhost:8080';
 if (conf.NODE_ENV === 'production'){
-  url = 'http://chime-in.herokuapp.com';
+  url = 'https://mighty-depths-52749.herokuapp.com/';
 }
 const knex = require('knex')({
   client: 'pg',

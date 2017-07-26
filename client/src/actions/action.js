@@ -1,6 +1,6 @@
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
-  url = 'http://chime-in.herokuapp.com';
+  url = 'https://mighty-depths-52749.herokuapp.com/';
 }
 
 export const SEND_PHONE_MESSAGE = 'SEND_PHONE_MESSAGE';

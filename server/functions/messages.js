@@ -9,7 +9,7 @@ class messages{
       to:target,
       body: message,
       from: conf.TWILIO_PHONE,
-      statusCallback: 'http://chime-in.herokuapp.com/api/messages'
+      statusCallback: 'https://mighty-depths-52749.herokuapp.com//api/messages'
     }).then(res=>{
       console.log("After sending message");
 
