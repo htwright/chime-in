@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
+const fetchUserWithPhonenumber = require('../functions/fetchUser');
 
 uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
@@ -59,6 +60,11 @@ uRoutes.get("/get/:users",(req,res)=>{
     res.send(list.map(el=>el));
   })
   .catch(err => console.error(err));
+});
+
+uRoutes.get('/phonenumber/:phonenumber', (req, res) => {
+  return fetchUserWithPhonenumber(req.params.phonenumber)
+  .then(data => res.status(200).json(data)).catch(err => console.error(err));
 });
 
 uRoutes.put('/update/:id', (req, res) => {

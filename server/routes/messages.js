@@ -6,6 +6,8 @@ const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 const Auth = require("../functions/auth");
+const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
+const fetchUserWithPhonenumber = require('../functions/fetchUser');
 mRoutes.use("/send",bodyParser.json());
 mRoutes.use("/get",bodyParser.json());
 mRoutes.use("/post",bodyParser.xml());
@@ -13,6 +15,7 @@ mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
 mRoutes.use("/send",Auth);
+// mRoutes.use(Auth);
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   url = 'http://chime-in.herokuapp.com';
@@ -25,8 +28,13 @@ const knex = require('knex')({
     max:2
   }
 });
-mRoutes.get('/', (req, res) => {
-  res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });
+
+mRoutes.get('/:id', (req, res) => {
+  return fetchAdminQuestions(req.params.id).then(j => res.status(200).json(j))
+  .catch(err => {
+    console.error(err);
+    res.status(200).send('No questions found for this admin');
+  });
 });
 
 mRoutes.post("/send",(req,res,next)=>{
@@ -62,9 +70,12 @@ mRoutes.post('/post', (req, res) => {
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log("sms is.....................")
     console.log(sms);
-    knex('questions').where('id', 1).update({responses: sms.body});
-  }).then(()=> res.status(200).json({message: 'ok'}))
-  .catch(err => console.error(err));
+    return fetchUserWithPhonenumber(sms.from.substring(1)).then(data => {
+      knex('questions').where('users', data.id).update({responses: sms.body});
+    }).then (()=> res.status(200).send('ok'));
+  //   knex('questions').where('id', 1).update({responses: sms.body});
+  // }).then(()=> res.status(200).json({message: 'ok'}))
+  }).catch(err => console.error(err));
 
 });
 
