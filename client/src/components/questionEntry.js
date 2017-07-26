@@ -3,16 +3,25 @@ import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchQuestion} from '../actions/action';
-
+import QuestionsTable from './questionsTable';
 
 export class QuestionEntry extends Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     questions: []
-  //   }
-  //   //this.getQuestions = this.getQuestions.bind(this);
-  // }
+   constructor(props){
+     super(props);
+   //state added to control when table displays
+     this.state = {
+       showDetails: false
+      }
+      //  this.showQuestionDetails = this.showQuestionDetails.bind(this);
+    }
+
+    //add onClick handler that changes showQuestionDetails state
+    onClick(e){
+    e.preventDefault();
+    this.setState({
+      showDetails: !this.state.showDetails
+    })
+  }
 
   componentDidMount(){
   //  let q = this.props.dispatch(fetchQuestion()).then(res=>{
@@ -44,21 +53,30 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <ListGroupItem href="#" key={index}> {question.question} </ListGroupItem>
+          <ListGroupItem onClick={this.onClick.bind(this)} 
+                         href="#" 
+                         key={index}> {question.question} </ListGroupItem>
         )
       })
+
+///////
+        // <a onClick={this.onClick.bind(this)} href='#'>Post a reply to this comment</a>
+       // {this.state.showReply && < ReplyForm / >}
+//////
 
     return (
       <div className="questionXYZ">
         <ListGroup> {questionsList} </ListGroup>
       </div>
+        //  <QuestionsTable/> 
     );
   }
 }
 
 //this pulls in the questions to the component
 export const mapStateToProps = state => ({
-  questions: state.questions
+  questions: state.questions,
+  showDetails: state.showDetails
 });
 
 export default connect(mapStateToProps)(QuestionEntry);

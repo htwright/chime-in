@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import QuestionEntry from './components/questionEntry';
-import QuestionsTable from './components/questionsTable';
 import Users from './components/users';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
@@ -72,7 +71,6 @@ class App extends Component {
               alert('You clicked the third ListGroupItem');} */}
             <Users/>
           </div>
-          <QuestionsTable/>
     </div>
     );
   }
