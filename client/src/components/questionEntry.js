@@ -2,21 +2,17 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import {fetchQuestion} from '../actions/action';
+import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
 
 export class QuestionEntry extends Component {
    constructor(props){
      super(props);
-   //state added to control when table displays
-     this.state = {
-       showDetails: false
-      }
-      //  this.showQuestionDetails = this.showQuestionDetails.bind(this);
+        //this.showDetails = this.showDetails.bind(this);
     }
 
-    //add onClick handler that changes showQuestionDetails state
-    onClick(e){
+    //show handler that changes showDetails in the state
+    toggleQuestionDetails(e){
     e.preventDefault();
     this.setState({
       showDetails: !this.state.showDetails
@@ -53,27 +49,22 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <ListGroupItem onClick={this.onClick.bind(this)} 
-                         href="#" 
+          <ListGroupItem onClick={this.toggleQuestionDetails.bind()} 
+                         href={<QuestionsTable/>}
                          key={index}> {question.question} </ListGroupItem>
+                         //key={index}> {question.question && <QuestionsTable/>} </ListGroupItem>
+
         )
       })
-
-///////
-        // <a onClick={this.onClick.bind(this)} href='#'>Post a reply to this comment</a>
-       // {this.state.showReply && < ReplyForm / >}
-//////
-
     return (
       <div className="questionXYZ">
         <ListGroup> {questionsList} </ListGroup>
       </div>
-        //  <QuestionsTable/> 
     );
   }
 }
 
-//this pulls in the questions to the component
+//this pulls in the questions & showDetails from the component
 export const mapStateToProps = state => ({
   questions: state.questions,
   showDetails: state.showDetails

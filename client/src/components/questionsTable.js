@@ -7,6 +7,7 @@ export class QuestionsTable extends Component {
     }
   //   //this.getQuestions = this.getQuestions.bind(this);
 
+
   render() {
     return (
       <Table
