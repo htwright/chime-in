@@ -43,23 +43,23 @@ uRoutes.post("/new", (req,res,next)=>{
     })
 })
 
-uRoutes.get('/',(req,res)=>{
+uRoutes.get('/', (req,res) => {
   let users = req.params.users;
 
-  knex('users').then(list=>{
-    res.send(list.map(el=>el))
-  }).catch(err => console.error(err));
+  knex('users').select().then(list => {
+    res.send(list.map(el => el));
+  })
+    .catch(err => console.error(err));
 });
 
-uRoutes.get('/get/:users',(req,res)=>{
-  let users = req.params.users.split(',');
+uRoutes.get("/get/:users",(req,res)=>{
+  let users = req.params.users.split(",");
 
-  knex('users').select().whereIn('id',users).then(list=>{
-    res.send(list.map(el=>el))
-  }).catch(err => console.error(err));
-
+  knex("users").select().whereIn("id",users).then(list=>{
+    res.send(list.map(el=>el));
+  })
+  .catch(err => console.error(err));
 });
-
 
 uRoutes.put('/update/:id', (req, res) => {
   knex('users').where('id', req.params.id).update(req.body.user).returning('*').then((data) =>{
