@@ -46,7 +46,7 @@ mRoutes.post("/send",(req,res,next)=>{
     to:req.body.phone,
     body: req.body.message,
     from: conf.TWILIO_PHONE,
-    statusCallback: 'http://chime-in.herokuapp.com/api/messages'
+    statusCallback: 'https://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
     console.log('inside knex write', msgID);
     knex('questions')
