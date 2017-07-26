@@ -22,7 +22,7 @@ let fetchAdminQuestions = (id = 0) => {
 };
 
 let knexFetch = id => {
-  return knex.select().from('questions').where('admin', id).then(data => data).catch(err => console.error(err));
+  return knex('questions').select().where('admin', id).then(data => data).catch(err => console.error(err));
 };
 
 module.exports = fetchAdminQuestions;

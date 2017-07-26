@@ -23,12 +23,13 @@ const knex = require('knex')({
     max:2
   }
 });
+
 mRoutes.get('/:id', (req, res) => {
-  // console.log(fetchUsers([1, 2]));
   return fetchAdminQuestions(req.params.id).then(j => res.status(200).json(j))
-  .catch(err => console.error(err));
-  // res.status(200).json(fetchUsers([1, 2]));
-  // res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });
+  .catch(err => {
+    console.error(err);
+    res.status(200).send('No questions found for this admin');
+  });
 });
 
 mRoutes.post("/send",(req,res,next)=>{
@@ -56,10 +57,6 @@ mRoutes.post("/send",(req,res,next)=>{
     console.log(err);
   })
 });
-
-  // knex('users').select().then(list => {
-  //   res.send(list.map(el => el));
-  // })
 
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
