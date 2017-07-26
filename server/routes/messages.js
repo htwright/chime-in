@@ -6,6 +6,7 @@ const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
+const fetchUserWithPhonenumber = require('../functions/fetchUser');
 mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
@@ -62,9 +63,12 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log(sms);
-    knex('questions').where('id', 1).update({responses: sms.body});
-  }).then(()=> res.status(200).json({message: 'ok'}))
-  .catch(err => console.error(err));
+    return fetchUserWithPhonenumber(sms.from.substring(1)).then(data => {
+      knex('questions').where('users', data.id).update({responses: sms.body});
+    }).then (()=> res.status(200).send('ok')); 
+  //   knex('questions').where('id', 1).update({responses: sms.body});
+  // }).then(()=> res.status(200).json({message: 'ok'}))
+  }).catch(err => console.error(err));
 
 });
 
