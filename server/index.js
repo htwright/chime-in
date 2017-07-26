@@ -1,14 +1,15 @@
 const path = require('path');
 const express = require('express');
+const conf = require("./config");
 let messageRoutes = require("./routes/messages");
 let userRoutes = require("./routes/users");
 let questionRoutes = require("./routes/questions");
 let adminRoutes = require("./routes/admins");
-require('dotenv').config()
+
 const app = express();
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: conf.DATABASE_URL,
   pool: {
     min:0,
     max:2

@@ -1,5 +1,6 @@
 const express = require('express');
 const proxy = require('http-proxy-middleware');
+const conf = require("./server/config");
 
 const app = express();
 
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     // in development
     const runServer = require('./server').runServer;
     // Just run the server
-    runServer(process.env.PORT || 8080);
+    runServer(conf.PORT || 8080);
 }
 else {
     const app = express();

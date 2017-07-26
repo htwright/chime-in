@@ -1,7 +1,7 @@
-require('dotenv').config();
+const conf = require("../config");
 
 let Twilio = require("twilio")
-let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
 const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
@@ -14,15 +14,15 @@ mRoutes.use("/post",bodyParser.xml());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-mRoutes.use("/send",Auth);
+//mRoutes.use("/send",Auth);
 // mRoutes.use(Auth);
 let url = 'http://localhost:8080';
-if (process.env.NODE_ENV === 'production'){
+if (conf.NODE_ENV === 'production'){
   url = 'http://chime-in.herokuapp.com';
 }
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: conf.DATABASE_URL,
   pool: {
     min:0,
     max:2
@@ -45,7 +45,7 @@ mRoutes.post("/send",(req,res,next)=>{
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
-    from: process.env.TWILIO_PHONE,
+    from: conf.TWILIO_PHONE,
     statusCallback: 'http://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
     console.log('inside knex write', msgID);

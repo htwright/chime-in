@@ -1,4 +1,4 @@
-require('dotenv').config();
+const conf = require("../config");
 const bodyParser = require('body-parser');
 const qRoutes = require('express').Router();
 
@@ -8,7 +8,7 @@ qRoutes.use(bodyParser.urlencoded({
 }));
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: conf.DATABASE_URL,
   pool: {
     min:0,
     max:2

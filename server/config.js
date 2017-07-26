@@ -8,3 +8,5 @@ exports.TEST_DATABASE_URL = (
 exports.PORT = process.env.PORT || 8080;
 exports.TWILIO_SID = process.env.TWILIO_SID;
 exports.TWILIO_AUTH = process.env.TWILIO_AUTH;
+exports.TWILIO_PHONE = process.env.TWILIO_PHONE;
+exports.URL = process.env.URL;

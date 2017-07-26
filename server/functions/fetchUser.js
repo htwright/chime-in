@@ -1,6 +1,7 @@
+const conf = require("../config");
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: conf.DATABASE_URL,
   pool: {
     min:0,
     max:2

@@ -82,7 +82,7 @@ export const sendMessage = (targetID, message) => dispatch => {
 
 export const fetchQuestion = () => dispatch => {
   dispatch(fetchQuestionRequest());
-  return fetch('https://localhost:8080/api/questions/questionsList')
+  return fetch('http://localhost:8080/api/questions/questionsList')
       .then(data => {
         if (!data.ok) {
           return dispatch(fetchQuestionFailure());
