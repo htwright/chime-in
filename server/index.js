@@ -3,6 +3,7 @@ const express = require('express');
 let messageRoutes = require("./routes/messages");
 let userRoutes = require("./routes/users");
 let questionRoutes = require("./routes/questions");
+let adminRoutes = require("./routes/admins");
 require('dotenv').config()
 const app = express();
 const knex = require('knex')({
@@ -17,6 +18,7 @@ const knex = require('knex')({
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/questions", questionRoutes);
+app.use("/api/admins", adminRoutes);
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
