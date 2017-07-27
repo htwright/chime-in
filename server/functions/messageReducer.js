@@ -1,13 +1,18 @@
 //purpose: middleware that runs whenever a message comes in.
 const conf = require("../config");
 const Messaging = require("./messages");
+cons fetchUser = require("./fetchUser")
 const Message = new Messaging();
 const knex = require('./knex')();
 
 MessageReducer = (req,res,next) =>{
-  console.log("hit the message reducer!")
-  //Message.send(req,1);
-  console.log(req.body.message);
+  let message = req.body.message;
+  console.log(req.body);
+  fetchUser(message.phone).then(user=>{
+    console.log(user);
+    // next();
+  })
+
 }
 
 module.exports=MessageReducer;
