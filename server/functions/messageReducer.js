@@ -7,7 +7,7 @@ const knex = require('./knex')();
 MessageReducer = (req,res,next) =>{
   console.log("hit the message reducer!")
   //Message.send(req,1);
-  console.log(req.json());
+  console.log(req.body);
 }
 
 module.exports=MessageReducer;
