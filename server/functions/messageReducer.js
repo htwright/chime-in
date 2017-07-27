@@ -9,7 +9,7 @@ MessageReducer = (req,res,next) =>{
   let message = req.body;
 
   console.log(message.phone);
-  fetchUser("+"+message.phone).then(user=>{
+  fetchUser(message.phone).then(user=>{
     console.log(user);
     // next();
   })
