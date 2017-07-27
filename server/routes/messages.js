@@ -9,13 +9,13 @@ const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
 const MessageReducer = require("../functions/messageReducer");
-mRoutes.use("/send",MessageReducer);
-mRoutes.use("/send",bodyParser.json());
-mRoutes.use("/get",bodyParser.json());
 mRoutes.use("/post",bodyParser.xml());
+
+mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
+mRoutes.use("/send",MessageReducer);
 //mRoutes.use("/send",Auth);
 // mRoutes.use(Auth);
 const knex = require('../functions/knex')()
