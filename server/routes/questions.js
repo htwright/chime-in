@@ -18,6 +18,7 @@ const knex = require('knex')({
 
 //GET questions
 qRoutes.get('/questionsList', (req, res)=>{
+  console.log("Hit the questions list component.")
   knex('questions')
   .select('id', 'question', 'responses', 'users')
   .then(results=>{
