@@ -10,8 +10,20 @@ MessageReducer = (req,res,next) =>{
 
 
   fetchUser(message.From.substring(1)).then(user=>{
-    console.log(user);
-    //next();
+    if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
+      console.log("That was an account management message.");
+      let command = message.Body.substring(2);
+      console.log("Command is " + command);
+      if(command === "skip"){
+        //drop the most recent question in your account
+        console.log("you should do the skip logic.");
+      }
+
+    }else{
+      console.log("That was NOT an account management message, bud.");
+      next();
+    }
+
   })
 
 }
