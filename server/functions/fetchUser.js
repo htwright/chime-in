@@ -1,11 +1,5 @@
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+const conf = require("../config");
+const knex = require('./knex')();
 
 const fetchUserWithPhonenumber = (phonenumber) => {
   phonenumber = phonenumber.toString();

@@ -1,4 +1,4 @@
-require('dotenv').config();
+const conf = require("../config");
 const bodyParser = require('body-parser');
 const qRoutes = require('express').Router();
 
@@ -6,18 +6,12 @@ qRoutes.use(bodyParser.json());
 qRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+const knex = require('../functions/knex')();
 
 
 //GET questions
 qRoutes.get('/questionsList', (req, res)=>{
+  console.log("Hit the questions list component.")
   knex('questions')
   .select('id', 'question', 'responses', 'users')
   .then(results=>{
