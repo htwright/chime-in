@@ -1,7 +1,7 @@
 //purpose: middleware that runs whenever a message comes in.
 const conf = require("../config");
 const Messaging = require("./messages");
-cons fetchUser = require("./fetchUser")
+const fetchUser = require("./fetchUser")
 const Message = new Messaging();
 const knex = require('./knex')();
 
