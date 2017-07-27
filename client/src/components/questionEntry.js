@@ -6,6 +6,8 @@ import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
 import Panel from 'react-bootstrap/lib/Panel';
 import Accordion from 'react-bootstrap/lib/Accordion';
+import {Table, Column, Cell} from 'fixed-data-table';
+
 
 
 export class QuestionEntry extends Component {
@@ -58,6 +60,21 @@ export class QuestionEntry extends Component {
           //                key={index}> {question.question} </ListGroupItem>
           <Panel header={question.question} eventKey={index}>
             {question.responses}
+
+            <Table
+              rowsCount={2}
+              rowHeight={50}
+              width={1000}
+              height={500}>
+              <Column
+                cell={<Cell>{question.id}</Cell>}
+                width={200}
+              />
+              <Column
+                cell={<Cell>{question.responses}</Cell>}
+                width={200}
+              />
+            </Table>
           </Panel>        
 )
       })

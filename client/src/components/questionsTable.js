@@ -6,7 +6,7 @@ export class QuestionsTable extends Component {
   render() {
     return (
       <Table
-        rowsCount={100}
+        rowsCount={2}
         rowHeight={50}
         width={1000}
         height={500}>
