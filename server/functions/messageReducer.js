@@ -10,4 +10,4 @@ MessageReducer = (req,res,next) =>{
   console.log(req);
 }
 
-module.exports=Auth;
+module.exports=MessageReducer;
