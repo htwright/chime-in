@@ -15,10 +15,10 @@ MessageReducer = (req,res,next) =>{
       if(command === "skip"){
         //drop the most recent question in your account
         console.log("you should do the skip logic.");
-        message.send("Okay, skipping.", message.From);
+        Message.send("Okay, skipping.", message.From);
       }else if(command ==="help"){
         console.log("show the help logic");
-        message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
+        Message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
       }
 
     }else{
