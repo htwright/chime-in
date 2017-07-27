@@ -6,7 +6,7 @@ const Message = new Messaging();
 const knex = require('./knex')();
 
 MessageReducer = (req,res,next) =>{
-  let message = req.body.message;
+  let message = req.body;
 
   console.log(message.phone);
   fetchUser("+"+message.phone).then(user=>{
