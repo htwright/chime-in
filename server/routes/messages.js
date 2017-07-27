@@ -32,14 +32,14 @@ mRoutes.post("/send",(req,res,next)=>{
   let arr = JSON.parse(req.body.phone);
   let phone = parseInt(arr[0]);
 
-  console.log(phone);
+  //console.log(phone);
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
     from: conf.TWILIO_PHONE,
     statusCallback: 'https://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
-    console.log('inside knex write', msgID);
+    //console.log('inside knex write', msgID);
     knex('questions')
       .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
       .catch(err => console.error(err));
