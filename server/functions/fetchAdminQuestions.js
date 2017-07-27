@@ -1,11 +1,6 @@
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+const conf = require("../config");
+
+const knex = require('./knex')();
 
 let fetchAdminQuestions = (id = 0) => {
   let arr = [id];
@@ -13,7 +8,7 @@ let fetchAdminQuestions = (id = 0) => {
     return Promise.all(arr)
     .then(val => knexFetch(parseInt(val)))
     .catch(err => {
-      console.error(err); 
+      console.error(err);
       return 'No users found/invalid function input';
     });
   } else {

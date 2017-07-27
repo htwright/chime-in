@@ -1,28 +1,16 @@
-require('dotenv').config();
+const conf = require("../config");
 let Twilio = require("twilio");
-
 let Tokens = require("../functions/tokens");
 let Messages = require("../functions/messages");
-
-let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
 const aRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 aRoutes.use(bodyParser.json());
 aRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-let url = 'http://localhost:8080';
-if (process.env.NODE_ENV === 'production'){
-  url = 'http://chime-in.herokuapp.com';
-}
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+
+const knex = require('../functions/knex')();
 
 aRoutes.post("/login", (req,res, next)=>{
   //redirect to the create verify token.  Flushes all active tokens for the user number.

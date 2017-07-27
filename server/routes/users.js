@@ -7,14 +7,7 @@ uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+const knex = require('../functions/knex')();
 
 //function to add a user
 // let x =knex.select().table("users").then(el=>{

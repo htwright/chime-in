@@ -1,7 +1,6 @@
-require('dotenv').config();
-
+const conf = require("../config");
 let Twilio = require("twilio")
-let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
 
 class messages{
   send(message, target){
@@ -9,8 +8,8 @@ class messages{
     client.messages.create({
       to:target,
       body: message,
-      from: "+12409863225",
-      statusCallback: 'http://chime-in.herokuapp.com/api/messages'
+      from: conf.TWILIO_PHONE,
+      statusCallback: conf.URL +'/api/messages'
     }).then(res=>{
       console.log("After sending message");
 
