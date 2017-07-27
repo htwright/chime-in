@@ -56,21 +56,20 @@ class App extends Component {
                 <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
               </FormGroup>
               {' '}
-                <Button type="submit">Enter</Button>
+                <Button className="submit_sms" type="submit">Enter</Button>
             </Form>
           </div>
+          
+          <div className='users' id="admin-users-col">
+            <h1>Users</h1>
+            <Users/>
+          </div>
 
-          <div className='column' id="admin-col-one">
+          <div className='questions' id="admin-questions-col">
             <h1>Questions</h1>
             <QuestionEntry/>
           </div>
 
-          <div className='column' id="admin-col-two">
-            <h1>Users</h1>
-            {/* function alertClicked() {
-              alert('You clicked the third ListGroupItem');} */}
-            <Users/>
-          </div>
     </div>
     );
   }

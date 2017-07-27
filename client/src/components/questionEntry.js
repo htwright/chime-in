@@ -36,45 +36,28 @@ export class QuestionEntry extends Component {
   this.props.dispatch(fetchQuestion());
   }
 
-  //get questionsList prop & maps over each question as a listGroupItem
-  //  makeQuestions(){
-  //    console.log("its working!");
-  //  }
-  //     const questionsList =  this.props.questions.map((question, index) => {
-  //       console.log(question);
-  //       return (
-  //         <ListGroupItem> {question} </ListGroupItem>
-  //       )
-  //     })
-  //     console.log(questionsList);
-  //     return questionsList;
-  //   })
-
-  // }
-
   render() {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          // <ListGroupItem onClick={this.toggleQuestionDetails} 
-          //                key={index}> {question.question} </ListGroupItem>
-          <Panel header={question.question} eventKey={index}>
+          // <ListGroupItem onClick={this.toggleQuestionDetails} key={index}> {question.question} </ListGroupItem>
+          
+          <Panel header={question.question} eventKey={index} bsStyle="info">
             {question.responses}
 
             <Table
               rowsCount={2}
               rowHeight={50}
-              width={1000}
-              height={500}>
-              <Column
-                cell={<Cell>{question.id}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<Cell>{question.responses}</Cell>}
-                width={200}
-              />
+              width={600}
+              height={200}>
+              <Column cell={<Cell>{question.id}</Cell>}
+                      width={200}/>
+              <Column cell={<Cell>{question.users}</Cell>}
+                      width={200}/>
+              <Column cell={<Cell>{question.responses}</Cell>}
+                      width={200}/>
             </Table>
+
           </Panel>        
 )
       })
