@@ -56,7 +56,7 @@ class App extends Component {
                 <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
               </FormGroup>
               {' '}
-                <Button className="submit_sms" type="submit">Enter</Button>
+                <Button bsStyle="primary"className="submit_sms" type="submit">Enter</Button>
             </Form>
           </div>
           
