@@ -30,7 +30,7 @@ describe('Backend unit tests', function() {
   //   1. make request to `/api/hello`
   //   2. check response object keys
   it('should list all messages on GET', function() {
-    // const knex = require('knex')({
+    // const knex = require('../functions/knex')({
     //   client: 'pg',
     //   connection: process.env.DATABASE_URL
     // });

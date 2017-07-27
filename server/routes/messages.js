@@ -16,18 +16,7 @@ mRoutes.use(bodyParser.urlencoded({
 }));
 //mRoutes.use("/send",Auth);
 // mRoutes.use(Auth);
-let url = 'http://localhost:8080';
-if (conf.NODE_ENV === 'production'){
-  url = 'https://mighty-depths-52749.herokuapp.com/';
-}
-const knex = require('knex')({
-  client: 'pg',
-  connection: conf.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+const knex = require('../functions/knex')()
 
 mRoutes.get('/:id', (req, res) => {
   return fetchAdminQuestions(req.params.id).then(j => res.status(200).json(j))

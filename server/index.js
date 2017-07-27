@@ -5,16 +5,9 @@ let messageRoutes = require("./routes/messages");
 let userRoutes = require("./routes/users");
 let questionRoutes = require("./routes/questions");
 let adminRoutes = require("./routes/admins");
-
+let knex = require("./functions/knex.js")();
 const app = express();
-const knex = require('knex')({
-  client: 'pg',
-  connection: conf.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
+
 // API endpoints go here!
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
