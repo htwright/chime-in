@@ -4,6 +4,9 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
+import Panel from 'react-bootstrap/lib/Panel';
+import Accordion from 'react-bootstrap/lib/Accordion';
+
 
 export class QuestionEntry extends Component {
   constructor(props){
@@ -51,14 +54,17 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <ListGroupItem onClick={this.toggleQuestionDetails} 
-                         href={<QuestionsTable/>}
-                         key={index}> {question.question} </ListGroupItem>
-        )
+          // <ListGroupItem onClick={this.toggleQuestionDetails} 
+          //                key={index}> {question.question} </ListGroupItem>
+          <Panel header={question.question} eventKey={index}>
+            {question.responses}
+          </Panel>        
+)
       })
     return (
       <div className="questionXYZ">
-        <ListGroup> {questionsList} </ListGroup>
+        {/* <ListGroup> {questionsList} </ListGroup> */}
+        <Accordion>{questionsList}</Accordion>
       </div>
     );
   }
