@@ -63,8 +63,8 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   client.messages(req.body.MessageSid).fetch().then(sms =>{
     console.log(sms);
-    return fetchUserWithPhonenumber(sms.from.substring(1)).then(data => {
-      return knex('questions').where('users', data.id).update({responses: sms.body});
+    return fetchUserWithPhonenumber(sms.From.substring(1)).then(data => {
+      return knex('questions').where('users', data.id).update({responses: JSON.stringify(sms.body)});
     }).then (()=> res.status(200).send('ok')); 
   //   knex('questions').where('id', 1).update({responses: sms.body});
   // }).then(()=> res.status(200).json({message: 'ok'}))
