@@ -8,11 +8,11 @@ const knex = require('./knex')();
 MessageReducer = (req,res,next) =>{
   let message = req.body;
 
-  console.log(message.phone);
-  fetchUser(message.phone).then(user=>{
-    console.log(user);
-    // next();
-  })
+  console.log(message);
+  // fetchUser(message.phone).then(user=>{
+  //   console.log(user);
+  //   // next();
+  // })
 
 }
 
