@@ -4,6 +4,7 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
+import Chart from './Chart';
 import Panel from 'react-bootstrap/lib/Panel';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import {Table, Column, Cell} from 'fixed-data-table';
@@ -43,8 +44,7 @@ export class QuestionEntry extends Component {
           // <ListGroupItem onClick={this.toggleQuestionDetails} key={index}> {question.question} </ListGroupItem>
           
           <Panel header={question.question} eventKey={index} bsStyle="info">
-            {question.responses}
-
+            <Chart/>
             <Table
               rowsCount={2}
               rowHeight={50}
