@@ -11,9 +11,10 @@ export const sendPhoneMessage = (id, message) => ({
   message
 });
 
-export const TOGGLE_QUESTION_DETAILS = 'TOGGLE_QUESTION_DETAILS';
-export const toggleQuestionDetails = () => ({
-  type: TOGGLE_QUESTION_DETAILS
+export const DISPLAY_QUESTIONS = 'DISPLAY_QUESTION';
+export const displayQuestions = (questions) => ({
+  type: DISPLAY_QUESTIONS,
+  questions
 });
 
 export const FETCH_QUESTION_REQUEST = 'FETCH_QUESTION_REQUEST';
