@@ -48,13 +48,17 @@ export class QuestionEntry extends Component {
             <Table
               rowsCount={2}
               rowHeight={50}
+              headerHeight={50}
               width={900}
               height={200}>
               <Column cell={<Cell>{question.id}</Cell>}
+                      header={<Cell>Question ID</Cell>}
                       width={300}/>
               <Column cell={<Cell>{question.users}</Cell>}
+                      header={<Cell>User ID</Cell>}
                       width={300}/>
               <Column cell={<Cell>{question.responses}</Cell>}
+                      header={<Cell>Response</Cell>}
                       width={300}/>
             </Table>
 

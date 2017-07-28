@@ -8,9 +8,11 @@ export class QuestionsTable extends Component {
       <Table
         rowsCount={2}
         rowHeight={50}
+        headerHeight={50}
         width={1000}
         height={500}>
         <Column
+          header={<Cell>Name</Cell>}
           cell={<Cell>Column 1</Cell>}
           width={200}
         />
