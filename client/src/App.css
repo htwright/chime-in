@@ -14,18 +14,16 @@
   color: white;
 }
 
-#admin-questions,
-#admin-users {
-margin-left: 10%;
-margin-right: 10%;
-}
-
 .App-intro {
   font-size: large;
 }
 
 .adminSection {
     margin: 0 auto;
+}
+.column {
+  width: 50%;
+  display: inline-block;
 }
 
 .topic {
@@ -35,11 +33,7 @@ margin-right: 10%;
  
 .logout {
   margin-left: 1000px;
-}
-
-.submit_sms {
-  margin-bottom: 50px;
-}
+}  
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

@@ -26,7 +26,7 @@ export class Users extends Component {
         const usersList = this.props.users.map((user, index) => {
         console.log(user);
         return (
-          <ListGroupItem href="#" key={index} bsStyle="warning"> {user.name} </ListGroupItem>
+          <ListGroupItem key={index}> {user.name} </ListGroupItem>
         )
       })
 
