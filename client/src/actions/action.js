@@ -1,6 +1,7 @@
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
-  url = 'http://chime-in.herokuapp.com';
+  //do not include a slash at the end!
+  url = 'https://chime-in.herokuapp.com';
 }
 
 export const SEND_PHONE_MESSAGE = 'SEND_PHONE_MESSAGE';
@@ -81,7 +82,7 @@ export const sendMessage = (targetID, message) => dispatch => {
 
 export const fetchQuestion = () => dispatch => {
   dispatch(fetchQuestionRequest());
-  return fetch('http://localhost:8080/api/questions/questionsList')
+  return fetch(`${url}/api/questions/questionsList`)
       .then(data => {
         if (!data.ok) {
           return dispatch(fetchQuestionFailure());

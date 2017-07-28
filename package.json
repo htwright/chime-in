@@ -21,7 +21,9 @@
   "author": "Joe Turner <jturner@thinkful.com>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "body-parser-xml": "^1.1.0",
     "bootstrap": "^4.0.0-alpha.6",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
