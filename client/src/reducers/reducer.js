@@ -2,12 +2,14 @@ import { sendMessage } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from '../actions/action';
+import { toggleQuestionDetails, TOGGLE_QUESTION_DETAILS } from '../actions/action';
 
 const initialState = {
   questions: [],
   loading: false,
   error: null,
-  users: []
+  users: [],
+  showDetails: false
 };
 
 export default function reducer (state=initialState, action) {
@@ -29,6 +31,13 @@ switch (action.type) {
       loading: false,
       error: null,
       questions: action.questions
+    };
+  case TOGGLE_QUESTION_DETAILS:
+    return {
+      ...state,
+      loading: false,
+      error: null,
+      showDetails: action.showDetails
     };
   case sendMessage:
     //now for the serious stuff: actually send the message.
