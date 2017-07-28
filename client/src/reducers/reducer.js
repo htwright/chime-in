@@ -68,19 +68,4 @@ switch (action.type) {
   }
 };
 
-  // else if(action.type === fetchQuestion){
-  //
-  //   // console.log(action.questions);
-  //   //   fetch(`${url}/api/questions/questionsList`)
-  //   //   .then(result => result.text())
-  //   //   .then(result => {
-  //   //     console.log(result);
-  //   //   });
-  //
-  //   return ({ ...state, questions: action.questions})
-  //   }
-  //
-  // else
-  //   return state;
-  //
-  // }
+
