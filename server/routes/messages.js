@@ -9,7 +9,6 @@ const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
 const MessageReducer = require("../functions/messageReducer");
-//mRoutes.use("/post",bodyParser.xml());
 
 mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({

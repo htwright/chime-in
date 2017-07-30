@@ -7,9 +7,20 @@ const knex = require('./knex')();
 
 MessageReducer = (req,res,next) =>{
   let message = req.body;
+  console.log("phone number is.............")
+  console.log(message.From);
+
   fetchUser(message.From.substring(1)).then(user=>{
-    if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
-      console.log("That was an account management message.");
+    //User is user, From is phone number, Body is the message.
+    if(user.state==="verify"){
+      //verify the user.  Check if it is yes
+        if(message.Body === "yes"){
+          Message.send("Awesome, you are verified!  We'll send you the message now.", message.From);
+          //Fetch current question
+        }
+    }
+    else if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
+      //This is the message reducer.
       let command = message.Body.substring(2).toLowerCase();
       console.log("Command is " + command);
       if(command === "skip"){
@@ -21,7 +32,11 @@ MessageReducer = (req,res,next) =>{
         Message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
       }
 
-    }else{
+    }
+
+
+
+    else{
       console.log("That was NOT an account management message, bud.");
       next();
     }

@@ -7,4 +7,6 @@ const fetchUserWithPhonenumber = (phonenumber) => {
   return knex('users').where('phonenumber', phonenumber).then(data => data).catch(err => console.error(err));
 };
 
+
+
 module.exports = fetchUserWithPhonenumber;
