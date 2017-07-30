@@ -14,7 +14,7 @@ class messages{
       from: conf.TWILIO_PHONE,
     }).then(res=>{
       console.log("After sending message");
-      console.log(res);
+      
 
     })
   }
