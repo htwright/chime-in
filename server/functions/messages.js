@@ -10,7 +10,7 @@ class messages{
   }
   send(message, target, delay=0){
     console.log(target);
-    setTimeout(delay, ()=>{
+    setTimeout(()=>{
       client.messages.create({
         to:target,
         body: message,
@@ -18,7 +18,7 @@ class messages{
       }).then(res=>{
         console.log("After sending message");
       })
-    })
+    },1000);
   }
   SendCurrentQuestion(id=this.userId){
     //get the current question from the user's list and send it.
