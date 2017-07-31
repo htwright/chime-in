@@ -53,9 +53,9 @@ MessageReducer = (req,res,next) =>{
             if(message.Body === "reenable"){
               //update verification status with the function
               updateVerifyStatus(user.id,currentQuestion[0].admin);
-              message.send("Got it, they can send you questions again.  Type !!current to get your current question.",message.From);
+              Message.send("Got it, they can send you questions again.  Type !!current to get your current question.",message.From);
             }else{
-              message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
+              Message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
             }
           }
         }else{
