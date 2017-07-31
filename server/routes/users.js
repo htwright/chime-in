@@ -5,6 +5,7 @@ const fetchUserWithPhonenumber = require('../functions/fetchUser');
 
 //to test some code.
 const addQuestionToUser = require("../functions/addQuestionToUser");
+const getUserCurrentQuestion = require("../functions/getUserCurrentquestion");
 
 uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
@@ -17,6 +18,11 @@ const knex = require('../functions/knex')();
 //     console.log("In the users route area");
 //     console.log(el);
 // });
+
+uRoutes.post("/test",(req,res,next)=>{
+  //test endpoint for you to drop your experimental code into.
+  getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+})
 
 uRoutes.post("/new", (req,res,next)=>{
   //added in a default state of verify to each user.

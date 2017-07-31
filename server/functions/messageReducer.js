@@ -2,6 +2,9 @@
 const conf = require("../config");
 const Messaging = require("./messages");
 const fetchUser = require("./fetchUser")
+const updateUser = require("./updateUser");
+const getQuestion = require("./getQuestion");
+const findVerifyStatus = require("./verification/findVerifyStatus");
 const Message = new Messaging();
 const knex = require('./knex')();
 
@@ -11,15 +14,46 @@ MessageReducer = (req,res,next) =>{
   console.log(message.From);
 
   fetchUser(message.From.substring(1)).then(user=>{
-    //User is user, From is phone number, Body is the message.
-    if(user.state==="verify"){
-      //verify the user.  Check if it is yes
-        if(message.Body === "yes"){
-          Message.send("Awesome, you are verified!  We'll send you the message now.", message.From);
-          //Fetch current question
+    //check if there is a verify token for the user
+    //to do so, check who sent the last question, then check the verify table
+    //findVerifyStatus(user.id,).then()
+
+    getQuestion(user.id).then(currentQuestion=>{
+      //now we fetch verify status with the returned question's id
+      findVerifyStatus(user.id,currentQuestion.id).then(result=>{
+        console.log(result);
+        let verified = result.length()>0 ? true : false;
+        console.log(verified);
+        //now do stuff depending on whether the user verified that admin.
+        if (verified){
+          if(result[0].status === "verified"){
+            //do stuff
+          }else{
+            //check if the user sent reenable
+            if(message.Body === "reenable"){
+              //update verification status with the function
+            }else{
+              messages.send("You aren't verified with this person!  Send reenable to let them send you questions.");
+            }
+          }
         }
-    }
-    else if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
+
+      })
+    })
+
+
+
+    //User is user, From is phone number, Body is the message.
+    // if(user.state==="verify"){
+    //   //verify the user.  Check if it is yes
+    //     if(message.Body === "yes"){
+    //       Message.send("Awesome, you are verified!  We'll send you the message now.", message.From);
+    //       //Fetch current question and remove verified status.
+    //       updateUser(user.id,{state: ""});
+    //
+    //     }
+    // }
+    if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
       //This is the message reducer.
       let command = message.Body.substring(2).toLowerCase();
       console.log("Command is " + command);
