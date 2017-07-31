@@ -25,11 +25,13 @@ MessageReducer = (req,res,next) =>{
           //now do stuff depending on whether the user verified that admin.
           console.log(".....................................................................");
           console.log(result[0])
+          if(!Array.isArray(result)) result = [result]
+          else if(result===[]) result = null;
           if (result !== null){
             //cast result into array if it isn't one
 
-            if(!Array.isArray(result)) result = [result]
-            console.log(result.length)
+
+
             if(result.length>0){
               if(result[0].status === "verified"){
                 //do normal account stuff that's broken out into its own function.
