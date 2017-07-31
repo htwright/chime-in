@@ -25,21 +25,23 @@ MessageReducer = (req,res,next) =>{
           //now do stuff depending on whether the user verified that admin.
           console.log(".....................................................................");
           console.log(result)
-          if (result !== null && result !== []){
+          if (result !== null){
             //cast result into array if it isn't one
 
             if(!Array.isArray(result)) result = [result]
-            if(result[0].status === "verified"){
-              //do normal account stuff that's broken out into its own function.
-              messageReducerLogic(message, user, currentQuestion[0]);
-            }else{
-              //check if the user sent reenable
-              if(message.Body === "reenable"){
-                //update verification status with the function
-                updateVerifyStatus(user.id,currentQuestion[0].admin);
-                Message.send("Got it, they can send you questions again.  Type !!current to get your current question.",message.From);
+            if(result.length>0){
+              if(result[0].status === "verified"){
+                //do normal account stuff that's broken out into its own function.
+                messageReducerLogic(message, user, currentQuestion[0]);
               }else{
-                Message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
+                //check if the user sent reenable
+                if(message.Body === "reenable"){
+                  //update verification status with the function
+                  updateVerifyStatus(user.id,currentQuestion[0].admin);
+                  Message.send("Got it, they can send you questions again.  Type !!current to get your current question.",message.From);
+                }else{
+                  Message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
+                }
               }
             }
           }else{
