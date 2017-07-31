@@ -6,6 +6,7 @@ const updateUser = require("./updateUser");
 const getUserCurrentQuestion = require("./getUserCurrentquestion");
 const findVerifyStatus = require("./verification/findVerifyStatus");
 const createVerifyStatus = require("./verification/createVerifyStatus");
+const updateVerifyStatus = require("./verification/updateVerifyStatus");
 const Message = new Messaging();
 const knex = require('./knex')();
 
@@ -51,8 +52,10 @@ MessageReducer = (req,res,next) =>{
             //check if the user sent reenable
             if(message.Body === "reenable"){
               //update verification status with the function
+              updateVerifyStatus(user.id,currentQuestion[0].admin);
+              message.send("Got it, they can send you questions again.  Type !!current to get your current question.",message.From);
             }else{
-              messages.send("You aren't verified with this person!  Send reenable to let them send you questions.");
+              message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
             }
           }
         }else{
