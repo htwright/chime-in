@@ -61,7 +61,7 @@ MessageReducer = (req,res,next) =>{
           console.log("user is..........................")
           console.log(user)
           console.log("currentQuestion is..........................")
-          console.log(admin)
+          console.log(currentQuestion.admin)
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
             Message.send("Awesome, you are verified!  Here's your question:",message.From);
