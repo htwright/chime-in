@@ -41,7 +41,7 @@ MessageReducer = (req,res,next) =>{
                 console.log("show the help logic");
                 Message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
               }else if(command === "revoke"){
-                Message.send("Okay, revoking.  Site creator: create this function.", message.From);
+                Message.send("Okay, revoking.  If you wish to reenable, please send reenable.  Site creator: make sure to let the user retarget this admin later.  Maybe a view revoked.", message.From);
               }
             }
             else{
@@ -68,6 +68,7 @@ MessageReducer = (req,res,next) =>{
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
             Message.send("Awesome, you are verified!  Here's your question:",message.From);
+            Message.send(currentQuestion[0].question,message.From);
             createVerifyStatus(user.id,currentQuestion[0].admin);
           }else if(message.Body.toLowerCase() === "no"){
             Message.send("Okay, that person has been blocked from sending you questions.  Reply with reenable if you did this in error.",message.From);
