@@ -20,6 +20,8 @@ MessageReducer = (req,res,next) =>{
 
     getQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
+      console.log(user.id)
+      console.log(currentQuestion.id)
       findVerifyStatus(user.id,currentQuestion.id).then(result=>{
         console.log(result);
         let verified = result.length()>0 ? true : false;
