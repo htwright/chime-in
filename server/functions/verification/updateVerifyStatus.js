@@ -1,7 +1,7 @@
 const conf = require("../../config");
 const knex = require('../knex')();
 
-const updateVerifyStatus = (userId,adminId, status="verify") => {
+const updateVerifyStatus = (userId,adminId, status="verified") => {
   // console.log(`user id: ${userId}, admin id: ${adminId}`)
   return knex('verify').where({userid:userId,adminid:adminId})
     .update({status: status})
