@@ -21,7 +21,7 @@ MessageReducer = (req,res,next) =>{
     user = user[0];
     getUserCurrentQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
-      findVerifyStatus(user.id,currentQuestion.admin).then(result=>{
+      findVerifyStatus(user.id,currentQuestion[0].admin).then(result=>{
         console.log("result is.........................................");
         console.log(result);
         //now do stuff depending on whether the user verified that admin.
