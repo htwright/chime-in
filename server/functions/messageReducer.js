@@ -19,7 +19,7 @@ MessageReducer = (req,res,next) =>{
     //to do so, check who sent the last question, then check the verify table
     //findVerifyStatus(user.id,).then()
 
-    getQuestion(user.id).then(currentQuestion=>{
+    getUserCurrentQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
       console.log("Current Question is................................");
       console.log(currentQuestion)
