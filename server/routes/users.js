@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const createVerifyStatus = require("../functions/verification/createVerifyStatus");
 
 //to test some code.
 const addQuestionToUser = require("../functions/addQuestionToUser");
@@ -21,7 +22,8 @@ const knex = require('../functions/knex')();
 
 uRoutes.post("/test",(req,res,next)=>{
   //test endpoint for you to drop your experimental code into.
-  getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+  //getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+
 })
 
 uRoutes.post("/new", (req,res,next)=>{
