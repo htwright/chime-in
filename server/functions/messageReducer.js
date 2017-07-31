@@ -7,7 +7,7 @@ const getUserCurrentQuestion = require("./getUserCurrentquestion");
 const findVerifyStatus = require("./verification/findVerifyStatus");
 const createVerifyStatus = require("./verification/createVerifyStatus");
 const updateVerifyStatus = require("./verification/updateVerifyStatus");
-const messageReducerLogic = require("./MessageReducerLogic");
+const messageReducerLogic = require("./messageReducerLogic");
 const Message = new Messaging();
 const knex = require('./knex')();
 
@@ -27,7 +27,7 @@ MessageReducer = (req,res,next) =>{
             //cast result into array if it isn't one
             if(!Array.isArray(result)) result = [result]
             if(result[0].status === "verified"){
-              //do stuff
+              //do normal account stuff that's broken out into its own function.
               messageReducerLogic(message, user, currentQuestion[0]);
             }else{
               //check if the user sent reenable
