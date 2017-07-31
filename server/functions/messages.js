@@ -18,7 +18,7 @@ class messages{
       }).then(res=>{
         console.log("After sending message");
       })
-    },1000);
+    },delay);
   }
   SendCurrentQuestion(id=this.userId){
     //get the current question from the user's list and send it.
