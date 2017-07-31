@@ -8,6 +8,4 @@ const getQuestion = (id) => {
     }).catch(err => console.error(err));
 };
 
-
-
 module.exports = getQuestion;
