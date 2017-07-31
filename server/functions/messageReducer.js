@@ -61,14 +61,14 @@ MessageReducer = (req,res,next) =>{
           console.log("user is..........................")
           console.log(user)
           console.log("currentQuestion is..........................")
-          console.log(currentQuestion.admin)
+          console.log(currentQuestion)
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
             Message.send("Awesome, you are verified!  Here's your question:",message.From);
-            createVerifyStatus(user.id,currentQuestion.admin);
+            createVerifyStatus(user.id,currentQuestion[0].admin);
           }else if(message.Body.toLowerCase() === "no"){
             Message.send("Okay, that person has been blocked from sending you questions.  Reply with reenable if you did this in error.",message.From);
-            createVerifyStatus(user.id,currentQuestion.admin,"revoked");
+            createVerifyStatus(user.id,currentQuestion[0].admin,"revoked");
           }else{
             Message.send("I'm sorry, I didn't understand that.  Please send yes if you want to allow the sender to send you messages, or no if not.",message.From);
           }
