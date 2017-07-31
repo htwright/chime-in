@@ -28,7 +28,7 @@ MessageReducer = (req,res,next) =>{
           //else if(result===[]) result = null;
           console.log(".....................................................................");
           console.log(result)
-          if (result !== null){
+          if (result !== null || result === []){
             //cast result into array if it isn't one
             if(result.length>0){
               if(result[0].status === "verified"){
@@ -45,6 +45,7 @@ MessageReducer = (req,res,next) =>{
                 }
               }
             }else{
+              //I need to make sure the verification stuff happens here!
               Message.send("I don't know who you're replying to.",message.From);
             }
           }else{
