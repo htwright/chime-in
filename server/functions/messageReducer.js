@@ -58,7 +58,10 @@ MessageReducer = (req,res,next) =>{
         }else{
           console.log("not verified, doing the checks for that.")
           //this fires if there is not verified status.  Create verified status based on what the person sent.
-          console.log(Message)
+          console.log("user is..........................")
+          console.log(user)
+          console.log("Admin is..........................")
+          console.log(admin)
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
             Message.send("Awesome, you are verified!  Here's your question:",message.From);
