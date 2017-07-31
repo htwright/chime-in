@@ -86,6 +86,9 @@ MessageReducer = (req,res,next) =>{
           }
 
         })
+      }else{
+        console.log("no active question, so going into administrative mode.");
+        Message.send("You have no active questions.  Account management is due soon!",message.from);
       }
 
     })
