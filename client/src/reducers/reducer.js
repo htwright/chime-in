@@ -7,7 +7,8 @@ const initialState = {
   questions: [],
   loading: false,
   error: null,
-  users: []
+  users: [],
+  targets: []
 };
 
 export default function reducer (state=initialState, action) {
