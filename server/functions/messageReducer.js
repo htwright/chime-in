@@ -21,8 +21,8 @@ MessageReducer = (req,res,next) =>{
 
     getQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
-      //console.log(user.id)
-      //console.log(currentQuestion.id)
+      console.log("Current Question is................................");
+      console.log(currentQuestion)
       findVerifyStatus(user.id,currentQuestion.id).then(result=>{
         //console.log(result);
         //now do stuff depending on whether the user verified that admin.
@@ -40,6 +40,8 @@ MessageReducer = (req,res,next) =>{
               }else if(command ==="help"){
                 console.log("show the help logic");
                 Message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
+              }else if(command === "revoke"){
+                Message.send("Okay, revoking.  Site creator: create this function.", message.From);
               }
             }
             else{
