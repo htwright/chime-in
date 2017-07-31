@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Welcome from './Welcome';
 import App from './App';
-import Login from "./components/login"
 import './index.css';
 import store from './store';
 import {Provider} from 'react-redux';
