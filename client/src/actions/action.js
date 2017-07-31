@@ -49,6 +49,12 @@ export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
 
+export const SET_ACTIVE_QUESTION = 'SET_ACTIVE_QUESTION';
+export const setActiveQuestion = (question) => ({
+  type: SET_ACTIVE_QUESTION,
+  question: question
+});
+
 
 // export const fetchQuestion = (questions) => dispatch => {
 //   return fetch('http://localhost:8080/api/questions/questionsList', {

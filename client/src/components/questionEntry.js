@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import {fetchQuestion} from '../actions/action';
+import {fetchQuestion, setActiveQuestion} from '../actions/action';
 
 
 export class QuestionEntry extends Component {
@@ -20,7 +20,7 @@ export class QuestionEntry extends Component {
   //   this.setState({questions: res});
   //   console.log(this.state);
   //  });
-  this.props.dispatch(fetchQuestion());
+    this.props.dispatch(fetchQuestion());
 
   }
 
@@ -41,12 +41,12 @@ export class QuestionEntry extends Component {
   // }
 
   render() {
-        const questionsList = this.props.questions.map((question, index) => {
-        console.log(question);
-        return (
-          <ListGroupItem key={index}> {question.question} </ListGroupItem>
-        )
-      })
+    const questionsList = this.props.questions.map((question, index) => {
+      console.log(question);
+      return (
+          <ListGroupItem key={index} onClick = {() => this.props.dispatch(setActiveQuestion(question))}> {question.question} </ListGroupItem>
+      );
+    });
 
     return (
       <div className="questionXYZ">
@@ -54,11 +54,14 @@ export class QuestionEntry extends Component {
       </div>
     );
   }
+
 }
 
 //this pulls in the questions to the component
 export const mapStateToProps = state => ({
-  questions: state.questions
+  questions: state.questions,
+  activeQuestion: state.activeQuestion
 });
 
 export default connect(mapStateToProps)(QuestionEntry);
+
