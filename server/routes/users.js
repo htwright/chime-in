@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
 
+//to test some code.
+const addQuestionToUser = require("../functions/addQuestionToUser");
+
 uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
   extended: true
@@ -16,7 +19,8 @@ const knex = require('../functions/knex')();
 // });
 
 uRoutes.post("/new", (req,res,next)=>{
-  let userData = Object.assign({},req.body);
+  //added in a default state of verify to each user.
+  let userData = Object.assign({state:"verify"},req.body);
   console.log("User data is...");
   console.log(JSON.stringify(userData,null,2));
   knex("users").select("id","name","phonenumber","email","slack")
