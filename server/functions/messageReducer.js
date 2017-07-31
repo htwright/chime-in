@@ -25,7 +25,7 @@ MessageReducer = (req,res,next) =>{
           //now do stuff depending on whether the user verified that admin.
           console.log(".....................................................................");
           console.log(result)
-          if (result !== null || result == []){
+          if (result !== null && result !== []){
             //cast result into array if it isn't one
 
             if(!Array.isArray(result)) result = [result]
