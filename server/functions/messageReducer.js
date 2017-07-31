@@ -18,7 +18,7 @@ MessageReducer = (req,res,next) =>{
     //check if there is a verify token for the user
     //to do so, check who sent the last question, then check the verify table
     //findVerifyStatus(user.id,).then()
-
+    console.log(user)
     getUserCurrentQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
       console.log("Current Question is................................");
