@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as Cookies from 'js-cookie';
+import Login from './components/loginPage';
 import QuestionEntry from './components/questionEntry';
 import Users from './components/users';
 import Button from 'react-bootstrap/lib/Button';
@@ -17,11 +19,39 @@ class App extends Component {
     super(props);
     this.state = {
       id: null,
-      message: null
+      message: null,
+      currentUser: null
     }
 
     this.manageState = this.manageState.bind(this);
   }
+
+  componentDidMount() {
+    // Job 4: Redux-ify all of the state and fetch calls to async actions.
+    const accessToken = Cookies.get('accessToken');
+    if (accessToken) {
+        fetch('/api/me', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        }).then(res => {
+            if (!res.ok) {
+                if (res.status === 401) {
+                    // Unauthorized, clear the cookie and go to
+                    // the login page
+                    Cookies.remove('accessToken');
+                    return;
+                }
+                throw new Error(res.statusText);
+            }
+            return res.json();
+        }).then(currentUser =>
+            this.setState({
+                currentUser
+            })
+        );
+    }
+}
 
   doPhoneStuff(event,id, message){
     event.preventDefault();
@@ -34,6 +64,10 @@ class App extends Component {
   }
 
   render() {
+    if (!this.state.currentUser) {
+          return <Login />;
+      }
+
     return (
       <div className="App">
 
