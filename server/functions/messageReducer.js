@@ -21,6 +21,7 @@ MessageReducer = (req,res,next) =>{
     user = user[0];
     getUserCurrentQuestion(user.id).then(currentQuestion=>{
       //now we fetch verify status with the returned question's id
+      currentQuestion = currentQuestion[0];
       console.log("Current Question is................................");
       console.log(currentQuestion)
       console.log("Current user is................................");
