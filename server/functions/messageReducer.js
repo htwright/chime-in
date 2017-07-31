@@ -44,6 +44,8 @@ MessageReducer = (req,res,next) =>{
                   Message.send("You aren't verified with this person!  Send reenable to let them send you questions.",message.From);
                 }
               }
+            }else{
+              Message.send("I don't know who you're replying to.",message.From);
             }
           }else{
             console.log("not verified, doing the checks for that.")
