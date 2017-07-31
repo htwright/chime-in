@@ -56,6 +56,7 @@ MessageReducer = (req,res,next) =>{
             }
           }
         }else{
+          console.log("not verified, doing the checks for that.")
           //this fires if there is not verified status.  Create verified status based on what the person sent.
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
@@ -64,6 +65,8 @@ MessageReducer = (req,res,next) =>{
           }else if(message.Body.toLowerCase() === "no"){
             Message.send("Okay, that person has been blocked from sending you questions.  Reply with reenable if you did this in error.",Message.From);
             createVerifyStatus(user.id,user.admin,"revoked");
+          }else{
+            Message.send("I'm sorry, I didn't understand that.  Please send yes if you want to allow the sender to send you messages, or no if not.",Message.From);
           }
         }
 
