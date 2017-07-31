@@ -29,6 +29,7 @@ MessageReducer = (req,res,next) =>{
             //cast result into array if it isn't one
 
             if(!Array.isArray(result)) result = [result]
+            console.log(result.length)
             if(result.length>0){
               if(result[0].status === "verified"){
                 //do normal account stuff that's broken out into its own function.
