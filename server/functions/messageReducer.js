@@ -26,7 +26,11 @@ MessageReducer = (req,res,next) =>{
         console.log("result is.........................................");
         console.log(result);
         //now do stuff depending on whether the user verified that admin.
-        if (result.length>0){
+
+        if (result !== null){
+          //cast result into array if it isn't one
+          if(!Array.isArray(result)) result = [result]
+
           if(result[0].status === "verified"){
             //do stuff
             if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
@@ -42,6 +46,7 @@ MessageReducer = (req,res,next) =>{
                 Message.send("Type !!skip to ignore current question, !!update to update your info, and !!help to get this message.", message.From);
               }else if(command === "revoke"){
                 Message.send("Okay, revoking.  If you wish to reenable, please send reenable.  Site creator: make sure to let the user retarget this admin later.  Maybe a view revoked.", message.From);
+                createVerifyStatus(user.id,currentQuestion[0].admin,"revoked");
               }
             }
             else{
@@ -68,7 +73,7 @@ MessageReducer = (req,res,next) =>{
           if(message.Body.toLowerCase() === "yes"){
             //user is verified, reply and then create auth token.
             Message.send("Awesome, you are verified!  Here's your question:",message.From);
-            Message.send(currentQuestion[0].question,message.From);
+            Message.send(currentQuestion[0].question,message.From,1000);
             createVerifyStatus(user.id,currentQuestion[0].admin);
           }else if(message.Body.toLowerCase() === "no"){
             Message.send("Okay, that person has been blocked from sending you questions.  Reply with reenable if you did this in error.",message.From);
@@ -80,20 +85,6 @@ MessageReducer = (req,res,next) =>{
 
       })
     })
-
-
-
-    //User is user, From is phone number, Body is the message.
-    // if(user.state==="verify"){
-    //   //verify the user.  Check if it is yes
-    //     if(message.Body === "yes"){
-    //       Message.send("Awesome, you are verified!  We'll send you the message now.", message.From);
-    //       //Fetch current question and remove verified status.
-    //       updateUser(user.id,{state: ""});
-    //
-    //     }
-    // }
-
   })
 
 }

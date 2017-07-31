@@ -8,16 +8,16 @@ class messages{
   constructor(userId){
     if(userId) this.userId = userId;
   }
-  send(message, target){
+  send(message, target, delay=0){
     console.log(target);
-    client.messages.create({
-      to:target,
-      body: message,
-      from: conf.TWILIO_PHONE,
-    }).then(res=>{
-      console.log("After sending message");
-
-
+    setTimeout(delay, ()=>{
+      client.messages.create({
+        to:target,
+        body: message,
+        from: conf.TWILIO_PHONE,
+      }).then(res=>{
+        console.log("After sending message");
+      })
     })
   }
   SendCurrentQuestion(id=this.userId){
