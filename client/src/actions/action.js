@@ -48,6 +48,8 @@ export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
+
+
 // export const fetchQuestion = (questions) => dispatch => {
 //   return fetch('http://localhost:8080/api/questions/questionsList', {
 //     method: 'GET',
@@ -112,9 +114,9 @@ export const fetchQuestion = () => dispatch => {
       });
 };
 
-export const fetchUsers = () => dispatch => {
+export const fetchUsers = (id = 1) => dispatch => {
   dispatch(fetchUsersRequest());
-  return fetch(`${url}/api/users`)
+  return fetch(`${url}/api/users/targets/${id}`)
     .then(data => {
       if (!data.ok) {
         return dispatch(fetchUsersFailure());
@@ -125,3 +127,13 @@ export const fetchUsers = () => dispatch => {
       return dispatch(fetchUsersSuccess(response));
   })
 }
+
+// export const fetchUser = (userid) => {
+//   dispatch(fetchUserRequest());
+//   return fetch(`${url}/api/get/${userid}`)
+// }
+
+// export const fetchTargets = () => dispatch => {
+//   dispatch(fetchTargetsRequest());
+//   return fetch (`${url}/api/users/`)
+// }

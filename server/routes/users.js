@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const fetchTargets = require('../functions/fetchTargets');
 
 //to test some code.
 const addQuestionToUser = require("../functions/addQuestionToUser");
@@ -57,6 +58,11 @@ uRoutes.get("/get/:users",(req,res)=>{
     res.send(list.map(el=>el));
   })
   .catch(err => console.error(err));
+});
+
+uRoutes.get('/targets/:id', (req, res) => {
+  return fetchTargets(req.params.id)
+  .then(data => res.status(200).json(data)).catch(err => console.error(err));
 });
 
 uRoutes.get('/phonenumber/:phonenumber', (req, res) => {
