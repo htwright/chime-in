@@ -25,7 +25,7 @@ MessageReducer = (req,res,next) =>{
         console.log("result is.........................................");
         console.log(result);
         //now do stuff depending on whether the user verified that admin.
-        if (result.length()>0){
+        if (result.length>0){
           if(result[0].status === "verified"){
             //do stuff
             if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
