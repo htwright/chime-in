@@ -2,12 +2,14 @@ const conf = require("../config");
 
 let Twilio = require("twilio")
 let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
+let nodemailer = require('nodemailer');
 const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const fetchUserWithEmail = require('../functions/fetchUser');
 const MessageReducer = require("../functions/messageReducer");
 
 mRoutes.use(bodyParser.json());
@@ -53,6 +55,47 @@ mRoutes.post("/send",(req,res,next)=>{
     console.log(err);
   })
 });
+
+mRoutes.post('/sendEmail', (req, res) => {
+
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      type: 'OAuth2',
+      user: 'EMAIL_ACCOUNT_USER',
+      pass: 'EMAIL_ACCOUNT_PASSWORD'
+    }
+  })
+
+  transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
+      let accessToken = userTokens[user];
+      if(!accessToken){
+          return callback(new Error('Unknown user'));
+      }else{
+          return callback(null, accessToken);
+      }
+  })
+
+  let mailOpts = {
+    to: req.body.email,
+    body: req.body.message,
+    from: req.body.from
+  }
+
+  transporter.sendMail(mailOpts, (error, res) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Message sent' + res.response);
+      res.status(200).json({ message: 'Sent the message ' + res.response });
+    }
+    transporter.close();
+  })
+
+})
+
 
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
