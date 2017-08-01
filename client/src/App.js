@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
+import Landing from './components/landing';
 import QuestionEntry from './components/questionEntry';
 import Users from './components/users';
+import AddUser from './components/addUser';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -10,7 +13,7 @@ import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendMessage } from './actions/action';
-import './App.css';
+// import './App.css';
 
 class App extends Component {
   constructor(props){
@@ -19,8 +22,8 @@ class App extends Component {
       id: null,
       message: null
     }
-
     this.manageState = this.manageState.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   doPhoneStuff(event,id, message){
@@ -33,45 +36,19 @@ class App extends Component {
     console.log(this.state)
   }
 
+  // handleClick(e) {
+  //   e.preventDefault();
+  //   this.props.history.push('/adduser');
+  // }
+
   render() {
     return (
-      <div className="App">
-
-        <div className="App-header">
-          <Button className="logout">LogOut</Button>
-          <h2>Chime-In</h2>
+      <Router>
+        <div>
+          <Route exact path="/" component={Landing}/>
+          <Route exact path="/adduser" component={AddUser}/>
         </div>
-          <div>
-            <h1>Create a Message</h1>
-            <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
-              <FormGroup controlId="formInlinePassword">
-                <ControlLabel>Phone #</ControlLabel>
-                {' '}
-                <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
-                </FormGroup>
-                {' '}
-              <FormGroup controlId="formInlineName">
-                <ControlLabel></ControlLabel>
-                {' '}
-                <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
-              </FormGroup>
-              {' '}
-                <Button type="submit">Enter</Button>
-            </Form>
-          </div>
-
-          <div className='column' id="admin-col-one">
-            <h1>Questions</h1>
-            <QuestionEntry/>
-          </div>
-
-          <div className='column' id="admin-col-two">
-            <h1>Users</h1>
-            {/* function alertClicked() {
-              alert('You clicked the third ListGroupItem');} */}
-            <Users/>
-          </div>
-    </div>
+      </Router>
     );
   }
 }
