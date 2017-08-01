@@ -9,7 +9,7 @@ const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
 const addQuestionResponse = require('../functions/addQuestionResponse');
-const getUserCurrentQuestion = require('../functions/getUserCurrentQuestion');
+const getUserCurrentQuestion = require('../functions/getUserCurrentquestion');
 const MessageReducer = require("../functions/messageReducer");
 
 mRoutes.use(bodyParser.json());
