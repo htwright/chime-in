@@ -1,5 +1,5 @@
-const conf = require("../../config");
-const knex = require('../knex')();
+const conf = require("../config");
+const knex = require('./knex')();
 
 const getAdminFromId = (id) => {
   return knex('users').where({id:id})
