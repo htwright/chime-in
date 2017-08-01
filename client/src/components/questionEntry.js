@@ -9,11 +9,11 @@ import Accordion from 'react-bootstrap/lib/Accordion';
 
 export class QuestionEntry extends Component {
   constructor(props){
-     super(props);
+    super(props);
   }
 
   componentDidMount(){
-  this.props.dispatch(fetchQuestion());
+    this.props.dispatch(fetchQuestion());
 
   }
 
@@ -32,13 +32,13 @@ export class QuestionEntry extends Component {
 //<Panel header={question.question} eventKey={key} bsStyle="info"></Panel>
        // )
 
-        })
-        return (
+        
+    return (
           <div className="questionXYZ">
             <Accordion>{questionsList}</Accordion>
             <Chart/>
           </div>
-        );
+    );
   }
 
 }
