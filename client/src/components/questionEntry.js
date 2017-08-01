@@ -21,9 +21,10 @@ export class QuestionEntry extends Component {
     const questionsList = this.props.questions.map((question, index) => {
       console.log(question);
       return (
+        <div>
           <ListGroupItem key={index} onClick = {() => this.props.dispatch(setActiveQuestion(question))}> {question.question} </ListGroupItem>
           <Panel header={question.question} eventKey={key} bsStyle="info"></Panel>
-
+        </div>
       );
     });
 //questionsList += this.props.questions.map((question, key) => {
