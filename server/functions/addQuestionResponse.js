@@ -12,7 +12,10 @@ let addquestionResponse = (id, response) => {
     }else{
       newArr = [response];
     }
-    knex('questions').where({id:id}).update({responses:newArr});
+    knex('questions').where({id:id}).update({responses:newArr}).then(response=>{
+      console.log("successfully went through to the update function.")
+      console.log(response);
+    });
   })
 };
 
