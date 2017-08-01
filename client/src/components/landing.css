@@ -33,7 +33,10 @@
  
 .logout {
   margin-left: 1000px;
-}  
+}
+.submit_sms {
+  margin-bottom: 50px;  
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
