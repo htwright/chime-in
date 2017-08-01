@@ -1,4 +1,4 @@
-import { sendMessage } from '../actions/action';
+import { sendMessage, CREATE_USER } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from '../actions/action';
@@ -8,7 +8,8 @@ const initialState = {
   loading: false,
   error: null,
   users: [],
-  targets: []
+  targets: [],
+  currentUser: null
 };
 
 export default function reducer (state=initialState, action) {
@@ -55,24 +56,12 @@ switch (action.type) {
       error: null,
       users: action.users
     };
+  case CREATE_USER:
+    return {
+      ...state,
+      currentUser: action.currentUser
+    };
   default:
     return state;
   }
 };
-
-  // else if(action.type === fetchQuestion){
-  //
-  //   // console.log(action.questions);
-  //   //   fetch(`${url}/api/questions/questionsList`)
-  //   //   .then(result => result.text())
-  //   //   .then(result => {
-  //   //     console.log(result);
-  //   //   });
-  //
-  //   return ({ ...state, questions: action.questions})
-  //   }
-  //
-  // else
-  //   return state;
-  //
-  // }

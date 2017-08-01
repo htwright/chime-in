@@ -49,21 +49,11 @@ export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
 
-
-// export const fetchQuestion = (questions) => dispatch => {
-//   return fetch('http://localhost:8080/api/questions/questionsList', {
-//     method: 'GET',
-//     body: JSON.stringify(questions),
-//     headers: {
-//       'content-type': 'application/json'
-//     }
-//   })
-//       .then(result => result.json())
-//       .then(result => {
-//         console.log(result);
-//         return result;
-//       });
-// };
+export const CREATE_USER = 'CREATE_USER';
+export const createUser = (currentUser) => ({
+  type: CREATE_USER,
+  currentUser
+});
 
 export const sendMessage = (targetID, message) => dispatch => {
     console.log(targetID);

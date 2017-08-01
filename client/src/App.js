@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Cookies from 'js-cookie';
-import Login from './components/loginPage';
+import LoginPage from './components/login';
 import QuestionEntry from './components/questionEntry';
 import Users from './components/users';
 import Button from 'react-bootstrap/lib/Button';
@@ -11,7 +11,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import { sendMessage } from './actions/action';
+import { sendMessage, createUser } from './actions/action';
 import './App.css';
 
 class App extends Component {
@@ -19,15 +19,13 @@ class App extends Component {
     super(props);
     this.state = {
       id: null,
-      message: null,
-      currentUser: null
+      message: null
     }
 
     this.manageState = this.manageState.bind(this);
   }
 
   componentDidMount() {
-    // Job 4: Redux-ify all of the state and fetch calls to async actions.
     const accessToken = Cookies.get('accessToken');
     if (accessToken) {
         fetch('/api/me', {
@@ -37,8 +35,6 @@ class App extends Component {
         }).then(res => {
             if (!res.ok) {
                 if (res.status === 401) {
-                    // Unauthorized, clear the cookie and go to
-                    // the login page
                     Cookies.remove('accessToken');
                     return;
                 }
@@ -46,9 +42,7 @@ class App extends Component {
             }
             return res.json();
         }).then(currentUser =>
-            this.setState({
-                currentUser
-            })
+            this.props.dispatch(createUser(currentUser))
         );
     }
 }
@@ -64,8 +58,8 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.currentUser) {
-          return <Login />;
+    if (!this.props.currentUser) {
+          return <LoginPage />;
       }
 
     return (
@@ -111,7 +105,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  questions: state.questions
+  questions: state.questions,
+  currentUser: state.currentUser
 });
 
 export default connect(mapStateToProps)(App);
