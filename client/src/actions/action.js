@@ -51,6 +51,23 @@ export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
 
+export const SET_ACTIVE_QUESTION = 'SET_ACTIVE_QUESTION';
+export const setActiveQuestion = (question) => ({
+  type: SET_ACTIVE_QUESTION,
+  question: question
+});
+
+export const SET_ID_INPUT = 'SET_ID_INPUT';
+export const setIdInput = (string) => ({
+  type:SET_ID_INPUT,
+  ids: string
+});
+export const SET_MESSAGE_INPUT = 'SET_MESSAGE_INPUT';
+export const setMessageInput = (string) => ({
+  type:SET_MESSAGE_INPUT,
+  message:string
+});
+
 export const sendMessage = (targetID, message) => dispatch => {
   console.log(targetID);
   fetch(`${url}/api/users/get/${targetID}`)
