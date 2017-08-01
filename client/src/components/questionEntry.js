@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchQuestion, setActiveQuestion} from '../actions/action';
 import Chart from './Chart';
 import Panel from 'react-bootstrap/lib/Panel';
@@ -22,16 +20,10 @@ export class QuestionEntry extends Component {
       console.log(question);
       return (
         <div>
-          <ListGroupItem key={index}> {question.question} </ListGroupItem>
           <Panel header={question.question} eventKey={index} bsStyle="info"></Panel>
         </div>
       );
     });
-//questionsList += this.props.questions.map((question, key) => {
-//return (
-//<Panel header={question.question} eventKey={key} bsStyle="info"></Panel>
-       // )
-
         
     return (
           <div className="questionXYZ">
@@ -44,8 +36,7 @@ export class QuestionEntry extends Component {
 }
 
 export const mapStateToProps = state => ({
-  questions: state.questions,
-  activeQuestion: state.activeQuestion
+  questions: state.questions
 });
 
 export default connect(mapStateToProps)(QuestionEntry);
