@@ -62,9 +62,7 @@ mRoutes.post('/post', (req, res) => {
     data = data[0];
     getUserCurrentQuestion(data.id).then(currentQuestion=>{
       currentQuestion = currentQuestion[0];
-      console.log("current question is...");
-      console.log(currentQuestion);
-      addQuestionResponse(currentQuestion.id,{})
+      addQuestionResponse(currentQuestion.id,{user:data.id,body:req.body.Body})
     })
     //get the current question from the user
     //addQuestionResponse(data[0].)
