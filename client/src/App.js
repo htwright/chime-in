@@ -27,7 +27,7 @@ class App extends Component {
 
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');
-
+    console.log('APP', accessToken);
     if (accessToken) {
         fetch('/api/me', {
             headers: {
@@ -36,7 +36,6 @@ class App extends Component {
         }).then(res => {
             console.log('RES', res)
             if (!res.ok) {
-
                 if (res.status === 401) {
                     Cookies.remove('accessToken');
                     return;
@@ -45,8 +44,6 @@ class App extends Component {
             }
             return res.json();
         }).then(currentUser => {
-
-
             console.log("CURRENTUSER", currentUser)
             this.props.dispatch(createUser(currentUser))
         });

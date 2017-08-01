@@ -39,59 +39,37 @@ passport.use(
         }
 
         knex('users').where({_id: profile.id})
-
-        .then(user => {
-
-          if(!user.length) {
-            knex("users").insert(userData).then(user=>{
+          .then(user => {
+            if(!user.length) {
+              knex("users").insert(userData).then(user=>{
+                return cb(null, userData)
+              })
+            }
+            else  {
               return cb(null, userData)
-
-            })
-          }
-          else  {
-            return cb(null, userData)
-          }
-        })
-
-        .catch(err => console.log(err))
-
-        // return knex('users').where({ id: profile.id }, (err, user) => {
-        //   console.log('aldskfjaldskjfadlsjkfsdakljfa')
-        //   if (user) console.log("USER", user)
-        //   if(err) console.log("ERROR", err)
-        //   if(!user.length) {
-        //     return knex('users').insert({
-        //       accessToken: accessToken,
-        //       id: profile.id,
-        //       name: name,
-        //       email: email,
-        //       phonenumber: phonenumber
-        //     })
-        //   return cb(null,   return cb(null, user)<<        u></u>s></us>e></use>r)ser)
-        //   } else {
-        //     return cb(null, user[0])
-        //   }
-        // })
+            }
+          })
+          .catch(err => console.log(err))
     }
 ));
 
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            console.log('token', token)
-                            //
+            console.log(typeof token)
             knex('users').where({ accesstoken: token })
+              .then(user => {
+                console.log('BEARER USERS', user);
+                console.log(user[0].accesstoken == token);
+                console.log(user[0].accesstoken)
+                console.log(token)
+                return done(null, user[0])
+              })
 
-
-            .then(user => {
-              console.log('BEARER USERS', user);
-              return done(null, user[0])
-            })
-
-            .catch(err => {
-              console.log("ERROR", err)
-              return done(null, false);
-            });
+              .catch(err => {
+                console.log("ERROR", err)
+                return done(null, false);
+              });
         }
     )
 );
