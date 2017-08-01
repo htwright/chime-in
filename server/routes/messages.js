@@ -39,9 +39,9 @@ mRoutes.post("/send",(req,res,next)=>{
     statusCallback: `${conf.URL}/api/messages`
   }).then(msgID => {
     //console.log('inside knex write', msgID);
-    // knex('questions')
-    //   .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
-    //   .catch(err => console.error(err));
+    knex('questions')
+      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
+      .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{
     // console.log(msgID)
@@ -58,9 +58,9 @@ mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   return fetchUserWithPhonenumber(req.body.From.substring(1)).then(data => {
     console.log(data[0]);
-    return knex('questions').update({responses: JSON.stringify(req.body.Body)}).where('users', data[0].id);
-  }).then (()=> res.status(200).send('ok'))
-    .catch(err => console.error(err));
+  //   return knex('questions').update({responses: JSON.stringify(req.body.Body)}).where('users', data[0].id);
+  // }).then (()=> res.status(200).send('ok'))
+  //   .catch(err => console.error(err));
 });
 
 mRoutes.get("/get/:messageID", (req,res,next)=>{
