@@ -29,7 +29,7 @@ MessageReducer = (req,res,next) =>{
             if(result.length>0){
               if(result[0].status === "verified"){
                 //do normal account stuff that's broken out into its own function.
-                messageReducerLogic(message, user, currentQuestion[0]);
+                messageReducerLogic(message, user, next, currentQuestion[0]);
               }else{
                 //check if the user sent reenable
                 if(message.Body === "reenable"){

@@ -8,7 +8,7 @@ const updateVerifyStatus = require("./verification/updateVerifyStatus");
 const fetchUser = require("./fetchUser")
 const updateUser = require("./updateUser");
 
-const messageReducerLogic = (message, user, currentQuestion=null) =>{
+const messageReducerLogic = (message, user, next, currentQuestion=null) =>{
   if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
     //This is the message reducer.
     let command = message.Body.substring(2).toLowerCase();
@@ -42,7 +42,7 @@ const messageReducerLogic = (message, user, currentQuestion=null) =>{
   }
   else{
     console.log("That was NOT an account management message, bud.");
-    next();
+    return next();
   }
 }
 
