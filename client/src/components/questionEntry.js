@@ -23,7 +23,7 @@ export class QuestionEntry extends Component {
       return (
         <div>
           <ListGroupItem key={index} onClick = {() => this.props.dispatch(setActiveQuestion(question))}> {question.question} </ListGroupItem>
-          <Panel header={question.question} eventKey={key} bsStyle="info"></Panel>
+          <Panel header={question.question} eventKey={index} bsStyle="info"></Panel>
         </div>
       );
     });
