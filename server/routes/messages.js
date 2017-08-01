@@ -8,8 +8,8 @@ require('body-parser-xml')(bodyParser);
 const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
-const addQuestionResponse = require('./functions/addQuestionResponse');
-const getUserCurrentQuestion = require('./functions/getUserCurrentQuestion');
+const addQuestionResponse = require('../functions/addQuestionResponse');
+const getUserCurrentQuestion = require('../functions/getUserCurrentQuestion');
 const MessageReducer = require("../functions/messageReducer");
 
 mRoutes.use(bodyParser.json());
