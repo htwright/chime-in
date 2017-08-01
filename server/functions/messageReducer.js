@@ -28,6 +28,9 @@ MessageReducer = (req,res,next) =>{
           //else if(result===[]) result = null;
           console.log(".....................................................................");
           console.log(result)
+          if(result === []){
+            console.log("yup, hit it.");
+          }
           if (result !== null && result !== []){
             //cast result into array if it isn't one
             if(result.length>0){
