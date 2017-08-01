@@ -1,42 +1,48 @@
-require('dotenv').config();
+const conf = require("../config");
 
 let Twilio = require("twilio")
-let client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
 const mRoutes = require('express').Router();
 const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
+const Auth = require("../functions/auth");
+const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
+const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const addQuestionResponse = require('../functions/addQuestionResponse');
+const getUserCurrentQuestion = require('../functions/getUserCurrentquestion');
+const MessageReducer = require("../functions/messageReducer");
+
 mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
   extended: true
 }));
-let url = 'http://localhost:8080';
-if (process.env.NODE_ENV === 'production'){
-  url = 'http://chime-in.herokuapp.com';
-}
-const knex = require('knex')({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  pool: {
-    min:0,
-    max:2
-  }
-});
-mRoutes.get('/', (req, res) => {
-  res.status(200).json({ message: 'The raw endpoint.  Maybe try using the actual points?' });
+mRoutes.use("/post",MessageReducer);
+//mRoutes.use("/send",Auth);
+// mRoutes.use(Auth);
+const knex = require('../functions/knex')()
+
+mRoutes.get('/:id', (req, res) => {
+  return fetchAdminQuestions(req.params.id).then(j => res.status(200).json(j))
+  .catch(err => {
+    console.error(err);
+    res.status(200).send('No questions found for this admin');
+  });
 });
 
 mRoutes.post("/send",(req,res,next)=>{
   let arr = JSON.parse(req.body.phone);
   let phone = parseInt(arr[0]);
-  console.log(phone);
+
+  //console.log(phone);
   client.messages.create({
     to:req.body.phone,
     body: req.body.message,
-    from: "+12409863225",
-    statusCallback: 'http://chime-in.herokuapp.com/api/messages'
+    from: conf.TWILIO_PHONE,
+    statusCallback: 'https://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
-    console.log('inside knex write', msgID);
+    //console.log('inside knex write', msgID);
     knex('questions')
-      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
+      .insert({admin: 1, question: req.body.message, responses: JSON.stringify({}), users:req.body.id})
       .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{
@@ -52,12 +58,17 @@ mRoutes.post("/send",(req,res,next)=>{
 
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
-  client.messages(req.body.MessageSid).fetch().then(sms =>{
-    console.log(sms);
-    knex('questions').where('id', 1).update({responses: sms.body});
-  }).then(()=> res.status(200).json({message: 'ok'}))
-  .catch(err => console.error(err));
-
+  return fetchUserWithPhonenumber(req.body.From.substring(1)).then(data => {
+    data = data[0];
+    getUserCurrentQuestion(data.id).then(currentQuestion=>{
+      currentQuestion = currentQuestion[0];
+      addQuestionResponse(currentQuestion.id,{user:data.id,body:req.body.Body})
+    })
+    //get the current question from the user
+    //addQuestionResponse(data[0].)
+    // return knex('questions').update({responses: [...data[0].questions,req.body.Body]}).where('users', data[0].id);
+  }).then (()=> res.status(200).send('ok'))
+    .catch(err => console.error(err));
 });
 
 mRoutes.get("/get/:messageID", (req,res,next)=>{
