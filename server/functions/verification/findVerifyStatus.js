@@ -5,7 +5,7 @@ const findVerifyStatus = (userId,adminId) => {
   // console.log(`user id: ${userId}, admin id: ${adminId}`)
   return knex('verify').where({userid:userId,adminid:adminId})
     .then(data => {
-      console.log(data.length);
+      if(data.length===0) return null;
       return data;
     }).catch(err => console.error(err));
 };
