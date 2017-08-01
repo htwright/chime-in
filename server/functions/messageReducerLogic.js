@@ -4,7 +4,6 @@ const getUserCurrentQuestion = require("./getUserCurrentquestion");
 const findVerifyStatus = require("./verification/findVerifyStatus");
 const createVerifyStatus = require("./verification/createVerifyStatus");
 const updateVerifyStatus = require("./verification/updateVerifyStatus");
-const messageReducerLogic = require("./messageReducerLogic");
 const fetchUser = require("./fetchUser")
 const updateUser = require("./updateUser");
 
