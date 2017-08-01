@@ -65,7 +65,6 @@ passport.use(
                 console.log(token)
                 return done(null, user[0])
               })
-
               .catch(err => {
                 console.log("ERROR", err)
                 return done(null, false);

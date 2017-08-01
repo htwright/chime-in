@@ -81,6 +81,12 @@ class App extends Component {
                 <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
                 </FormGroup>
                 {' '}
+                <FormGroup controlId="formInlinePassword">
+                  <ControlLabel>Email</ControlLabel>
+                  {' '}
+                  <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="Email address"/>
+                  </FormGroup>
+                  {' '}
               <FormGroup controlId="formInlineName">
                 <ControlLabel></ControlLabel>
                 {' '}
