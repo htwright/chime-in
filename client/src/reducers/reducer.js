@@ -1,5 +1,4 @@
 import { sendMessage } from '../actions/action';
-import { DISPLAY_QUESTIONS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, SET_ACTIVE_QUESTION, SET_ID_INPUT, SET_MESSAGE_INPUT } from '../actions/action';
 
@@ -77,19 +76,4 @@ switch (action.type) {
   }
 };
 
-  // else if(action.type === fetchQuestion){
-  //
-  //   // console.log(action.questions);
-  //   //   fetch(`${url}/api/questions/questionsList`)
-  //   //   .then(result => result.text())
-  //   //   .then(result => {
-  //   //     console.log(result);
-  //   //   });
-  //
-  //   return ({ ...state, questions: action.questions})
-  //   }
-  //
-  // else
-  //   return state;
-  //
-  // }
+
