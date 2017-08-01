@@ -56,6 +56,8 @@ mRoutes.post("/send",(req,res,next)=>{
   })
 });
 
+let secret = require('../secret');
+
 mRoutes.post('/sendEmail', (req, res) => {
 
   let transporter = nodemailer.createTransport({
@@ -64,8 +66,12 @@ mRoutes.post('/sendEmail', (req, res) => {
     secure: true,
     auth: {
       type: 'OAuth2',
-      user: 'EMAIL_ACCOUNT_USER',
-      pass: 'EMAIL_ACCOUNT_PASSWORD'
+      user: 'thieniscoding@gmail.com',
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+      accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
+      expires: 1484314697598
     }
   })
 

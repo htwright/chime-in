@@ -27,13 +27,16 @@ class App extends Component {
 
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');
+
     if (accessToken) {
         fetch('/api/me', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         }).then(res => {
+            console.log('RES', res)
             if (!res.ok) {
+
                 if (res.status === 401) {
                     Cookies.remove('accessToken');
                     return;
@@ -41,9 +44,12 @@ class App extends Component {
                 throw new Error(res.statusText);
             }
             return res.json();
-        }).then(currentUser =>
+        }).then(currentUser => {
+
+
+            console.log("CURRENTUSER", currentUser)
             this.props.dispatch(createUser(currentUser))
-        );
+        });
     }
 }
 

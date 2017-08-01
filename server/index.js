@@ -21,7 +21,7 @@ if(process.env.NODE_ENV != 'production') {
 }
 const app = express();
 
-const {PORT, DATABASE_URL} = require('./config');
+// const {PORT, DATABASE_URL} = require('./config');
 app.use(passport.initialize());
 
 passport.use(
@@ -31,32 +31,66 @@ passport.use(
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-        knex('users').select().where({ googleId: profile.id }, (err, user) => {
+
+        const userData = {
+          name: profile.displayName,
+          accesstoken: accessToken,
+          _id: profile.id
+        }
+
+        knex('users').where({_id: profile.id})
+
+        .then(user => {
+
           if(!user.length) {
-            return knex('users').insert({
-              accessToken: accessToken,
-              googleId: profile.id,
-              name: name,
-              email: email,
-              phonenumber: phonenumber
+            knex("users").insert(userData).then(user=>{
+              return cb(null, userData)
+
             })
-            return cb(null, user)
-          } else {
-            return cb(null, user[0])
+          }
+          else  {
+            return cb(null, userData)
           }
         })
+
+        .catch(err => console.log(err))
+
+        // return knex('users').where({ id: profile.id }, (err, user) => {
+        //   console.log('aldskfjaldskjfadlsjkfsdakljfa')
+        //   if (user) console.log("USER", user)
+        //   if(err) console.log("ERROR", err)
+        //   if(!user.length) {
+        //     return knex('users').insert({
+        //       accessToken: accessToken,
+        //       id: profile.id,
+        //       name: name,
+        //       email: email,
+        //       phonenumber: phonenumber
+        //     })
+        //   return cb(null,   return cb(null, user)<<        u></u>s></us>e></use>r)ser)
+        //   } else {
+        //     return cb(null, user[0])
+        //   }
+        // })
     }
 ));
 
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            knex('users').select().where({ accessToken: token }, (err, user) => {
-              if(err) console.log(err);
-              if(!user.length) {
-                return done(null, false);
-             }
-            return done(null, user[0]);
+            console.log('token', token)
+                            //
+            knex('users').where({ accesstoken: token })
+
+
+            .then(user => {
+              console.log('BEARER USERS', user);
+              return done(null, user[0])
+            })
+
+            .catch(err => {
+              console.log("ERROR", err)
+              return done(null, false);
             });
         }
     )
@@ -71,7 +105,8 @@ app.get('/api/auth/google/callback',
         session: false
     }),
     (req, res) => {
-        res.cookie('accessToken', req.user.accessToken, {expires: 0});
+        console.log('ACCESSTOKEN', req.user.accesstoken)
+        res.cookie('accessToken', req.user.accesstoken, {expires: 0});
         res.redirect('/');
     }
 );
@@ -85,9 +120,12 @@ app.get('/api/auth/logout', (req, res) => {
 // API endpoints go here!
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
-    })
+    (req, res) => {
+    console.log('inside api/me')
+
+      res.json({
+        _id: req.user._id
+    })}
 );
 
 // API endpoints go here!
