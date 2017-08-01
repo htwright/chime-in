@@ -26,3 +26,5 @@ const messageReducerLogic = (message, user, currentQuestion=null) =>{
     next();
   }
 }
+
+module.exports=messageReducerLogic;
