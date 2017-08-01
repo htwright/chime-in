@@ -39,9 +39,9 @@ mRoutes.post("/send",(req,res,next)=>{
     statusCallback: `${conf.URL}/api/messages`
   }).then(msgID => {
     //console.log('inside knex write', msgID);
-    knex('questions')
-      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
-      .catch(err => console.error(err));
+    // knex('questions')
+    //   .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
+    //   .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{
     // console.log(msgID)

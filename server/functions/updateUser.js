@@ -14,7 +14,7 @@ const updateUser = (id, toUpdate,add=true) => {
       let element = user[el];
       //console.log(element);
       if(el==="questions"){
-        if(add){
+        if(add){          
           if(!Array.isArray(toUpdate[el])) toUpdate[el] = [toUpdate[el]];
           //check if value is duplicate
           if(element === null) element = toUpdate[el];
