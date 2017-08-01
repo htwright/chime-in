@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
 import QuestionsTable from './questionsTable';
 import Chart from './Chart';
@@ -25,10 +23,9 @@ export class QuestionEntry extends Component {
         const questionsList = this.props.questions.map((question, index) => {
         console.log(question);
         return (
-          <div>
 
             <Panel header={question.question} eventKey={index} bsStyle="info">
-              
+             <Chart/> 
               <Table
                 rowsCount={2}
                 rowHeight={50}
@@ -45,12 +42,8 @@ export class QuestionEntry extends Component {
                         header={<Cell>Response</Cell>}
                         width={300}/>
               </Table>
-
-            </Panel>  
-            
-            <Chart/>   
-          </div>   
-)
+            </Panel>
+        )
       })
     return (
       <div className="questionXYZ">
