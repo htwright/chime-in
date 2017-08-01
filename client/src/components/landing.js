@@ -63,16 +63,16 @@ class Landing extends Component {
                   <FormControl onChange={e=>this.props.dispatch(setMessageInput(e.target.value))} type="text" placeholder="Enter message here" />
                 </FormGroup>
                 {' '}
-                  <Button className="submit_sms" type="submit">Enter</Button>
+                  <Button bsStyle="primary" className="submit_sms" type="submit">Enter</Button>
               </Form>
             </div>
 
-            <div className='users' id="admin-users-col">
+            <div className='users' id="admin-users">
               <h1>Users</h1>
               <Users/>
             </div>
 
-            <div className='questions' id="admin-questions-col">
+            <div className='questions' id="admin-questions">
               <h1>Questions</h1>
               <QuestionEntry/>
             </div>
