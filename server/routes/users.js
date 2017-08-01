@@ -2,10 +2,12 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const createVerifyStatus = require("../functions/verification/createVerifyStatus");
 const fetchTargets = require('../functions/fetchTargets');
 
 //to test some code.
 const addQuestionToUser = require("../functions/addQuestionToUser");
+const getUserCurrentQuestion = require("../functions/getUserCurrentquestion");
 
 uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
@@ -18,6 +20,12 @@ const knex = require('../functions/knex')();
 //     console.log("In the users route area");
 //     console.log(el);
 // });
+
+uRoutes.post("/test",(req,res,next)=>{
+  //test endpoint for you to drop your experimental code into.
+  //getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+
+})
 
 uRoutes.post("/new", (req,res,next)=>{
   //added in a default state of verify to each user.
