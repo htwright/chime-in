@@ -1,3 +1,5 @@
+const Messaging = require("./messages");
+const Message = new Messaging();
 
 const messageReducerLogic = (message, user, currentQuestion=null) =>{
   if(message.Body.substring(0,2) === "!!" || user.state=== "manage"){
