@@ -24,14 +24,7 @@ MessageReducer = (req,res,next) =>{
         findVerifyStatus(user.id,currentQuestion[0].admin).then(result=>{
           //now do stuff depending on whether the user verified that admin.
 
-          //if(!Array.isArray(result)) result = [result]
-          //else if(result===[]) result = null;
-          console.log(".....................................................................");
-          console.log(typeof result)
-          if(result === []){
-            console.log("yup, hit it.");
-          }
-          if (result !== null && result !== []){
+          if (result !== null){
             //cast result into array if it isn't one
             if(result.length>0){
               if(result[0].status === "verified"){
