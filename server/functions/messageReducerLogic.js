@@ -1,6 +1,7 @@
 const Messaging = require("./messages");
 const Message = new Messaging();
 const getUserCurrentQuestion = require("./getUserCurrentquestion");
+const getAdminFromId = require("./getAdminFromId");
 const findVerifyStatus = require("./verification/findVerifyStatus");
 const createVerifyStatus = require("./verification/createVerifyStatus");
 const updateVerifyStatus = require("./verification/updateVerifyStatus");
@@ -26,7 +27,17 @@ const messageReducerLogic = (message, user, currentQuestion=null) =>{
       }else{
         Message.send("You have no active question.  I can't revoke something that doesn't exist.", message.From);
       }
+    }else if(command === "current"){
+      //display current question.
+      getUserCurrentquestion(user.id).then(question=>{
+        getAdminFromId(question.admin).then(admin=>{
+          if(admin){
+            Message.send(`From ${admin.name}:`,user.phonenumber)
+            Message.send(question[0].question,user.phonenumber,1000)
+          }
+        })
 
+      });
     }
   }
   else{
