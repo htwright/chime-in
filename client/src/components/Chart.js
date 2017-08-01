@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {fetchQuestion, toggleQuestionDetails} from '../actions/action';
-//import { Bar, Doughnut } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 
