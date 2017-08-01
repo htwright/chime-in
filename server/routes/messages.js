@@ -36,11 +36,11 @@ mRoutes.post("/send",(req,res,next)=>{
     to:req.body.phone,
     body: req.body.message,
     from: conf.TWILIO_PHONE,
-    statusCallback: `${conf.URL}/api/messages`
+    statusCallback: 'https://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
     //console.log('inside knex write', msgID);
     knex('questions')
-      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
+      .insert({admin: 1, question: req.body.message, responses: JSON.stringify({}), users:req.body.id})
       .catch(err => console.error(err));
     return msgID;
   }).then((msgID)=>{

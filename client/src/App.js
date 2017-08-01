@@ -18,25 +18,25 @@ import { sendMessage } from './actions/action';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      id: null,
-      message: null
-    }
-    this.manageState = this.manageState.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    // this.state = {
+    //   id: null,
+    //   message: null
+    // }
+    // this.manageState = this.manageState.bind(this);
+    // // this.handleClick = this.handleClick.bind(this);
   }
 
-  doPhoneStuff(event,id, message){
-    event.preventDefault();
-    this.props.dispatch(sendMessage(id, message));
-  }
+  // doPhoneStuff(event,id, message){
+  //   event.preventDefault();
+  //   this.props.dispatch(sendMessage(this.props.ids, this.props.message));
+  // }
 
-  manageState(target,value){
-    this.setState({...this.state,[target]:value});
-    console.log(this.state)
-  }
+  // manageState(target,value){
+  //   this.setState({...this.state,[target]:value});
+  //   console.log(this.state)
+  // }
 
-  // handleClick(e) {
+  // // handleClick(e) {
   //   e.preventDefault();
   //   this.props.history.push('/adduser');
   // }
@@ -54,7 +54,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  questions: state.questions
+  questions: state.questions,
+  ids: state.inputIds,
+  message: state.inputMessage
 });
 
 export default connect(mapStateToProps)(App);

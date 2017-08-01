@@ -55,7 +55,16 @@ export const setActiveQuestion = (question) => ({
   question: question
 });
 
-
+export const SET_ID_INPUT = 'SET_ID_INPUT';
+export const setIdInput = (string) => ({
+  type:SET_ID_INPUT,
+  ids: string
+});
+export const SET_MESSAGE_INPUT = 'SET_MESSAGE_INPUT';
+export const setMessageInput = (string) => ({
+  type:SET_MESSAGE_INPUT,
+  message:string
+});
 // export const fetchQuestion = (questions) => dispatch => {
 //   return fetch('http://localhost:8080/api/questions/questionsList', {
 //     method: 'GET',
