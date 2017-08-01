@@ -10,4 +10,4 @@ exports.TWILIO_SID = process.env.TWILIO_SID;
 exports.TWILIO_AUTH = process.env.TWILIO_AUTH;
 exports.TWILIO_PHONE = process.env.TWILIO_PHONE;
 exports.APP_URL = process.env.URL;
-exports.URL = process.env.NODE_ENV === 'production' ? 'https://chime-in.herokuapp.com/' : 'http://localhost:8080';
+exports.URL = process.env.NODE_ENV === 'production' ? 'https://mighty-depths-52749.herokuapp.com/' : 'http://localhost:8080';

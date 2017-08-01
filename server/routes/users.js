@@ -2,6 +2,12 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const uRoutes = require('express').Router();
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const createVerifyStatus = require("../functions/verification/createVerifyStatus");
+const fetchTargets = require('../functions/fetchTargets');
+
+//to test some code.
+const addQuestionToUser = require("../functions/addQuestionToUser");
+const getUserCurrentQuestion = require("../functions/getUserCurrentquestion");
 
 uRoutes.use(bodyParser.json());
 uRoutes.use(bodyParser.urlencoded({
@@ -15,8 +21,15 @@ const knex = require('../functions/knex')();
 //     console.log(el);
 // });
 
+uRoutes.post("/test",(req,res,next)=>{
+  //test endpoint for you to drop your experimental code into.
+  //getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+
+})
+
 uRoutes.post("/new", (req,res,next)=>{
-  let userData = Object.assign({},req.body);
+  //added in a default state of verify to each user.
+  let userData = Object.assign({state:"verify"},req.body);
   console.log("User data is...");
   console.log(JSON.stringify(userData,null,2));
   knex("users").select("id","name","phonenumber","email","slack")
@@ -53,6 +66,11 @@ uRoutes.get("/get/:users",(req,res)=>{
     res.send(list.map(el=>el));
   })
   .catch(err => console.error(err));
+});
+
+uRoutes.get('/targets/:id', (req, res) => {
+  return fetchTargets(req.params.id)
+  .then(data => res.status(200).json(data)).catch(err => console.error(err));
 });
 
 uRoutes.get('/phonenumber/:phonenumber', (req, res) => {

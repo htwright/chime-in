@@ -8,8 +8,9 @@ require('body-parser-xml')(bodyParser);
 const Auth = require("../functions/auth");
 const fetchAdminQuestions = require('../functions/fetchAdminQuestions');
 const fetchUserWithPhonenumber = require('../functions/fetchUser');
+const addQuestionResponse = require('../functions/addQuestionResponse');
+const getUserCurrentQuestion = require('../functions/getUserCurrentquestion');
 const MessageReducer = require("../functions/messageReducer");
-//mRoutes.use("/post",bodyParser.xml());
 
 mRoutes.use(bodyParser.json());
 mRoutes.use(bodyParser.urlencoded({
@@ -56,10 +57,16 @@ mRoutes.post("/send",(req,res,next)=>{
 });
 
 mRoutes.post('/post', (req, res) => {
-  console.log("req.body.MessageSid-------------->");
   console.log(req.body);
   return fetchUserWithPhonenumber(req.body.From.substring(1)).then(data => {
-    return knex('questions').where('users', data.id).update({responses: JSON.stringify(req.body.Body)});
+    data = data[0];
+    getUserCurrentQuestion(data.id).then(currentQuestion=>{
+      currentQuestion = currentQuestion[0];
+      addQuestionResponse(currentQuestion.id,{user:data.id,body:req.body.Body})
+    })
+    //get the current question from the user
+    //addQuestionResponse(data[0].)
+    // return knex('questions').update({responses: [...data[0].questions,req.body.Body]}).where('users', data[0].id);
   }).then (()=> res.status(200).send('ok'))
     .catch(err => console.error(err));
 });

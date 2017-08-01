@@ -7,7 +7,7 @@ const initialState = {
   loading: false,
   error: null,
   users: [],
-  showDetails: false
+  targets: []
 };
 
 export default function reducer (state=initialState, action) {

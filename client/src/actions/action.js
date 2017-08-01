@@ -1,8 +1,10 @@
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   //do not include a slash at the end!
-  url = 'https://chime-in.herokuapp.com';
+  url = 'https://mighty-depths-52749.herokuapp.com';
 }
+
+
 
 export const SEND_PHONE_MESSAGE = 'SEND_PHONE_MESSAGE';
 export const sendPhoneMessage = (id, message) => ({
@@ -11,9 +13,10 @@ export const sendPhoneMessage = (id, message) => ({
   message
 });
 
-export const TOGGLE_QUESTION_DETAILS = 'TOGGLE_QUESTION_DETAILS';
-export const toggleQuestionDetails = () => ({
-  type: TOGGLE_QUESTION_DETAILS
+export const DISPLAY_QUESTIONS = 'DISPLAY_QUESTION';
+export const displayQuestions = (questions) => ({
+  type: DISPLAY_QUESTIONS,
+  questions
 });
 
 export const FETCH_QUESTION_REQUEST = 'FETCH_QUESTION_REQUEST';
@@ -79,9 +82,9 @@ export const fetchQuestion = () => dispatch => {
       });
 };
 
-export const fetchUsers = () => dispatch => {
+export const fetchUsers = (id = 1) => dispatch => {
   dispatch(fetchUsersRequest());
-  return fetch(`${url}/api/users`)
+  return fetch(`${url}/api/users/targets/${id}`)
     .then(data => {
       if (!data.ok) {
         return dispatch(fetchUsersFailure());
@@ -90,5 +93,7 @@ export const fetchUsers = () => dispatch => {
     })
     .then(response => {
       return dispatch(fetchUsersSuccess(response));
+
     });
 };
+
