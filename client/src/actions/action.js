@@ -51,25 +51,9 @@ export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
 
-
-// export const fetchQuestion = (questions) => dispatch => {
-//   return fetch('http://localhost:8080/api/questions/questionsList', {
-//     method: 'GET',
-//     body: JSON.stringify(questions),
-//     headers: {
-//       'content-type': 'application/json'
-//     }
-//   })
-//       .then(result => result.json())
-//       .then(result => {
-//         console.log(result);
-//         return result;
-//       });
-// };
-
 export const sendMessage = (targetID, message) => dispatch => {
-    console.log(targetID);
-    fetch(`${url}/api/users/get/${targetID}`)
+  console.log(targetID);
+  fetch(`${url}/api/users/get/${targetID}`)
         .then(el=> el.text())
         .then(el=>{
           let elem = JSON.parse(el);
@@ -83,7 +67,7 @@ export const sendMessage = (targetID, message) => dispatch => {
             headers:{'content-type': 'application/json'}
           }).then(el=>console.log(el));
         });
-  };
+};
 
 export const fetchQuestion = () => dispatch => {
   dispatch(fetchQuestionRequest());
@@ -109,15 +93,7 @@ export const fetchUsers = (id = 1) => dispatch => {
     })
     .then(response => {
       return dispatch(fetchUsersSuccess(response));
-  })
-}
 
-// export const fetchUser = (userid) => {
-//   dispatch(fetchUserRequest());
-//   return fetch(`${url}/api/get/${userid}`)
-// }
+    });
+};
 
-// export const fetchTargets = () => dispatch => {
-//   dispatch(fetchTargetsRequest());
-//   return fetch (`${url}/api/users/`)
-// }
