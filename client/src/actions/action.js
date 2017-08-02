@@ -56,7 +56,7 @@ export const createUser = (currentUser) => ({
 });
 
 export const sendMessage = (targetID, message) => dispatch => {
-    console.log(targetID);
+    // console.log(targetID);
     fetch(`${url}/api/users/get/${targetID}`)
         .then(el=> el.text())
         .then(el=>{
@@ -74,21 +74,23 @@ export const sendMessage = (targetID, message) => dispatch => {
   };
 
   export const sendEmail = (targetID, message) => dispatch => {
-      console.log(targetID);
-      fetch(`${url}/api/users/get/${targetID}`)
+      // console.log(targetID);
+      // console.log('HI');
+      fetch(`${url}/api/users/getByEmail/${targetID}`)
           .then(el=> el.text())
           .then(el=>{
-            // let elem = JSON.parse(el);
+            let elem = JSON.parse(el);
             fetch(`${url}/api/messages/sendEmail`, {
               method: 'POST',
               body: JSON.stringify({
-                'email': el[0].email,
-                'id': el[0].id,
+                'email': elem[0].email,
+                'id': elem[0].id,
                 'message':message
               }),
               headers:{'content-type': 'application/json'}
             }).then(el=>console.log(el));
           });
+
     };
 
 export const fetchQuestion = () => dispatch => {

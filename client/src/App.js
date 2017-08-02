@@ -79,7 +79,7 @@ class App extends Component {
         </div>
           <div>
             <h1>Create a Message</h1>
-            <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
+            {/* <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
               <FormGroup controlId="formInlinePassword">
                 <ControlLabel>Phone #</ControlLabel>
                 {' '}
@@ -93,7 +93,7 @@ class App extends Component {
               </FormGroup>
               {' '}
                 <Button type="submit">Enter</Button>
-            </Form>
+            </Form> */}
             <Form onSubmit={(event)=>this.doEmailStuff(event,this.state.id.split(","),this.state.message)} inline>
             <FormGroup controlId="formInlinePassword">
               <ControlLabel>Email</ControlLabel>

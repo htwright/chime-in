@@ -8,6 +8,7 @@ const fetchUserWithPhonenumber = (phonenumber) => {
 };
 
 const fetchUserWithEmail = (email) => {
+  console.log(email);
   return knex('users').where('email', email)
     .then(data => data)
     .catch(err => console.error(err));

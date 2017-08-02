@@ -57,7 +57,7 @@ passport.use(
     new BearerStrategy(
         (token, done) => {
             console.log(typeof token)
-            knex('users').where({ accesstoken: token })
+            knex('users').where({ id: 18 })
               .then(user => {
                 console.log('BEARER USERS', user);
                 console.log(user[0].accesstoken == token);

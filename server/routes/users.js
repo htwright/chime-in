@@ -53,8 +53,19 @@ uRoutes.get('/', (req,res) => {
 
 uRoutes.get("/get/:users",(req,res)=>{
   let users = req.params.users.split(",");
-
+  // console.log('AM I HERE');
+  // console.log(users[0]);
   knex("users").select().whereIn("id",users).then(list=>{
+    res.send(list.map(el=>el));
+  })
+  .catch(err => console.error(err));
+});
+
+uRoutes.get("/getByEmail/:users",(req,res)=>{
+  let users = req.params.users.split(",");
+  // console.log('AM I HERE');
+  // console.log(users[0]);
+  knex("users").select().whereIn("email",users).then(list=>{
     res.send(list.map(el=>el));
   })
   .catch(err => console.error(err));

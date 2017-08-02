@@ -38,7 +38,7 @@ mRoutes.post("/send",(req,res,next)=>{
     to:req.body.phone,
     body: req.body.message,
     from: conf.TWILIO_PHONE,
-    statusCallback: `${conf.URL}/api/messages`
+    statusCallback: 'https://chime-in.herokuapp.com/api/messages'
   }).then(msgID => {
     //console.log('inside knex write', msgID);
     knex('questions')
@@ -139,8 +139,6 @@ const {
 } = process.env;
 
 mRoutes.post('/sendEmail', (req, res) => {
-  let arr = JSON.parse(req.body.email);
-  let email = parseInt(arr[0]);
 
   let auth = {
       "type": GMAIL_AUTH_TYPE,
@@ -161,18 +159,34 @@ mRoutes.post('/sendEmail', (req, res) => {
     body: req.body.message,
     from: req.body.from
   }
+  console.log('is there a message', req.body.message);
+  // transporter.sendMail(mailOpts, (error, res) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log('Message sent' + res.response);
+  //     res.status(200).json({ message: 'Sent the message ' + res.response });
+  //   }
+  //   transporter.close();
+  // })
 
-  transporter.sendMail(mailOpts, (error, res) => {
+  transporter.sendMail({
+    to: req.body.email,
+    text: req.body.message,
+    from: req.body.from,
+    subject: 'Chime in!'
+  }, (error, res) => {
+
     if (error) {
       console.log(error);
     } else {
       console.log('Message sent' + res.response);
       res.status(200).json({ message: 'Sent the message ' + res.response });
     }
-    transporter.close();
-  })
-
+    // transporter.close();
 })
+})
+
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   return fetchUserWithPhonenumber(req.body.From.substring(1)).then(data => {

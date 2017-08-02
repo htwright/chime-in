@@ -42,43 +42,43 @@ class Landing extends Component {
 
   render() {
     return (
-        <div className="App">
-
-          <div className="App-header">
-            <Button className="logout">LogOut</Button>
-            <h2>Chime-In</h2>
-          </div>
-            <div>
-              <h1>Create a Message</h1>
-              <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
-                <FormGroup controlId="formInlinePassword">
-                  <ControlLabel>Phone #</ControlLabel>
-                  {' '}
-                  <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
-                  </FormGroup>
-                  {' '}
-                <FormGroup controlId="formInlineName">
-                  <ControlLabel></ControlLabel>
-                  {' '}
-                  <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
-                </FormGroup>
-                {' '}
-                  <Button type="submit">Enter</Button>
-              </Form>
-            </div>
-
-            <div className='column' id="admin-col-one">
-              <h1>Questions</h1>
-              <QuestionEntry/>
-            </div>
-
-            <div className='column' id="admin-col-two">
-              <h1>Users</h1>
-              {/* function alertClicked() {
-                alert('You clicked the third ListGroupItem');} */}
-              <Users/>
-            </div>
-      </div>
+      //   <div className="App">
+      //
+      //     <div className="App-header">
+      //       <Button className="logout">LogOut</Button>
+      //       <h2>Chime-In</h2>
+      //     </div>
+      //       <div>
+      //         <h1>Create a Message</h1>
+      //         <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
+      //           <FormGroup controlId="formInlinePassword">
+      //             <ControlLabel>Phone #</ControlLabel>
+      //             {' '}
+      //             <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
+      //             </FormGroup>
+      //             {' '}
+      //           <FormGroup controlId="formInlineName">
+      //             <ControlLabel></ControlLabel>
+      //             {' '}
+      //             <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
+      //           </FormGroup>
+      //           {' '}
+      //             <Button type="submit">Enter</Button>
+      //         </Form>
+      //       </div>
+      //
+      //       <div className='column' id="admin-col-one">
+      //         <h1>Questions</h1>
+      //         <QuestionEntry/>
+      //       </div>
+      //
+      //       <div className='column' id="admin-col-two">
+      //         <h1>Users</h1>
+      //         {/* function alertClicked() {
+      //           alert('You clicked the third ListGroupItem');} */}
+      //         <Users/>
+      //       </div>
+      // </div>
     );
   }
 }
