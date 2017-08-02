@@ -68,12 +68,32 @@ export const setMessageInput = (string) => ({
   message:string
 });
 
+export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
+export const setActiveUser = (user) => ({
+  type: SET_ACTIVE_USER,
+  user: JSON.parse(user)
+});
+
 export const sendMessage = (targetID, message) => dispatch => {
   console.log(targetID);
   fetch(`${url}/api/users/get/${targetID}`)
         .then(el=> el.text())
         .then(el=>{
           let elem = JSON.parse(el);
+          if(elem.length > 1){
+            elem.forEach(obj => {
+              fetch(`${url}/api/messages/send`, {
+                method: 'POST',
+                body: JSON.stringify({
+                  'phone': obj.phonenumber,
+                  'id': obj.id,
+                  'message':message
+                }),
+                headers:{'content-type': 'application/json'}
+              });
+            });
+          }else {
+
           fetch(`${url}/api/messages/send`, {
             method: 'POST',
             body: JSON.stringify({
@@ -82,8 +102,9 @@ export const sendMessage = (targetID, message) => dispatch => {
               'message':message
             }),
             headers:{'content-type': 'application/json'}
-          }).then(el=>console.log(el));
-        });
+          })
+        }
+        }).catch(err => console.error(err));
 };
 
 export const fetchQuestion = () => dispatch => {
