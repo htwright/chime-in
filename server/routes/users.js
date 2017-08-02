@@ -20,7 +20,7 @@ uRoutes.use(bodyParser.urlencoded({ extended: true }));
 uRoutes.post("/test", ( req, res, next ) => {
   //test endpoint for you to drop your experimental code into.
   // console.log(req.body.id);
-	removeQuestionFromUser(req.body.id);
+
 
 })
 

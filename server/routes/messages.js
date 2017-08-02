@@ -80,7 +80,7 @@ mRoutes.post('/post', ( req, res ) => {
 				user: data.id,
 				body: req.body.Body
 			}).then(()=>{
-
+				removeQuestionFromUser(data.id);
 			})
 		})
 		//get the current question from the user
