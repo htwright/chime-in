@@ -44,7 +44,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 		idAccumulator.push(obj.id);
 	return client
 		.messages
-		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
+		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
 		});
 		// Promise.all(promiseArr)
 		// .then(() => {
