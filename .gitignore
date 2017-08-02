@@ -58,4 +58,5 @@ typings/
 .env
 ./server/.env
 
+./server/secret.js
 server/secret.js
