@@ -3,7 +3,7 @@ const conf 										= require( "../config" );
 const Messaging 							= require( "./messages" );
 const fetchUser               = require( "./fetchUser" )
 const updateUser              = require( "./updateUser" );
-const getUserCurrentQuestion  = require( "./getUserCurrentquestion" );
+const getUserCurrentQuestion  = require( "./getUserCurrentQuestion" );
 const findVerifyStatus        = require( "./verification/findVerifyStatus" );
 const createVerifyStatus      = require( "./verification/createVerifyStatus" );
 const updateVerifyStatus      = require( "./verification/updateVerifyStatus" );
@@ -17,7 +17,8 @@ MessageReducer = ( req, res, next ) => {
 	//console.log(message.From);
 
 	fetchUser(message.From.substring( 1 )).then(user => {
-		user = user[0];
+    console.log('USER', user)
+    user = user[0];
 		getUserCurrentQuestion( user.id ).then(currentQuestion => {
 			if ( currentQuestion ) {
         console.log(currentQuestion);
