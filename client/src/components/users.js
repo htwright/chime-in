@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import {fetchUsers} from '../actions/action';
+import {fetchUsers, setActiveUser} from '../actions/action';
 
 
 export class Users extends Component {
@@ -23,16 +23,22 @@ export class Users extends Component {
   }
 
   render() {
-        const usersList = this.props.users.map((user, index) => {
-        console.log(user);
-        return (
-          <ListGroupItem key={index}> {user[0].name} </ListGroupItem>
-        )
-      })
+    const usersList = this.props.users.map((user, index) => {
+      
+      console.log(user);
+      return (
+        <label>
+        Name: {user[0].name}
+          <input onChange={e=>this.props.dispatch(setActiveUser(e.target.value))} type="checkbox" key={index} value={JSON.stringify(user)}/><br/>
+        </label>
+      );
+    });
 
     return (
       <div className="userList">
-        <ListGroup> {usersList} </ListGroup>
+      <form  className="selectionChecklist">
+         {usersList}
+      </form>
       </div>
     );
   }

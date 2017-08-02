@@ -74,6 +74,12 @@ export const setMessageInput = (string) => ({
   message:string
 });
 
+export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
+export const setActiveUser = (user) => ({
+  type: SET_ACTIVE_USER,
+  user: JSON.parse(user)
+});
+
 export const sendMessage = (targetID, message) => dispatch => {
   console.log(targetID);
   fetch(`${url}/api/users/get/${targetID}`)
@@ -83,13 +89,13 @@ export const sendMessage = (targetID, message) => dispatch => {
           fetch(`${url}/api/messages/send`, {
             method: 'POST',
             body: JSON.stringify({
-              'phone': elem[0].phonenumber,
-              'id': elem[0].id,
-              'message':message
+              data:elem,
+              message: message,
+              targets: targetID
             }),
             headers:{'content-type': 'application/json'}
-          }).then(el=>console.log(el));
-        });
+          }).then(data =>console.log(data));
+        }).catch(err => console.error(err));
 };
 
   export const sendEmail = (targetID, message) => dispatch => {

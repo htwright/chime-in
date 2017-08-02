@@ -2,11 +2,13 @@ const mRoutes                   = require( 'express' ).Router( );
 const bodyParser                = require( 'body-parser' );
 const conf                      = require( "../config" );
 const Auth                      = require( "../functions/auth" );
+const addQuestionToUser = require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const fetchUserWithEmail        = require('../functions/fetchUser');
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
-const getUserCurrentQuestion    = require( '../functions/getUserCurrentquestion' );
+const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
+const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
@@ -36,30 +38,37 @@ mRoutes.get('/:id', ( req, res ) => {
 });
 
 mRoutes.post("/send", ( req, res, next ) => {
-	let arr = JSON.parse( req.body.phone );
-	let phone = parseInt(arr[0]);
-
-  //console.log(phone);
-  client.messages.create({
-    to:req.body.phone,
-    body: req.body.message,
-    from: conf.TWILIO_PHONE,
-    statusCallback: 'https://chime-in.herokuapp.com/api/messages'
-  }).then(msgID => {
-    //console.log('inside knex write', msgID);
-    knex('questions')
-      .insert({admin: 1, question: req.body.message, responses: ['hello'], users:req.body.id, msgsid: msgID.sid})
-      .catch(err => console.error(err));
-    return msgID;
-  }).then((msgID)=>{
-    // console.log(msgID)
-    res.status(200).json({
-      message: 'Sent the message "' + req.body.message + '", good job!',
-      messageID: msgID.sid
-    });
-  }).catch((err,msg)=>{
-    console.log(err);
-  })
+	// let arr = JSON.parse( req.body.data.phone );
+	// let phone = parseInt(arr[0]);
+	//console.log(phone);
+	let idAccumulator = [];
+	req.body.data.forEach(obj => {
+		idAccumulator.push(obj.id);
+	return client
+		.messages
+		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
+		});
+		// Promise.all(promiseArr)
+		// .then(() => {
+			//console.log('inside knex write', msgID);
+			return knex( 'questions' ).insert({
+				admin: 1,
+				question: req.body.message,
+				responses: JSON.stringify({ }),
+				users: req.body.targets
+		}).returning('id')
+		.then(questionId => {
+			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
+			// console.log(msgID)
+			res
+				.status( 200 )
+				.json({
+					message: 'Sent the message "' + req.body.message + '", good job!'
+				});
+		})
+		.catch(( err, msg ) => {
+			console.log( err );
+		})
 });
 
 const {
@@ -121,10 +130,12 @@ mRoutes.post('/post', ( req, res ) => {
 	return fetchUserWithPhonenumber(req.body.From.substring( 1 )).then(data => {
 		data = data[0];
 		getUserCurrentQuestion( data.id ).then(currentQuestion => {
-			currentQuestion = currentQuestion[0];
+			// currentQuestion = currentQuestion[0];
 			addQuestionResponse(currentQuestion.id, {
 				user: data.id,
 				body: req.body.Body
+			}).then(()=>{
+				removeQuestionFromUser(data.id);
 			})
 		})
 		//get the current question from the user
