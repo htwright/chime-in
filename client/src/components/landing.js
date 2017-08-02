@@ -71,11 +71,6 @@ class Landing extends Component {
               </Form>
             </div>
 
-            <div className='users' id="admin-users">
-              <h1>Users</h1>
-              <Users/>
-            </div>
-
             <div className='questions' id="admin-questions">
               <h1>Questions</h1>
               <QuestionEntry/>
