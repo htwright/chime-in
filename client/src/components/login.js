@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import "../LandingPage.css";
 
 let url = 'http://localhost:8080';
 
