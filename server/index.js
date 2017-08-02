@@ -1,3 +1,7 @@
+/**
+	This is the Chime In server app.  It handles all the sending and receiving of the messages.  It is powered by Node and Express, with Postgres managed through Knex for the database.
+*/
+
 const path          = require( 'path' );
 const express       = require( 'express' );
 const conf          = require( "./config" );
@@ -10,9 +14,14 @@ let knex            = require( "./functions/knex.js" )( );
 const app = express( );
 
 // API endpoints go here!
+
+/** Message api hits are redirected to the messageRoutes file */
 app.use( "/api/messages", messageRoutes );
+/** Users api hits are redirected to the userRoutes file */
 app.use( "/api/users", userRoutes );
+/** Question api hits are redirected to the questionRoutes file */
 app.use( "/api/questions", questionRoutes );
+/** Admin api hits are redirected to the adminRoutes file */
 app.use( "/api/admins", adminRoutes );
 
 // Serve the built client

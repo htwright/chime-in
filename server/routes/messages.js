@@ -7,6 +7,7 @@ const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
 const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
+const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
@@ -44,7 +45,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 		idAccumulator.push(obj.id);
 	return client
 		.messages
-		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
+		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
 		});
 		// Promise.all(promiseArr)
 		// .then(() => {
@@ -78,6 +79,8 @@ mRoutes.post('/post', ( req, res ) => {
 			addQuestionResponse(currentQuestion.id, {
 				user: data.id,
 				body: req.body.Body
+			}).then(()=>{
+				removeQuestionFromUser(data.id);
 			})
 		})
 		//get the current question from the user

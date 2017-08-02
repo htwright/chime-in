@@ -119,4 +119,3 @@ export const fetchUsers = (id = 1) => dispatch => {
 
     });
 };
-
