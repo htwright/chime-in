@@ -2,6 +2,7 @@ const mRoutes                   = require( 'express' ).Router( );
 const bodyParser                = require( 'body-parser' );
 const conf                      = require( "../config" );
 const Auth                      = require( "../functions/auth" );
+const addQuestionToUser = require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
@@ -38,8 +39,9 @@ mRoutes.post("/send", ( req, res, next ) => {
 	// let phone = parseInt(arr[0]);
 
 	//console.log(phone);
-
+	let idAccumulator = [];
 	req.body.data.forEach(obj => {
+		idAccumulator.push(obj.id);
 	return client
 		.messages
 		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
@@ -52,8 +54,9 @@ mRoutes.post("/send", ( req, res, next ) => {
 				question: req.body.message,
 				responses: JSON.stringify({ }),
 				users: req.body.targets
-		})
-		.then(() => {
+		}).returning('id')
+		.then(questionId => {
+			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
 			// console.log(msgID)
 			res
 				.status( 200 )
