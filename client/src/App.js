@@ -11,7 +11,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import { sendMessage, createUser } from './actions/action';
+import { sendMessage, createUser, sendEmail } from './actions/action';
 import './App.css';
 
 class App extends Component {
@@ -55,6 +55,11 @@ class App extends Component {
     this.props.dispatch(sendMessage(id, message));
   }
 
+  doEmailStuff(event,id, message){
+    event.preventDefault();
+    this.props.dispatch(sendEmail(id, message));
+  }
+
   manageState(target,value){
     this.setState({...this.state,[target]:value});
     console.log(this.state)
@@ -81,12 +86,6 @@ class App extends Component {
                 <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
                 </FormGroup>
                 {' '}
-                <FormGroup controlId="formInlinePassword">
-                  <ControlLabel>Email</ControlLabel>
-                  {' '}
-                  <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="Email address"/>
-                  </FormGroup>
-                  {' '}
               <FormGroup controlId="formInlineName">
                 <ControlLabel></ControlLabel>
                 {' '}
@@ -95,6 +94,21 @@ class App extends Component {
               {' '}
                 <Button type="submit">Enter</Button>
             </Form>
+            <Form onSubmit={(event)=>this.doEmailStuff(event,this.state.id.split(","),this.state.message)} inline>
+            <FormGroup controlId="formInlinePassword">
+              <ControlLabel>Email</ControlLabel>
+              {' '}
+              <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="Email"/>
+              </FormGroup>
+              {' '}
+            <FormGroup controlId="formInlineName">
+              <ControlLabel></ControlLabel>
+              {' '}
+              <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
+            </FormGroup>
+            {' '}
+              <Button type="submit">Enter</Button>
+          </Form>
           </div>
 
           <div className='column' id="admin-col-one">

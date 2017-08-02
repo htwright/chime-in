@@ -78,12 +78,12 @@ export const sendMessage = (targetID, message) => dispatch => {
       fetch(`${url}/api/users/get/${targetID}`)
           .then(el=> el.text())
           .then(el=>{
-            let elem = JSON.parse(el);
+            // let elem = JSON.parse(el);
             fetch(`${url}/api/messages/sendEmail`, {
               method: 'POST',
               body: JSON.stringify({
-                'email': elem[0].email,
-                'id': elem[0].id,
+                'email': el[0].email,
+                'id': el[0].id,
                 'message':message
               }),
               headers:{'content-type': 'application/json'}

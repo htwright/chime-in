@@ -1,4 +1,4 @@
-import { sendMessage, CREATE_USER } from '../actions/action';
+import { sendMessage, sendEmail, CREATE_USER } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from '../actions/action';
@@ -36,6 +36,12 @@ switch (action.type) {
     //now for the serious stuff: actually send the message.
     action.id.forEach(el => {
       sendMessage(el, action.message);
+    });
+    return ({...state})
+  case sendEmail:
+    //now for the serious stuff: actually send the message.
+    action.id.forEach(el => {
+      sendEmail(el, action.message);
     });
     return ({...state})
   case FETCH_USERS_REQUEST:

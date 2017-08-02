@@ -1,5 +1,5 @@
 const conf = require("../config");
-
+require('dotenv').config();
 let Twilio = require("twilio")
 let client = new Twilio(conf.TWILIO_SID, conf.TWILIO_AUTH);
 let nodemailer = require('nodemailer');
@@ -56,33 +56,105 @@ mRoutes.post("/send",(req,res,next)=>{
   })
 });
 
-let secret = require('../secret');
+// let secret = require('../secret');
+//
+// mRoutes.post('/sendEmail', (req, res) => {
+//
+//   let transporter = nodemailer.createTransport({
+//     host: 'smtp.gmail.com',
+//     port: 465,
+//     secure: true,
+//     auth: {
+//       type: 'OAuth2',
+//       user: 'thieniscoding@gmail.com',
+//       clientId: secret.CLIENT_ID,
+//       clientSecret: secret.CLIENT_SECRET,
+//       refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+//       accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
+//       expires: 1484314697598
+//     }
+//   })
+//
+//   transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
+//       let accessToken = userTokens[user];
+//       if(!accessToken){
+//           return callback(new Error('Unknown user'));
+//       }else{
+//           return callback(null, accessToken);
+//       }
+//   })
+//
+//   let mailOpts = {
+//     to: req.body.email,
+//     body: req.body.message,
+//     from: req.body.from
+//   }
+//
+//   transporter.sendMail(mailOpts, (error, res) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log('Message sent' + res.response);
+//       res.status(200).json({ message: 'Sent the message ' + res.response });
+//     }
+//     transporter.close();
+//   })
+//
+// })
+// const subject = 'Subject';
+// const text = template.replace('', email_url);
+// const html = `<p>Html email </p><ul><li>Name: abcd</li><li>Email:  abc@def.com</li><li>Message: Hi</li></ul>`;
+// var mailOptions = {
+//     from: '"My Title"' + GMAIL_FROM_EMAIL,
+//     to,
+//     subject,
+//     text
+// };
+// sendEmail(emailData) {
+//
+//     let auth = {
+//         "type": GMAIL_AUTH_TYPE,
+//         "user": GMAIL_AUTH_USER,
+//         "clientId": GMAIL_AUTH_CLIENT_ID,
+//         "clientSecret": GMAIL_AUTH_CLIENT_SECRET,
+//         "refreshToken": GMAIL_AUTH_REFRESH_TOKEN,
+//         "accessToken": GMAIL_AUTH_ACCESS_TOKEN
+//     };
+//
+//     const transporter = nodemailer.createTransport({
+//         service: GMAIL_SERVICE,
+//         auth
+//     });
+//
+//     logger.info(`Attempting to send email from ${emailData.from}`);
+//     transporter
+//         .sendMail(emailData)
+//         .then(info => console.log(`Email sent: ${info.response}`))
+//         .catch(err => console.log(`Problem sending email: ${err}`));
+// }
+
+const {
+    GMAIL_SERVICE, GMAIL_AUTH_TYPE, GMAIL_AUTH_USER, GMAIL_AUTH_CLIENT_ID, GMAIL_AUTH_CLIENT_SECRET,
+    GMAIL_AUTH_REFRESH_TOKEN, GMAIL_AUTH_ACCESS_TOKEN, GMAIL_FROM_EMAIL, GMAIL_SUPPORT_EMAIL
+} = process.env;
 
 mRoutes.post('/sendEmail', (req, res) => {
+  let arr = JSON.parse(req.body.email);
+  let email = parseInt(arr[0]);
 
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      type: 'OAuth2',
-      user: 'thieniscoding@gmail.com',
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
-      accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
-      expires: 1484314697598
-    }
-  })
+  let auth = {
+      "type": GMAIL_AUTH_TYPE,
+      "user": GMAIL_AUTH_USER,
+      "clientId": GMAIL_AUTH_CLIENT_ID,
+      "clientSecret": GMAIL_AUTH_CLIENT_SECRET,
+      "refreshToken": GMAIL_AUTH_REFRESH_TOKEN,
+      "accessToken": GMAIL_AUTH_ACCESS_TOKEN
+  };
 
-  transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
-      let accessToken = userTokens[user];
-      if(!accessToken){
-          return callback(new Error('Unknown user'));
-      }else{
-          return callback(null, accessToken);
-      }
-  })
+  const transporter = nodemailer.createTransport({
+      service: GMAIL_SERVICE,
+      auth
+  });
 
   let mailOpts = {
     to: req.body.email,
@@ -101,8 +173,6 @@ mRoutes.post('/sendEmail', (req, res) => {
   })
 
 })
-
-
 mRoutes.post('/post', (req, res) => {
   console.log(req.body);
   return fetchUserWithPhonenumber(req.body.From.substring(1)).then(data => {
