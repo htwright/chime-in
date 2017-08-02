@@ -20,7 +20,8 @@ MessageReducer = ( req, res, next ) => {
 		user = user[0];
 		getUserCurrentQuestion( user.id ).then(currentQuestion => {
 			if ( currentQuestion ) {
-				findVerifyStatus( user.id, currentQuestion[0].admin ).then(result => {
+        console.log(currentQuestion);
+				findVerifyStatus( user.id, currentQuestion.admin ).then(result => {
 					//now do stuff depending on whether the user verified that admin.
 
 					if ( result !== null ) {

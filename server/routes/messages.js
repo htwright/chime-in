@@ -2,6 +2,7 @@ const mRoutes                   = require( 'express' ).Router( );
 const bodyParser                = require( 'body-parser' );
 const conf                      = require( "../config" );
 const Auth                      = require( "../functions/auth" );
+const addQuestionToUser = require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
@@ -34,30 +35,33 @@ mRoutes.get('/:id', ( req, res ) => {
 });
 
 mRoutes.post("/send", ( req, res, next ) => {
-	let arr = JSON.parse( req.body.phone );
-	let phone = parseInt(arr[0]);
+	// let arr = JSON.parse( req.body.data.phone );
+	// let phone = parseInt(arr[0]);
 
 	//console.log(phone);
-	client
+	let idAccumulator = [];
+	req.body.data.forEach(obj => {
+		idAccumulator.push(obj.id);
+	return client
 		.messages
-		.create({ to: req.body.phone, body: req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
-		.then(msgID => {
+		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
+		});
+		// Promise.all(promiseArr)
+		// .then(() => {
 			//console.log('inside knex write', msgID);
-			knex( 'questions' ).insert({
+			return knex( 'questions' ).insert({
 				admin: 1,
 				question: req.body.message,
 				responses: JSON.stringify({ }),
-				users: req.body.id
-			}).catch(err => console.error( err ));
-			return msgID;
-		})
-		.then(( msgID ) => {
+				users: req.body.targets
+		}).returning('id')
+		.then(questionId => {
+			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
 			// console.log(msgID)
 			res
 				.status( 200 )
 				.json({
-					message: 'Sent the message "' + req.body.message + '", good job!',
-					messageID: msgID.sid
+					message: 'Sent the message "' + req.body.message + '", good job!'
 				});
 		})
 		.catch(( err, msg ) => {
