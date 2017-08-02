@@ -1,7 +1,7 @@
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
   //do not include a slash at the end!
-  url = 'https://chime-in.herokuapp.com';
+  url = 'https://mighty-depths-52749.herokuapp.com/';
 }
 
 
