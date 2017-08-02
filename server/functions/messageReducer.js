@@ -1,7 +1,7 @@
 //purpose: middleware that runs whenever a message comes in.
 const conf 										= require( "../config" );
 const Messaging 							= require( "./messages" );
-const fetchUser               = require( "./fetchUser" )
+const fetchUser               = require( "./fetchUser" );
 const updateUser              = require( "./updateUser" );
 const getUserCurrentQuestion  = require( "./getUserCurrentQuestion" );
 const findVerifyStatus        = require( "./verification/findVerifyStatus" );
