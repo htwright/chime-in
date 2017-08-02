@@ -4,7 +4,7 @@ const uRoutes                   = require( 'express' ).Router( );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const createVerifyStatus        = require( "../functions/verification/createVerifyStatus" );
 const fetchTargets              = require( '../functions/fetchTargets' );
-const getUserCurrentQuestion    = require('../functions/getUserCurrentQuestion');
+const getUserCurrentQuestion    = require('../functions/getUserCurrentquestion');
 const knex                      = require( '../functions/knex' )( );
 
 uRoutes.use(bodyParser.json( ));
