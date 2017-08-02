@@ -11,7 +11,7 @@ class Chart extends Component {
        chartData: {
          labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7'],
          datasets: [{
-           label: 'My First dataset',
+           label: 'Database Questions',
            backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -31,17 +31,21 @@ class Chart extends Component {
            borderWidth: 1,
            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
            hoverBorderColor: 'rgba(255,99,132,1)',
-           data: [5, 15, 8, 11, 6, 3, 4]
+          //  data: [5, 15, 8, 11, 6, 3, 4]
          }]
        }
      }
   }
 
   render() {
+    const res = this.props.questions.forEach((question,index) => {
+      console.log(question.responses.length);
+      return(question.responses.length);
+    })
 
     return (
       <div className="Chart">
-        <Bar data={this.state.chartData}
+        <Bar data={res}
              options={{ }}
         />
       </div>

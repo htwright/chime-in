@@ -39,7 +39,7 @@ export class QuestionEntry extends Component {
     return (
           <div className="questionXYZ">
             <Accordion>{questionsList}</Accordion>
-            <Chart/>
+            <Chart questionData={questionsList}/>
           </div>
     );
   }
