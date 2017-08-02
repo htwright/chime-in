@@ -80,30 +80,15 @@ export const sendMessage = (targetID, message) => dispatch => {
         .then(el=> el.text())
         .then(el=>{
           let elem = JSON.parse(el);
-          if(elem.length > 1){
-            elem.forEach(obj => {
-              fetch(`${url}/api/messages/send`, {
-                method: 'POST',
-                body: JSON.stringify({
-                  'phone': obj.phonenumber,
-                  'id': obj.id,
-                  'message':message
-                }),
-                headers:{'content-type': 'application/json'}
-              });
-            });
-          }else {
-
           fetch(`${url}/api/messages/send`, {
             method: 'POST',
             body: JSON.stringify({
-              'phone': elem[0].phonenumber,
-              'id': elem[0].id,
-              'message':message
+              data:elem,
+              message: message,
+              targets: targetID
             }),
             headers:{'content-type': 'application/json'}
-          })
-        }
+          }).then(data =>console.log(data));
         }).catch(err => console.error(err));
 };
 
