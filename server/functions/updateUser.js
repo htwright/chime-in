@@ -35,6 +35,7 @@ const updateUser = ( id, toUpdate, add = true ) => {
 						console.log( element );
 						//remove duplicates
 						element = R.uniq( element );
+					}else{
 					}
 				}
 				acc[el] = element;

@@ -7,6 +7,7 @@ const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
 const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
+const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
@@ -78,6 +79,8 @@ mRoutes.post('/post', ( req, res ) => {
 			addQuestionResponse(currentQuestion.id, {
 				user: data.id,
 				body: req.body.Body
+			}).then(()=>{
+
 			})
 		})
 		//get the current question from the user
