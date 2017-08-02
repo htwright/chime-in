@@ -6,7 +6,7 @@ const getQuestion = ( id ) => {
 		.where({ id: id })
 		.then(data => {
 			console.log(data)
-			return data;
+			return data[0];
 		})
 		.catch(err => console.error( err ));
 };
