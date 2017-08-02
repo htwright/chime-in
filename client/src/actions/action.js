@@ -4,6 +4,8 @@ if (process.env.NODE_ENV === 'production'){
   url = 'https://chime-in.herokuapp.com';
 }
 
+
+
 export const SEND_PHONE_MESSAGE = 'SEND_PHONE_MESSAGE';
 export const sendPhoneMessage = (id, message) => ({
   type: SEND_PHONE_MESSAGE,
@@ -55,9 +57,26 @@ export const createUser = (currentUser) => ({
   currentUser
 });
 
+export const SET_ACTIVE_QUESTION = 'SET_ACTIVE_QUESTION';
+export const setActiveQuestion = (question) => ({
+  type: SET_ACTIVE_QUESTION,
+  question: question
+});
+
+export const SET_ID_INPUT = 'SET_ID_INPUT';
+export const setIdInput = (string) => ({
+  type:SET_ID_INPUT,
+  ids: string
+});
+export const SET_MESSAGE_INPUT = 'SET_MESSAGE_INPUT';
+export const setMessageInput = (string) => ({
+  type:SET_MESSAGE_INPUT,
+  message:string
+});
+
 export const sendMessage = (targetID, message) => dispatch => {
-    // console.log(targetID);
-    fetch(`${url}/api/users/get/${targetID}`)
+  console.log(targetID);
+  fetch(`${url}/api/users/get/${targetID}`)
         .then(el=> el.text())
         .then(el=>{
           let elem = JSON.parse(el);
@@ -71,7 +90,7 @@ export const sendMessage = (targetID, message) => dispatch => {
             headers:{'content-type': 'application/json'}
           }).then(el=>console.log(el));
         });
-  };
+};
 
   export const sendEmail = (targetID, message) => dispatch => {
       // console.log(targetID);
@@ -117,15 +136,6 @@ export const fetchUsers = (id = 1) => dispatch => {
     })
     .then(response => {
       return dispatch(fetchUsersSuccess(response));
-  })
-}
 
-// export const fetchUser = (userid) => {
-//   dispatch(fetchUserRequest());
-//   return fetch(`${url}/api/get/${userid}`)
-// }
-
-// export const fetchTargets = () => dispatch => {
-//   dispatch(fetchTargetsRequest());
-//   return fetch (`${url}/api/users/`)
-// }
+    });
+};

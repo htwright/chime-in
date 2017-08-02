@@ -1,7 +1,7 @@
 import { sendMessage, sendEmail, CREATE_USER } from '../actions/action';
 import { DISPLAY_QUESTIONS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
-import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from '../actions/action';
+import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, SET_ACTIVE_QUESTION, SET_ID_INPUT, SET_MESSAGE_INPUT } from '../actions/action';
 
 const initialState = {
   questions: [],
@@ -9,7 +9,10 @@ const initialState = {
   error: null,
   users: [],
   targets: [],
-  currentUser: null
+  currentUser: null,
+  activeQuestion: null,
+  inputIds: '',
+  inputMessage:''
 };
 
 export default function reducer (state=initialState, action) {
@@ -67,6 +70,21 @@ switch (action.type) {
       ...state,
       currentUser: action.currentUser
     };
+  case SET_ACTIVE_QUESTION:
+    return{
+      ...state,
+      activeQuestion: action.question
+    }
+  case SET_ID_INPUT:
+    return{
+      ...state,
+      inputIds: action.ids
+    }
+  case SET_MESSAGE_INPUT:
+    return{
+      ...state,
+      inputMessage: action.message
+    }
   default:
     return state;
   }

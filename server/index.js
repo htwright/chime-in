@@ -1,14 +1,16 @@
-const path = require('path');
-const express = require('express');
-const conf = require("./config");
-let messageRoutes = require("./routes/messages");
-let userRoutes = require("./routes/users");
-let questionRoutes = require("./routes/questions");
-let adminRoutes = require("./routes/admins");
-let knex = require("./functions/knex.js")();
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const BearerStrategy = require('passport-http-bearer').Strategy;
+const path          = require( 'path' );
+const express       = require( 'express' );
+const conf          = require( "./config" );
+let messageRoutes   = require( "./routes/messages" );
+let userRoutes      = require( "./routes/users" );
+let questionRoutes  = require( "./routes/questions" );
+let adminRoutes     = require( "./routes/admins" );
+let knex            = require( "./functions/knex.js" )( );
+const passport      = require('passport');
+const GoogleStrategy= require('passport-google-oauth20').Strategy;
+const BearerStrategy= require('passport-http-bearer').Strategy;
+
+const app = express( );
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
