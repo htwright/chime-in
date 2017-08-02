@@ -10,8 +10,6 @@ const passport      = require('passport');
 const GoogleStrategy= require('passport-google-oauth20').Strategy;
 const BearerStrategy= require('passport-http-bearer').Strategy;
 
-const app = express( );
-
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET,
@@ -48,6 +46,7 @@ passport.use(
               })
             }
             else  {
+              console.log(userData)
               return cb(null, userData)
             }
           })
@@ -59,13 +58,14 @@ passport.use(
     new BearerStrategy(
         (token, done) => {
             console.log(typeof token)
-            knex('users').where({ id: 18 })
+            console.log(token)
+            knex('users').where({ accesstoken: token })
               .then(user => {
                 console.log('BEARER USERS', user);
                 console.log(user[0].accesstoken == token);
                 console.log(user[0].accesstoken)
                 console.log(token)
-                return done(null, user[0])
+                return done(null, user[0], { scope: 'all' })
               })
               .catch(err => {
                 console.log("ERROR", err)
@@ -101,9 +101,9 @@ app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
     console.log('inside api/me')
-
       res.json({
-        _id: req.user._id
+        _id: req.user._id,
+        accesstoken: req.user.accesstoken
     })}
 );
 

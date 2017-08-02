@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import { sendMessage, createUser, sendEmail } from './actions/action';
-import './App.css';
+// import './App.css';
 // import './App.css';
 
 class App extends Component {
@@ -76,11 +76,11 @@ class App extends Component {
       }
 
     return (
-      <Router>
-        <div>
-          <Route exact path="/" component={Landing}/>
-          <Route exact path="/adduser" component={AddUser}/>
-        </div>
+      // <Router>
+      //   <div>
+      //     <Route exact path="/" component={Landing}/>
+      //     <Route exact path="/adduser" component={AddUser}/>
+      //   </div>
           <div>
             <h1>Create a Message</h1>
             {/* <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
@@ -113,7 +113,7 @@ class App extends Component {
             {' '}
               <Button type="submit">Enter</Button>
           </Form>
-          </div>
+
 
           <div className='column' id="admin-col-one">
             <h1>Questions</h1>
@@ -126,7 +126,8 @@ class App extends Component {
               alert('You clicked the third ListGroupItem');} */}
             <Users/>
           </div>
-      </Router>
+          </div>
+      // </Router>
 
     );
   }
