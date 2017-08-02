@@ -7,21 +7,17 @@ const getCurrentQuestion = ( userId ) => {
 		.where({ id: userId })
 		.returning( "questions" )
 		.then(data => {
-			//if array, then
+      //if array, then
+      console.log('DATA', data);
 			let questions = data[0].questions;
 			if ( questions ) {
-				if (Array.isArray( questions )) {
-					return questions[0];
-				} else {
-					//single entry, simply return it.
-					return questions;
-				}
+				return questions[0];
 			} else {
 				return null;
 			}
 		})
 		.then(questionId => {
-
+      console.log('QUESTION ID', questionId)
 			if ( questionId ) {
 				//get the question
 				return getQuestion( questionId )

@@ -4,6 +4,7 @@ const uRoutes                   = require( 'express' ).Router( );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const createVerifyStatus        = require( "../functions/verification/createVerifyStatus" );
 const fetchTargets              = require( '../functions/fetchTargets' );
+const getUserCurrentQuestion    = require('../functions/getUserCurrentQuestion');
 const knex                      = require( '../functions/knex' )( );
 
 uRoutes.use(bodyParser.json( ));
@@ -17,8 +18,9 @@ uRoutes.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 uRoutes.post("/test", ( req, res, next ) => {
-	//test endpoint for you to drop your experimental code into.
-	//getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
+  //test endpoint for you to drop your experimental code into.
+  // console.log(req.body.id);
+	getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
 
 })
 
