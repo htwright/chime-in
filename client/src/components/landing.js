@@ -17,12 +17,6 @@ import './landing.css';
 class Landing extends Component {
   constructor(props){
     super(props);
-  //   this.state = {
-  //     id: null,
-  //     message: null
-  //   }
-  //   this.manageState = this.manageState.bind(this);
-  //   // this.handleClick = this.handleClick.bind(this);
   }
 
   doPhoneStuff(event,id, message){

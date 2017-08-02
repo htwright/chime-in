@@ -5,12 +5,14 @@ const Auth                      = require( "../functions/auth" );
 const addQuestionToUser = require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
+const fetchUserWithEmail        = require('../functions/fetchUser');
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
 const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
 const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
+let nodemailer                  = require('nodemailer');
 let client                      = new Twilio( conf.TWILIO_SID, conf.TWILIO_AUTH );
                                   require( 'body-parser-xml' )( bodyParser );
 
@@ -38,7 +40,6 @@ mRoutes.get('/:id', ( req, res ) => {
 mRoutes.post("/send", ( req, res, next ) => {
 	// let arr = JSON.parse( req.body.data.phone );
 	// let phone = parseInt(arr[0]);
-
 	//console.log(phone);
 	let idAccumulator = [];
 	req.body.data.forEach(obj => {
@@ -69,6 +70,60 @@ mRoutes.post("/send", ( req, res, next ) => {
 			console.log( err );
 		})
 });
+
+const {
+    GMAIL_SERVICE, GMAIL_AUTH_TYPE, GMAIL_AUTH_USER, GMAIL_AUTH_CLIENT_ID, GMAIL_AUTH_CLIENT_SECRET,
+    GMAIL_AUTH_REFRESH_TOKEN, GMAIL_AUTH_ACCESS_TOKEN, GMAIL_FROM_EMAIL, GMAIL_SUPPORT_EMAIL
+} = process.env;
+
+mRoutes.post('/sendEmail', (req, res) => {
+
+  let auth = {
+      "type": GMAIL_AUTH_TYPE,
+      "user": GMAIL_AUTH_USER,
+      "clientId": GMAIL_AUTH_CLIENT_ID,
+      "clientSecret": GMAIL_AUTH_CLIENT_SECRET,
+      "refreshToken": GMAIL_AUTH_REFRESH_TOKEN,
+      "accessToken": GMAIL_AUTH_ACCESS_TOKEN
+  };
+
+  const transporter = nodemailer.createTransport({
+      service: GMAIL_SERVICE,
+      auth
+  });
+
+  let mailOpts = {
+    to: req.body.email,
+    body: req.body.message,
+    from: req.body.from
+  }
+  console.log('is there a message', req.body.message);
+  // transporter.sendMail(mailOpts, (error, res) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log('Message sent' + res.response);
+  //     res.status(200).json({ message: 'Sent the message ' + res.response });
+  //   }
+  //   transporter.close();
+  // })
+
+  transporter.sendMail({
+    to: req.body.email,
+    text: req.body.message,
+    from: req.body.from,
+    subject: 'Chime in!'
+  }, (error, res) => {
+
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Message sent' + res.response);
+      res.status(200).json({ message: 'Sent the message ' + res.response });
+    }
+    // transporter.close();
+})
+})
 
 mRoutes.post('/post', ( req, res ) => {
 	console.log( req.body );

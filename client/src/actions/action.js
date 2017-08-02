@@ -51,6 +51,12 @@ export const fetchUsersFailure = () => ({
   type: FETCH_USERS_FAILURE
 });
 
+export const CREATE_USER = 'CREATE_USER';
+export const createUser = (currentUser) => ({
+  type: CREATE_USER,
+  currentUser
+});
+
 export const SET_ACTIVE_QUESTION = 'SET_ACTIVE_QUESTION';
 export const setActiveQuestion = (question) => ({
   type: SET_ACTIVE_QUESTION,
@@ -91,6 +97,26 @@ export const sendMessage = (targetID, message) => dispatch => {
           }).then(data =>console.log(data));
         }).catch(err => console.error(err));
 };
+
+  export const sendEmail = (targetID, message) => dispatch => {
+      // console.log(targetID);
+      // console.log('HI');
+      fetch(`${url}/api/users/getByEmail/${targetID}`)
+          .then(el=> el.text())
+          .then(el=>{
+            let elem = JSON.parse(el);
+            fetch(`${url}/api/messages/sendEmail`, {
+              method: 'POST',
+              body: JSON.stringify({
+                'email': elem[0].email,
+                'id': elem[0].id,
+                'message':message
+              }),
+              headers:{'content-type': 'application/json'}
+            }).then(el=>console.log(el));
+          });
+
+    };
 
 export const fetchQuestion = () => dispatch => {
   dispatch(fetchQuestionRequest());

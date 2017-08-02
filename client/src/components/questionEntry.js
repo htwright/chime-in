@@ -30,12 +30,12 @@ export class QuestionEntry extends Component {
                     <Column header={<Cell>Question ID</Cell>} cell={<Cell>{question.id}</Cell>} width={100}/>
                     <Column header={<Cell>Users</Cell>} cell={<Cell>{question.users}</Cell>} width={200}/>
                     <Column header={<Cell>Responses</Cell>} cell={<Cell>{question.users}</Cell>} width={900}/>
-              </Table> 
+              </Table>
           </Panel>
-        
+
       );
     });
-        
+
     return (
           <div className="questionXYZ">
             <Accordion>{questionsList}</Accordion>
@@ -51,4 +51,3 @@ export const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(QuestionEntry);
-

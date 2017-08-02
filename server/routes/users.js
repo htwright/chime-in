@@ -2,6 +2,7 @@ require( 'dotenv' ).config( );
 const bodyParser                = require( 'body-parser' );
 const uRoutes                   = require( 'express' ).Router( );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
+const fetchUserWithEmail        = require('../functions/fetchUser');
 const createVerifyStatus        = require( "../functions/verification/createVerifyStatus" );
 const fetchTargets              = require( '../functions/fetchTargets' );
 const removeQuestionFromUser    = require('../functions/removeQuestionFromUser');
@@ -79,6 +80,16 @@ uRoutes.get("/get/:users", ( req, res ) => {
 			res.send(list.map( el => el ));
 		})
 		.catch(err => console.error( err ));
+});
+
+uRoutes.get("/getByEmail/:users", (req, res) => {
+  let users = req.params.users.split(",");
+
+  knex("users").select().whereIn("email", users)
+    .then(list => {
+      res.send(list.map(el=>el));
+    })
+    .catch(err => console.error(err));
 });
 
 uRoutes.get('/targets/:id', ( req, res ) => {

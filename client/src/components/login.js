@@ -75,6 +75,7 @@ export class LoginPage extends Component {
     return (
       <div className="loginPage">
         <h1>Login Page</h1>
+        <a href={'/api/auth/google'}>Login with Google</a>;
         {this.renderPage()}
       </div>
     )
