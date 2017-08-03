@@ -36,7 +36,7 @@ export class AddUser extends Component {
         <input type="email" className="userEmail" placeholder="jdoe@gmail.com"
                 ref={input => this.userEmail = input} />
           <div className="form-group">
-          <label htmlfor="preferred">Preference:</label>
+          <label htmlFor="preferred">Preference:</label>
           <select className="form-control" id="preferred">
             <option>Text</option>
             <option>Email</option>

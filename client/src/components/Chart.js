@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { Bar } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 class Chart extends Component {
   constructor(props){
      super(props);
+     console.log(props.questionData)
+     let data = [];
+     let keys = [];
+     Object.keys(props.questionData).forEach(el=>{
+      keys.push(el);
+      data.push(props.questionData[el]);
+      console.log(keys);
+      console.log(data);
+     })
      this.chartData = { 
-                    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"],
+                    labels: keys,
                     datasets: [{
                       label: 'Question Responses',
                       backgroundColor: [
@@ -26,7 +35,7 @@ class Chart extends Component {
                       borderWidth: 1,
                       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                       hoverBorderColor: 'rgba(255,99,132,1)',
-                      data: []
+                      data: data
                     }]
                   }
      this.state = {
@@ -35,25 +44,15 @@ class Chart extends Component {
   }
 
   render() {
-    console.log(this.props.questions);
-    const res = this.props.questions.map((question,index) => {
-      console.log(question.responses.length);
-      return question.responses.length    
-    })
-    // this.setState.chartData.datasets[0].data = [2,1,1,1,1,1,1,1,0,0,0,4,0]
-     console.log(res);
-     console.log(this.state);
-
     return (
       <div className="Chart">
-        <Bar data={this.state.chartData}
+        <Doughnut data={this.chartData}
              options={{ }}/>
       </div>
     )
   }
 }
 
-//this pulls in the questions from the component
 export const mapStateToProps = (state, props) => ({
   questions: state.questions
 });
