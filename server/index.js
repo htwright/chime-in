@@ -1,12 +1,111 @@
-const path = require('path');
-const express = require('express');
-const conf = require("./config");
-let messageRoutes = require("./routes/messages");
-let userRoutes = require("./routes/users");
-let questionRoutes = require("./routes/questions");
-let adminRoutes = require("./routes/admins");
-let knex = require("./functions/knex.js")();
+const path          = require( 'path' );
+const express       = require( 'express' );
+const conf          = require( "./config" );
+let messageRoutes   = require( "./routes/messages" );
+let userRoutes      = require( "./routes/users" );
+let questionRoutes  = require( "./routes/questions" );
+let adminRoutes     = require( "./routes/admins" );
+let knex            = require( "./functions/knex.js" )( );
+const passport      = require('passport');
+const GoogleStrategy= require('passport-google-oauth20').Strategy;
+const BearerStrategy= require('passport-http-bearer').Strategy;
+
+let secret = {
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  DATABASE_URL: process.env.DATABASE_URL
+}
+
+if(process.env.NODE_ENV != 'production') {
+  secret = require('./secret');
+}
 const app = express();
+
+// const {PORT, DATABASE_URL} = require('./config');
+app.use(passport.initialize());
+
+passport.use(
+    new GoogleStrategy({
+        clientID: secret.CLIENT_ID,
+        clientSecret: secret.CLIENT_SECRET,
+        callbackURL: `/api/auth/google/callback`
+    },
+    (accessToken, refreshToken, profile, cb) => {
+
+        const userData = {
+          name: profile.displayName,
+          accesstoken: accessToken,
+          _id: profile.id
+        }
+
+        knex('users').where({_id: profile.id})
+          .then(user => {
+            if(!user.length) {
+              knex("users").insert(userData).then(user=>{
+                return cb(null, userData)
+              })
+            }
+            else  {
+              console.log(userData)
+              return cb(null, userData)
+            }
+          })
+          .catch(err => console.log(err))
+    }
+));
+
+passport.use(
+    new BearerStrategy(
+        (token, done) => {
+            console.log(typeof token)
+            console.log(token)
+            knex('users').where({ accesstoken: token })
+              .then(user => {
+                console.log('BEARER USERS', user);
+                console.log(user[0].accesstoken == token);
+                console.log(user[0].accesstoken)
+                console.log(token)
+                return done(null, user[0], { scope: 'all' })
+              })
+              .catch(err => {
+                console.log("ERROR", err)
+                return done(null, false);
+              });
+        }
+    )
+);
+
+app.get('/api/auth/google',
+    passport.authenticate('google', {scope: ['profile']}));
+
+app.get('/api/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/',
+        session: false
+    }),
+    (req, res) => {
+        console.log('ACCESSTOKEN', req.user.accesstoken)
+        res.cookie('accessToken', req.user.accesstoken, {expires: 0});
+        res.redirect('/');
+    }
+);
+
+app.get('/api/auth/logout', (req, res) => {
+    req.logout();
+    res.clearCookie('accessToken');
+    res.redirect('/');
+});
+
+// API endpoints go here!
+app.get('/api/me',
+    passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+    console.log('inside api/me')
+      res.json({
+        _id: req.user._id,
+        accesstoken: req.user.accesstoken
+    })}
+);
 
 // API endpoints go here!
 app.use("/api/messages", messageRoutes);
