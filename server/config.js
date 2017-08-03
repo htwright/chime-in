@@ -9,5 +9,5 @@ exports.APP_URL 					= process.env.URL;
 exports.CLIENT_ID         = process.env.CLIENT_ID;
 exports.CLIENT_SECRET     = process.env.CLIENT_SECRET;
 exports.URL 							= process.env.NODE_ENV === 'production'
-	? "https://chime-in.herokuapp.com/"
+	? "https://mighty-depths-52749.herokuapp.com/"
 	: 'http://localhost:8080';

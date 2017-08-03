@@ -7,6 +7,8 @@ const createVerifyStatus        = require( "../functions/verification/createVeri
 const fetchTargets              = require( '../functions/fetchTargets' );
 const removeQuestionFromUser    = require('../functions/removeQuestionFromUser');
 const knex                      = require( '../functions/knex' )( );
+const Messaging									= require( '../functions/messages');
+const Messages 									= new Messaging();
 
 uRoutes.use(bodyParser.json( ));
 uRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -21,8 +23,6 @@ uRoutes.use(bodyParser.urlencoded({ extended: true }));
 uRoutes.post("/test", ( req, res, next ) => {
   //test endpoint for you to drop your experimental code into.
   // console.log(req.body.id);
-
-
 })
 
 // uRoutes.post("/new", ( req, res, next ) => {
@@ -70,6 +70,12 @@ uRoutes.post("/new", ( req, res, next ) => {
 				preferred: req.body.preferred
 			})
 			.then(user => {
+				if(user[0].preferred==="phone"){
+					console.log("sending verify message");
+					messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
+				}else if(user[0].preferred==="email"){
+
+				}
 				res.status(200).json({message: 'Added a user'});
 			})
 			.catch(err => console.error( err ));

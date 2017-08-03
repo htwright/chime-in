@@ -2,7 +2,7 @@ const mRoutes                   = require( 'express' ).Router( );
 const bodyParser                = require( 'body-parser' );
 const conf                      = require( "../config" );
 const Auth                      = require( "../functions/auth" );
-const addQuestionToUser = require('../functions/addQuestionToUser');
+const addQuestionToUser 				= require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
 const fetchUserWithEmail        = require('../functions/fetchUser');
@@ -10,11 +10,13 @@ const addQuestionResponse       = require( '../functions/addQuestionResponse' );
 const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
 const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
+const messages = new Messaging();
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
-let nodemailer                  = require('nodemailer');
+let sendEmail										= require( '../functions/sendEmail' );
+console.log(sendEmail);
 let client                      = new Twilio( conf.TWILIO_SID, conf.TWILIO_AUTH );
-                                  require( 'body-parser-xml' )( bodyParser );
+                                  require( 'body-parser-xml' )( bodyParser )
 
 mRoutes.use(bodyParser.json( ));
 mRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -38,28 +40,35 @@ mRoutes.get('/:id', ( req, res ) => {
 });
 
 mRoutes.post("/send", ( req, res, next ) => {
-	// let arr = JSON.parse( req.body.data.phone );
-	// let phone = parseInt(arr[0]);
-	//console.log(phone);
 	let idAccumulator = [];
 	req.body.data.forEach(obj => {
 		idAccumulator.push(obj.id);
-	return client
-		.messages
-		.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
-		});
-		// Promise.all(promiseArr)
-		// .then(() => {
-			//console.log('inside knex write', msgID);
-			return knex( 'questions' ).insert({
-				admin: 1,
-				question: req.body.message,
-				responses: JSON.stringify({ }),
-				users: req.body.targets
+	// return client
+	// 	.messages
+	// 	.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
+	// 	});
+		return knex( 'questions' ).insert({
+			admin: 1,
+			question: req.body.message,
+			responses: JSON.stringify({ }),
+			users: req.body.targets
 		}).returning('id')
 		.then(questionId => {
 			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
-			// console.log(msgID)
+			console.log("ID Accumulator......", idAccumulator)
+			knex('users').select().whereIn("id", idAccumulator).then(users=>{
+				users.forEach(user=>{
+					console.log(user.preferred);
+					if(user.preferred === "phone"){
+						//send a phone message
+						messages.send(req.body.message,user.phonenumber);
+					}else if(user.preferred ===  "email"){
+						//body message
+						let bodyText= "Hello, this is Simmetric.  A user has sent you a question.  Reply to this email with your response.  Please keep it to the provided options, otherwise the user might not be able to use it.  Here it is... \n\n"
+						sendEmail(user.email,bodyText+req.body.message);
+					}
+				})
+			})
 			res
 				.status( 200 )
 				.json({
@@ -70,85 +79,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 			console.log( err );
 		})
 });
-
-const {
-    GMAIL_SERVICE, GMAIL_AUTH_TYPE, GMAIL_AUTH_USER, GMAIL_AUTH_CLIENT_ID, GMAIL_AUTH_CLIENT_SECRET,
-    GMAIL_AUTH_REFRESH_TOKEN, GMAIL_AUTH_ACCESS_TOKEN, GMAIL_FROM_EMAIL, GMAIL_SUPPORT_EMAIL
-} = process.env;
-
-mRoutes.post('/sendEmail', (req, res) => {
-  // let idAccumulator = [];
-  // req.body.data.forEach(obj => {
-  //   idAccumulator.push(obj.id);
-
-console.log(req.body.message)
-  return knex( 'questions' ).insert({
-    admin: 1,
-    question: req.body.message,
-    responses: JSON.stringify({ }),
-    users: req.body.targets
-}).returning('id')
-.then(id => {
-
-  // console.log(msgID)
-  res
-    .status( 200 )
-    .json({
-      message: 'Sent the message "' + req.body.message + '", good job!'
-    })
-  })
-.catch(( err, msg ) => {
-  console.log( err );
-})
-
-  let auth = {
-      "type": GMAIL_AUTH_TYPE,
-      "user": GMAIL_AUTH_USER,
-      "clientId": GMAIL_AUTH_CLIENT_ID,
-      "clientSecret": GMAIL_AUTH_CLIENT_SECRET,
-      "refreshToken": GMAIL_AUTH_REFRESH_TOKEN,
-      "accessToken": GMAIL_AUTH_ACCESS_TOKEN
-  };
-
-  const transporter = nodemailer.createTransport({
-      service: GMAIL_SERVICE,
-      auth
-  });
-
-  let mailOpts = {
-    to: req.body.email,
-    body: req.body.message,
-    from: req.body.from
-  }
-  console.log('is there a message', req.body.message);
-  // transporter.sendMail(mailOpts, (error, res) => {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log('Message sent' + res.response);
-  //     res.status(200).json({ message: 'Sent the message ' + res.response });
-  //   }
-  //   transporter.close();
-  // })
-
-  transporter.sendMail({
-    to: req.body.email,
-    text: req.body.message,
-    from: req.body.from,
-    subject: 'Chime in!'
-  }, (error, res) => {
-
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Message sent' + res.response);
-      res.status(200).json({ message: 'Sent the message ' + res.response });
-    }
-    // transporter.close();
-
-
-})
-})
+});
 
 mRoutes.post('/post', ( req, res ) => {
 	console.log( req.body );
@@ -164,7 +95,7 @@ mRoutes.post('/post', ( req, res ) => {
 			})
 		})
 		//get the current question from the user
-		
+
 		// return knex('questions').update({responses: [...data[0].questions,req.body.Body]}).where('users', data[0].id);
 	}).then(( ) => res.status( 200 ).send( 'ok' )).catch(err => console.error( err ));
 });
