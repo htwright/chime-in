@@ -139,7 +139,7 @@ mRoutes.post('/post', ( req, res ) => {
 			})
 		})
 		//get the current question from the user
-		//addQuestionResponse(data[0].)
+		
 		// return knex('questions').update({responses: [...data[0].questions,req.body.Body]}).where('users', data[0].id);
 	}).then(( ) => res.status( 200 ).send( 'ok' )).catch(err => console.error( err ));
 });
