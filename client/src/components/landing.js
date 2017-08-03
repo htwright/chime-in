@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
+// import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
 import QuestionEntry from './questionEntry';
 import Users from './users';
-import AddUser from './addUser';
+// import AddUser from './addUser';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -11,7 +11,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import {sendMessage, setIdInput, setMessageInput, setActiveUsers} from '../actions/action';
+import {sendMessage, setIdInput, setMessageInput} from '../actions/action';
 import './landing.css';
 
 class Landing extends Component {

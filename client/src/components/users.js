@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchUsers, setActiveUser} from '../actions/action';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 
 
 export class Users extends Component {
@@ -24,9 +25,9 @@ export class Users extends Component {
 
     return (
       <div className="userList">
-      <form  className="selectionChecklist">
+      <FormGroup  className="selectionChecklist">
          {usersList}
-      </form>
+      </FormGroup>
       </div>
     );
   }

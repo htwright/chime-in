@@ -5,8 +5,8 @@ import { Bar } from 'react-chartjs-2';
 class Chart extends Component {
   constructor(props){
      super(props);
-     this.state = {
-       chartData: { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"],
+     this.chartData = { 
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"],
                     datasets: [{
                       label: 'Question Responses',
                       backgroundColor: [
@@ -29,6 +29,8 @@ class Chart extends Component {
                       data: []
                     }]
                   }
+     this.state = {
+       data: [2,5,7,9]
     }
   }
 
@@ -38,7 +40,7 @@ class Chart extends Component {
       console.log(question.responses.length);
       return question.responses.length    
     })
-    this.state.chartData.datasets[0].data = [2,1,1,1,1,1,1,1,0,0,0,4,0]
+    // this.setState.chartData.datasets[0].data = [2,1,1,1,1,1,1,1,0,0,0,4,0]
      console.log(res);
      console.log(this.state);
 
