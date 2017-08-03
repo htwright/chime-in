@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {fetchUsers, setActiveUser} from '../actions/action';
 
 
 export class Users extends Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     users: []
-  //   }
-  // }
+
 
   componentDidMount(){
-  //  let q = this.props.dispatch(fetchUsers()).then(res=>{
-  //   console.log(res);
-  //   this.setState({users: res});
-  //   console.log(this.state);
-  //  });
     this.props.dispatch(fetchUsers());
   }
 
@@ -27,7 +15,7 @@ export class Users extends Component {
       
       console.log(user);
       return (
-        <label>
+        <label key={index}>
         Name: {user[0].name}
           <input onChange={e=>this.props.dispatch(setActiveUser(e.target.value))} type="checkbox" key={index} value={JSON.stringify(user)}/><br/>
         </label>

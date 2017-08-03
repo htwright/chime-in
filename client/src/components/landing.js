@@ -63,7 +63,7 @@ class Landing extends Component {
                   <FormControl onChange={e=>this.props.dispatch(setMessageInput(e.target.value))} type="text" placeholder="Enter message here" />
                 </FormGroup>
                 {' '}
-                <FormGroup constrolId="formInLineUsers">
+                <FormGroup controlId="formInLineUsers">
                 <span>Available targets</span>
                 <Users/>
                 </FormGroup>
