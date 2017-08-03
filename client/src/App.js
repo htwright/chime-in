@@ -76,13 +76,13 @@ class App extends Component {
       }
 
     return (
-      // <Router>
-      //   <div>
-      //     <Route exact path="/" component={Landing}/>
-      //     <Route exact path="/adduser" component={AddUser}/>
-      //   </div>
-          <div>
-            <h1>Create a Message</h1>
+      <Router>
+        <div>
+          <Route exact path="/" component={Landing}/>
+          <Route exact path="/adduser" component={AddUser}/>
+        </div>
+          {/* <div>
+            <h1>Create a Message</h1> */}
             {/* <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
               <FormGroup controlId="formInlinePassword">
                 <ControlLabel>Phone #</ControlLabel>
@@ -98,7 +98,7 @@ class App extends Component {
               {' '}
                 <Button type="submit">Enter</Button>
             </Form> */}
-            <Form onSubmit={(event)=>this.doEmailStuff(event,this.state.id.split(","),this.state.message)} inline>
+            {/* <Form onSubmit={(event)=>this.doEmailStuff(event,this.state.id.split(","),this.state.message)} inline>
             <FormGroup controlId="formInlinePassword">
               <ControlLabel>Email</ControlLabel>
               {' '}
@@ -112,22 +112,22 @@ class App extends Component {
             </FormGroup>
             {' '}
               <Button type="submit">Enter</Button>
-          </Form>
+          </Form> */}
 
 
-          <div className='column' id="admin-col-one">
-            <h1>Questions</h1>
-            <QuestionEntry/>
-          </div>
+       {/* <div className='column' id="admin-col-one">
+             <h1>Questions</h1>
+             <QuestionEntry/>
+           </div>
 
-          <div className='column' id="admin-col-two">
-            <h1>Users</h1>
-            {/* function alertClicked() {
-              alert('You clicked the third ListGroupItem');} */}
-            <Users/>
-          </div>
-          </div>
-      // </Router>
+           <div className='column' id="admin-col-two">
+             <h1>Users</h1>
+              function alertClicked() {
+               alert('You clicked the third ListGroupItem');}
+               <Users/>
+           </div>
+           </div> */}
+      </Router>
 
     );
   }
