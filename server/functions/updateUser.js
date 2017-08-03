@@ -34,7 +34,8 @@ const updateUser = ( id, toUpdate, add = true ) => {
 							];
 						console.log( element );
 						//remove duplicates
-						element = R.uniq( element );
+						element = R.uniq( element ).sort((a,b)=>a<b);
+					}else{
 					}
 				}
 				acc[el] = element;

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 let url = 'http://localhost:8080';
-
+if (process.env.NODE_ENV === 'production'){
+  //do not include a slash at the end!
+  url = 'https://chime-in.herokuapp.com';
+}
 
 export class LoginPage extends Component {
   constructor(){
@@ -75,6 +78,7 @@ export class LoginPage extends Component {
     return (
       <div className="loginPage">
         <h1>Login Page</h1>
+        <a href={'/api/auth/google'}>Login with Google</a>;
         {this.renderPage()}
       </div>
     )

@@ -1,9 +1,9 @@
 //purpose: middleware that runs whenever a message comes in.
 const conf 										= require( "../config" );
 const Messaging 							= require( "./messages" );
-const fetchUser               = require( "./fetchUser" )
+const fetchUser               = require( "./fetchUser" );
 const updateUser              = require( "./updateUser" );
-const getUserCurrentQuestion  = require( "./getUserCurrentquestion" );
+const getUserCurrentQuestion  = require( "./getUserCurrentQuestion" );
 const findVerifyStatus        = require( "./verification/findVerifyStatus" );
 const createVerifyStatus      = require( "./verification/createVerifyStatus" );
 const updateVerifyStatus      = require( "./verification/updateVerifyStatus" );
@@ -17,10 +17,12 @@ MessageReducer = ( req, res, next ) => {
 	//console.log(message.From);
 
 	fetchUser(message.From.substring( 1 )).then(user => {
-		user = user[0];
+    console.log('USER', user)
+    user = user[0];
 		getUserCurrentQuestion( user.id ).then(currentQuestion => {
 			if ( currentQuestion ) {
-				findVerifyStatus( user.id, currentQuestion[0].admin ).then(result => {
+        console.log(currentQuestion);
+				findVerifyStatus( user.id, currentQuestion.admin ).then(result => {
 					//now do stuff depending on whether the user verified that admin.
 
 					if ( result !== null ) {

@@ -2,9 +2,13 @@ require( 'dotenv' ).config( );
 const bodyParser                = require( 'body-parser' );
 const uRoutes                   = require( 'express' ).Router( );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
+const fetchUserWithEmail        = require('../functions/fetchUser');
 const createVerifyStatus        = require( "../functions/verification/createVerifyStatus" );
 const fetchTargets              = require( '../functions/fetchTargets' );
+const removeQuestionFromUser    = require('../functions/removeQuestionFromUser');
 const knex                      = require( '../functions/knex' )( );
+const Messaging									= require( '../functions/messages');
+const Messages 									= new Messaging();
 
 uRoutes.use(bodyParser.json( ));
 uRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -17,41 +21,67 @@ uRoutes.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 uRoutes.post("/test", ( req, res, next ) => {
-	//test endpoint for you to drop your experimental code into.
-	//getUserCurrentQuestion(req.body.id).then(result=>console.log(result));
-
+  //test endpoint for you to drop your experimental code into.
+  // console.log(req.body.id);
 })
+
+// uRoutes.post("/new", ( req, res, next ) => {
+// 	console.log('is this hitting?')
+// 	//added in a default state of verify to each user.
+// 	let userData = Object.assign( {
+// 		state: "verify"
+// 	}, req.body );
+// 	console.log( "User data is..." );
+// 	console.log(JSON.stringify( userData, null, 2 ));
+// 	knex( "users" )
+// 		.select( "id", "name", "phonenumber", "email" )
+// 		.where({ name: userData.name })
+// 		// .orWhere({ phonenumber: userData.phonenumber })
+// 		.orWhere({ email: userData.email })
+// 		.then(list => {
+// 			if ( list.length > 0 ) {
+// 				//update info
+// 				knex( "users" )
+// 					.select( )
+// 					.where({ id: list[0].id })
+// 					.update({ userData });
+// 			} else {
+// 				knex( "users" )
+// 					.insert( userData )
+// 					.then(el => {
+// 						console.log( "el is " );
+// 						console.log( el );
+// 					})
+// 			}
+// 			res.send( "done" );
+// 		})
+// })
 
 uRoutes.post("/new", ( req, res, next ) => {
-	//added in a default state of verify to each user.
-	let userData = Object.assign( {
-		state: "verify"
-	}, req.body );
-	console.log( "User data is..." );
-	console.log(JSON.stringify( userData, null, 2 ));
-	knex( "users" )
-		.select( "id", "name", "phonenumber", "email", "slack" )
-		.where({ name: userData.name })
-		.orWhere({ phonenumber: userData.phonenumber })
-		.orWhere({ email: userData.email })
-		.then(list => {
-			if ( list.length > 0 ) {
-				//update info
-				knex( "users" )
-					.select( )
-					.where({ id: list[0].id })
-					.update({ userData });
-			} else {
-				knex( "users" )
-					.insert( userData )
-					.then(el => {
-						console.log( "el is " );
-						console.log( el );
-					})
-			}
-			res.send( "done" );
-		})
-})
+	console.log('is this hitting?')
+	if ( knex('users').select().where({ name: req.body.name})) {
+		throw new Error('User already exists');
+		} else {
+		knex( "users" )
+			.insert({
+				name: req.body.name,
+				phonenumber: req.body.phonenumber,
+				email: req.body.email,
+				preferred: req.body.preferred
+			})
+			.then(user => {
+				if(user[0].preferred==="phone"){
+					console.log("sending verify message");
+					messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
+				}else if(user[0].preferred==="email"){
+
+				}
+				res.status(200).json({message: 'Added a user'});
+			})
+			.catch(err => console.error( err ));
+		}
+});
+
 
 uRoutes.get('/', ( req, res ) => {
 	let users = req.params.users;
@@ -77,6 +107,16 @@ uRoutes.get("/get/:users", ( req, res ) => {
 			res.send(list.map( el => el ));
 		})
 		.catch(err => console.error( err ));
+});
+
+uRoutes.get("/getByEmail/:users", (req, res) => {
+  let users = req.params.users.split(",");
+
+  knex("users").select().whereIn("email", users)
+    .then(list => {
+      res.send(list.map(el=>el));
+    })
+    .catch(err => console.error(err));
 });
 
 uRoutes.get('/targets/:id', ( req, res ) => {

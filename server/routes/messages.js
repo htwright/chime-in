@@ -2,15 +2,21 @@ const mRoutes                   = require( 'express' ).Router( );
 const bodyParser                = require( 'body-parser' );
 const conf                      = require( "../config" );
 const Auth                      = require( "../functions/auth" );
+const addQuestionToUser 				= require('../functions/addQuestionToUser');
 const fetchAdminQuestions       = require( '../functions/fetchAdminQuestions' );
 const fetchUserWithPhonenumber  = require( '../functions/fetchUser' );
+const fetchUserWithEmail        = require('../functions/fetchUser');
 const addQuestionResponse       = require( '../functions/addQuestionResponse' );
-const getUserCurrentQuestion    = require( '../functions/getUserCurrentquestion' );
+const getUserCurrentQuestion    = require( '../functions/getUserCurrentQuestion' );
+const removeQuestionFromUser		= require( '../functions/removeQuestionFromUser');
 const Messaging                 = require( '../functions/messages' );
+const messages = new Messaging();
 const MessageReducer            = require( "../functions/messageReducer" );
 let Twilio                      = require( "twilio" )
+let sendEmail										= require( '../functions/sendEmail' );
+console.log(sendEmail);
 let client                      = new Twilio( conf.TWILIO_SID, conf.TWILIO_AUTH );
-                                  require( 'body-parser-xml' )( bodyParser );
+                                  require( 'body-parser-xml' )( bodyParser )
 
 mRoutes.use(bodyParser.json( ));
 mRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -34,35 +40,45 @@ mRoutes.get('/:id', ( req, res ) => {
 });
 
 mRoutes.post("/send", ( req, res, next ) => {
-	let arr = JSON.parse( req.body.phone );
-	let phone = parseInt(arr[0]);
-
-	//console.log(phone);
-	client
-		.messages
-		.create({ to: req.body.phone, body: req.body.message, from: conf.TWILIO_PHONE, statusCallback: 'https://chime-in.herokuapp.com/api/messages' })
-		.then(msgID => {
-			//console.log('inside knex write', msgID);
-			knex( 'questions' ).insert({
-				admin: 1,
-				question: req.body.message,
-				responses: JSON.stringify({ }),
-				users: req.body.id
-			}).catch(err => console.error( err ));
-			return msgID;
-		})
-		.then(( msgID ) => {
-			// console.log(msgID)
+	let idAccumulator = [];
+	req.body.data.forEach(obj => {
+		idAccumulator.push(obj.id);
+	// return client
+	// 	.messages
+	// 	.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
+	// 	});
+		return knex( 'questions' ).insert({
+			admin: 1,
+			question: req.body.message,
+			responses: JSON.stringify({ }),
+			users: req.body.targets
+		}).returning('id')
+		.then(questionId => {
+			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
+			console.log("ID Accumulator......", idAccumulator)
+			knex('users').select().whereIn("id", idAccumulator).then(users=>{
+				users.forEach(user=>{
+					console.log(user.preferred);
+					if(user.preferred === "phone"){
+						//send a phone message
+						messages.send(req.body.message,user.phonenumber);
+					}else if(user.preferred ===  "email"){
+						//body message
+						let bodyText= "Hello, this is Simmetric.  A user has sent you a question.  Reply to this email with your response.  Please keep it to the provided options, otherwise the user might not be able to use it.  Here it is... \n\n"
+						sendEmail(user.email,bodyText+req.body.message);
+					}
+				})
+			})
 			res
 				.status( 200 )
 				.json({
-					message: 'Sent the message "' + req.body.message + '", good job!',
-					messageID: msgID.sid
+					message: 'Sent the message "' + req.body.message + '", good job!'
 				});
 		})
 		.catch(( err, msg ) => {
 			console.log( err );
 		})
+});
 });
 
 mRoutes.post('/post', ( req, res ) => {
@@ -70,14 +86,16 @@ mRoutes.post('/post', ( req, res ) => {
 	return fetchUserWithPhonenumber(req.body.From.substring( 1 )).then(data => {
 		data = data[0];
 		getUserCurrentQuestion( data.id ).then(currentQuestion => {
-			currentQuestion = currentQuestion[0];
+			// currentQuestion = currentQuestion[0];
 			addQuestionResponse(currentQuestion.id, {
 				user: data.id,
 				body: req.body.Body
+			}).then(()=>{
+				removeQuestionFromUser(data.id);
 			})
 		})
 		//get the current question from the user
-		//addQuestionResponse(data[0].)
+
 		// return knex('questions').update({responses: [...data[0].questions,req.body.Body]}).where('users', data[0].id);
 	}).then(( ) => res.status( 200 ).send( 'ok' )).catch(err => console.error( err ));
 });

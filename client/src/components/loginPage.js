@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Welcome.css';
+// import './Welcome.css';
 import LoginForm from 'loginPage';
 
 console.log(Login);
@@ -12,6 +12,7 @@ class Login extends Component {
                 <div className="Welcome-header">
                     <p>Decision Within a Team Should Be a Conversation</p>
                     <h1>Chime-In</h1>
+                    <a href={'/api/auth/google'}>Login with Google</a>;
                 </div>
 
             </div>

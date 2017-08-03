@@ -1,5 +1,5 @@
 const Messaging               = require( "./messages" );
-const getUserCurrentQuestion  = require( "./getUserCurrentquestion" );
+const getUserCurrentQuestion  = require( "./getUserCurrentQuestion" );
 const getAdminFromId          = require( "./getAdminFromId" );
 const findVerifyStatus        = require( "./verification/findVerifyStatus" );
 const createVerifyStatus      = require( "./verification/createVerifyStatus" );
