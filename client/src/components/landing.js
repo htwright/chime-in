@@ -39,7 +39,7 @@ class Landing extends Component {
         <div className="App">
 
           <div className="App-header">
-            <Button className="logout">LogOut</Button>
+            <Button className="logout" href={'/api/auth/logout'}>LogOut</Button>
             <h2>Chime-In</h2>
           </div>
             <div>
@@ -68,6 +68,7 @@ class Landing extends Component {
             <div className='questions' id="admin-questions">
               <h1>Questions</h1>
               <QuestionEntry/>
+              <AddUser />
             </div>
       </div>
     );

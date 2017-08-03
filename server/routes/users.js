@@ -25,36 +25,57 @@ uRoutes.post("/test", ( req, res, next ) => {
 
 })
 
+// uRoutes.post("/new", ( req, res, next ) => {
+// 	console.log('is this hitting?')
+// 	//added in a default state of verify to each user.
+// 	let userData = Object.assign( {
+// 		state: "verify"
+// 	}, req.body );
+// 	console.log( "User data is..." );
+// 	console.log(JSON.stringify( userData, null, 2 ));
+// 	knex( "users" )
+// 		.select( "id", "name", "phonenumber", "email" )
+// 		.where({ name: userData.name })
+// 		// .orWhere({ phonenumber: userData.phonenumber })
+// 		.orWhere({ email: userData.email })
+// 		.then(list => {
+// 			if ( list.length > 0 ) {
+// 				//update info
+// 				knex( "users" )
+// 					.select( )
+// 					.where({ id: list[0].id })
+// 					.update({ userData });
+// 			} else {
+// 				knex( "users" )
+// 					.insert( userData )
+// 					.then(el => {
+// 						console.log( "el is " );
+// 						console.log( el );
+// 					})
+// 			}
+// 			res.send( "done" );
+// 		})
+// })
+
 uRoutes.post("/new", ( req, res, next ) => {
-	//added in a default state of verify to each user.
-	let userData = Object.assign( {
-		state: "verify"
-	}, req.body );
-	console.log( "User data is..." );
-	console.log(JSON.stringify( userData, null, 2 ));
-	knex( "users" )
-		.select( "id", "name", "phonenumber", "email", "slack" )
-		.where({ name: userData.name })
-		.orWhere({ phonenumber: userData.phonenumber })
-		.orWhere({ email: userData.email })
-		.then(list => {
-			if ( list.length > 0 ) {
-				//update info
-				knex( "users" )
-					.select( )
-					.where({ id: list[0].id })
-					.update({ userData });
-			} else {
-				knex( "users" )
-					.insert( userData )
-					.then(el => {
-						console.log( "el is " );
-						console.log( el );
-					})
-			}
-			res.send( "done" );
-		})
-})
+	console.log('is this hitting?')
+	if ( knex('users').select().where({ name: req.body.name})) {
+		throw new Error('User already exists');
+		} else {
+		knex( "users" )
+			.insert({
+				name: req.body.name,
+				phonenumber: req.body.phonenumber,
+				email: req.body.email,
+				preferred: req.body.preferred
+			})
+			.then(user => {
+				res.status(200).json({message: 'Added a user'});
+			})
+			.catch(err => console.error( err ));
+		}
+});
+
 
 uRoutes.get('/', ( req, res ) => {
 	let users = req.params.users;

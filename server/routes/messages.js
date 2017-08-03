@@ -77,6 +77,29 @@ const {
 } = process.env;
 
 mRoutes.post('/sendEmail', (req, res) => {
+  // let idAccumulator = [];
+  // req.body.data.forEach(obj => {
+  //   idAccumulator.push(obj.id);
+
+console.log(req.body.message)
+  return knex( 'questions' ).insert({
+    admin: 1,
+    question: req.body.message,
+    responses: JSON.stringify({ }),
+    users: req.body.targets
+}).returning('id')
+.then(id => {
+
+  // console.log(msgID)
+  res
+    .status( 200 )
+    .json({
+      message: 'Sent the message "' + req.body.message + '", good job!'
+    })
+  })
+.catch(( err, msg ) => {
+  console.log( err );
+})
 
   let auth = {
       "type": GMAIL_AUTH_TYPE,
@@ -122,6 +145,8 @@ mRoutes.post('/sendEmail', (req, res) => {
       res.status(200).json({ message: 'Sent the message ' + res.response });
     }
     // transporter.close();
+
+
 })
 })
 
