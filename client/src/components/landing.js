@@ -9,15 +9,16 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
+import AddUser from './addUser'
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {sendMessage, setIdInput, setMessageInput} from '../actions/action';
 import './landing.css';
 
 class Landing extends Component {
-  constructor(props){
-    super(props);
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   doPhoneStuff(event,id, message){
     event.preventDefault();

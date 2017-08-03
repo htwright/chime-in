@@ -1,5 +1,5 @@
 import { sendMessage, sendEmail, CREATE_USER } from '../actions/action';
-import { DISPLAY_QUESTIONS, ADD_USER_SUCCESS } from '../actions/action';
+import { ADD_USER_SUCCESS } from '../actions/action';
 import { FETCH_QUESTION_REQUEST, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_FAILURE } from '../actions/action';
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, SET_ACTIVE_QUESTION, SET_ID_INPUT, SET_MESSAGE_INPUT, SET_ACTIVE_USER } from '../actions/action';
 

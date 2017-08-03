@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-=======
 import * as Cookies from 'js-cookie';
 import LoginPage from './components/login';
-import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
->>>>>>> master
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Landing from './components/landing';
 // import QuestionEntry from './components/questionEntry';
 // import Users from './components/users';
@@ -18,24 +14,20 @@ import AddUser from './components/addUser';
 import {connect} from 'react-redux';
 // import ListGroup from 'react-bootstrap/lib/ListGroup';
 // import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-<<<<<<< HEAD
-// import { sendMessage } from './actions/action';
-=======
 import { sendMessage, createUser, sendEmail } from './actions/action';
 // import './App.css';
->>>>>>> master
 // import './App.css';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   id: null,
-    //   message: null
-    // }
-    // this.manageState = this.manageState.bind(this);
-    // // this.handleClick = this.handleClick.bind(this);
-  }
+  // constructor(props){
+  //   super(props);
+  //   // this.state = {
+  //   //   id: null,
+  //   //   message: null
+  //   // }
+  //   // this.manageState = this.manageState.bind(this);
+  //   // // this.handleClick = this.handleClick.bind(this);
+  // }
 
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');

@@ -8,9 +8,9 @@ import {Cell, Column, Table} from 'fixed-data-table';
 import 'fixed-data-table/dist/fixed-data-table.min.css';
 
 export class QuestionEntry extends Component {
-  constructor(props){
-    super(props);
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   componentDidMount(){
     this.props.dispatch(fetchQuestion());
@@ -19,7 +19,7 @@ export class QuestionEntry extends Component {
 
   render() {
     const questionsList = this.props.questions.map((question, index) => {
-      console.log(question);
+      //console.log(question);
       return (
           <Panel header={question.question}  key={index} eventKey={index} bsStyle="info">
               <Table className="table"

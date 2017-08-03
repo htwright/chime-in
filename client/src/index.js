@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './Welcome';
+//import Welcome from './Welcome';
 import App from './App';
 import './index.css';
 import store from './store';

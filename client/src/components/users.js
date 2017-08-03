@@ -13,8 +13,8 @@ export class Users extends Component {
 
   render() {
     const usersList = this.props.users.map((user, index) => {
-      
-      console.log(user);
+
+      //console.log(user);
       return (
         <label key={index}>
         Name: {user[0].name}
