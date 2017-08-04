@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-// import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
 import QuestionEntry from './questionEntry';
 import Users from './users';
-// import AddUser from './addUser';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -10,15 +8,10 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import {connect} from 'react-redux';
 import AddUser from './addUser'
-// import ListGroup from 'react-bootstrap/lib/ListGroup';
-// import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {sendMessage, setIdInput, setMessageInput} from '../actions/action';
 import './landing.css';
 
 class Landing extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
 
   doPhoneStuff(event,ids, message){
     event.preventDefault();
@@ -27,23 +20,13 @@ class Landing extends Component {
 
   }
 
-  // manageState(target,value){
-  //   this.setState({...this.state,[target]:value});
-  //   console.log(this.state)
-  // }
-
-  // handleClick(e) {
-  //   e.preventDefault();
-  //   this.props.history.push('/adduser');
-  // }
-
   render() {
     return (
         <div className="App">
 
           <div className="App-header">
-            <Button className="logout" href={'/api/auth/logout'}>LogOut</Button>
-            <h2>Chime-In</h2>
+            <Button className="logout" href={'/api/auth/logout'}>Log Out</Button>
+            <h2>Simmetric</h2>
           </div>
             <div>
               <h1>Create a Message</h1>

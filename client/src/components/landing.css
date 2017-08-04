@@ -1,3 +1,7 @@
+* {
+  font-family: 'Oswald';
+}
+
 .App {
   text-align: center;
 }
@@ -15,7 +19,10 @@
 }
 h2{
   color: #3B7EB5;
+  font-weight: 700;
+  font-size: 45px;
 }
+
 #add-user {
   color: white;
   background: #3B7EB5;
@@ -24,7 +31,9 @@ h2{
 }
 
 h1{
+  margin-top: 50px;
   color: black;
+  margin-bottom: 30px;
 }
 
 span {
