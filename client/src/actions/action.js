@@ -120,8 +120,8 @@ export const sendMessage = (targetIDs, message) => dispatch => {
             fetch(`${url}/api/messages/sendEmail`, {
               method: 'POST',
               body: JSON.stringify({
-                'email': elem[0].email,
-                'id': elem[0].id,
+                'email': el[0].email,
+                'id': el[0].id,
                 'message':message
               }),
               headers:{'content-type': 'application/json'}

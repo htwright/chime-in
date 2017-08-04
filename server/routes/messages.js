@@ -52,7 +52,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 			users: req.body.targetIDs
 		}).returning('id')
 		.then(questionId => {
-			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
+			req.body.targetIDs.forEach(id => addQuestionToUser(id, questionId));
 			console.log("TARGET IDS......", req.body.targetIDs)
 			knex('users').select().whereIn("id", req.body.targetIDs).then(users=>{
 				users.forEach(user=>{
