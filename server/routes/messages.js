@@ -49,12 +49,12 @@ mRoutes.post("/send", ( req, res, next ) => {
 			admin: 1,
 			question: req.body.message,
 			responses: JSON.stringify({ }),
-			users: req.body.targetIDs
+			users: req.body.targets
 		}).returning('id')
 		.then(questionId => {
-			req.body.targetIDs.forEach(id => addQuestionToUser(id, questionId));
-			console.log("TARGET IDS......", req.body.targetIDs)
-			knex('users').select().whereIn("id", req.body.targetIDs).then(users=>{
+			req.body.targets.forEach(id => addQuestionToUser(id, questionId));
+			console.log("TARGET IDS......", req.body.targets)
+			knex('users').select().whereIn("id", req.body.targets).then(users=>{
 				users.forEach(user=>{
 					console.log(user.preferred);
 					if(user.preferred === "Text"){
