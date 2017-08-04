@@ -115,6 +115,7 @@ export const sendMessage = (targetIDs, message) => dispatch => {
       fetch(`${url}/api/users/getByEmail/${targetID}`)
           .then(el=> el.text())
           .then(el=>{
+            console.log(el);
             let elem = JSON.parse(el);
             fetch(`${url}/api/messages/sendEmail`, {
               method: 'POST',
