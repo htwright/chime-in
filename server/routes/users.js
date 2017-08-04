@@ -40,7 +40,8 @@ uRoutes.post("/new", ( req, res, next ) => {
 					phonenumber: req.body.phonenumber,
 					email: req.body.email,
 					preferred: req.body.preferred,
-					lastuser: req.body.admin
+					lastuser: req.body.admin,
+					admin: req.body.admin
 				}).then(user => {
 					knex("users").select().where({name:req.body.name}).then(user=>{
 						console.log("USER",user)
