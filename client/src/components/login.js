@@ -86,8 +86,8 @@ export class LoginPage extends Component {
         </div>
         <div className="overlay">
           <div classname="container main-page">
-            <h1>Simmetric</h1>
-            <h2>Keeping you and your team connected and on the same page</h2>
+            <h1 className="login">Simmetric</h1>
+            <h2 className="login">Keeping you and your team connected and on the same page</h2>
             <div className="hero-about-links">
               <button className="btn btn-primary btn-lg" bsSize="large">
                 <a href={'/api/auth/google'}>Login with Google</a>

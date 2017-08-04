@@ -17,7 +17,7 @@
   padding: 20px;
   color: white;
 }
-h2{
+.landing>h2{
   color: #3B7EB5;
   font-weight: 700;
   font-size: 45px;
@@ -30,9 +30,9 @@ h2{
   border-radius: 6%;
 }
 
-h1{
+.landing-pg > h1{
   margin-top: 50px;
-  color: black;
+  color: red;
   margin-bottom: 30px;
 }
 

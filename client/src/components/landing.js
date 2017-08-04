@@ -26,10 +26,10 @@ class Landing extends Component {
 
           <div className="App-header">
             <Button className="logout" href={'/api/auth/logout'}>Log Out</Button>
-            <h2>Simmetric</h2>
+            <h2 className="landing-pg">Simmetric</h2>
           </div>
             <div>
-              <h1>Create a Message</h1>
+              <h1 className="landing-pg">Create a Message</h1>
               <Form onSubmit={(event)=>this.doPhoneStuff(event,this.props.activeUsers,this.props.message)} inline>
                 <FormGroup controlId="formInlinePassword">
                   <ControlLabel>Phone #</ControlLabel>
@@ -52,7 +52,7 @@ class Landing extends Component {
             </div>
 
             <div className='questions' id="admin-questions">
-              <h1>Questions</h1>
+              <h1 className="landing-pg">Questions</h1>
               <QuestionEntry/>
               <AddUser />
             </div>
