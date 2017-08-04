@@ -9,7 +9,7 @@ const removeQuestionFromUser    = require('../functions/removeQuestionFromUser')
 const knex                      = require( '../functions/knex' )( );
 const Messaging									= require( '../functions/messages');
 const sendEmail									= require( "../functions/sendEmail" );
-const Messages 									= new Messaging();
+const messages 									= new Messaging();
 
 uRoutes.use(bodyParser.json( ));
 uRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -71,14 +71,15 @@ uRoutes.post("/new", ( req, res, next ) => {
 					name: req.body.name,
 					phonenumber: req.body.phonenumber,
 					email: req.body.email,
-					preferred: req.body.preferred
+					preferred: req.body.preferred,
+					lastuser: req.body.admin
 				}).then(user => {
 					knex("users").select().where({name:req.body.name}).then(user=>{
 						console.log("USER",user)
 						console.log(user[0].preferred)
 						if(user[0].preferred==="Text"){
 							console.log("sending verify message");
-							message.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
+							messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
 						}else if(user[0].preferred==="Email"){
 							console.log("bob's your uncle")
 							createVerifyStatus(user[0].id,req.body.admin, "verified");

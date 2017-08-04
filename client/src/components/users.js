@@ -3,10 +3,7 @@ import {connect} from 'react-redux';
 import {fetchUsers, setActiveUser} from '../actions/action';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 
-
 export class Users extends Component {
-
-
   componentDidMount(){
     console.log("CURRENT user..........",this.props.currentUser);
     this.props.dispatch(fetchUsers(this.props.currentUser.id));

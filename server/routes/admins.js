@@ -1,6 +1,7 @@
 const conf 					= require( "../config" );
 let Tokens 					= require( "../functions/tokens" );
 let Messages 				= require( "../functions/messages" );
+let message = new Messages();
 const aRoutes 			= require( 'express' ).Router( );
 const bodyParser 		= require( 'body-parser' );
 let Twilio 					= require( "twilio" );
