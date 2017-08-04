@@ -19,19 +19,10 @@ import { sendMessage, createUser, sendEmail } from './actions/action';
 // import './App.css';
 
 class App extends Component {
-  // constructor(props){
-  //   super(props);
-  //   // this.state = {
-  //   //   id: null,
-  //   //   message: null
-  //   // }
-  //   // this.manageState = this.manageState.bind(this);
-  //   // // this.handleClick = this.handleClick.bind(this);
-  // }
 
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');
-    
+
     if (accessToken) {
         fetch('/api/me', {
             headers: {
@@ -81,52 +72,6 @@ class App extends Component {
           <Route exact path="/" component={Landing}/>
           <Route exact path="/adduser" component={AddUser}/>
         </div>
-          {/* <div>
-            <h1>Create a Message</h1> */}
-            {/* <Form onSubmit={(event)=>this.doPhoneStuff(event,this.state.id.split(","),this.state.message)} inline>
-              <FormGroup controlId="formInlinePassword">
-                <ControlLabel>Phone #</ControlLabel>
-                {' '}
-                <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="US Phone Number"/>
-                </FormGroup>
-                {' '}
-              <FormGroup controlId="formInlineName">
-                <ControlLabel></ControlLabel>
-                {' '}
-                <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
-              </FormGroup>
-              {' '}
-                <Button type="submit">Enter</Button>
-            </Form> */}
-            {/* <Form onSubmit={(event)=>this.doEmailStuff(event,this.state.id.split(","),this.state.message)} inline>
-            <FormGroup controlId="formInlinePassword">
-              <ControlLabel>Email</ControlLabel>
-              {' '}
-              <FormControl onChange={e=>this.manageState("id",e.target.value)} type="text" placeholder="Email"/>
-              </FormGroup>
-              {' '}
-            <FormGroup controlId="formInlineName">
-              <ControlLabel></ControlLabel>
-              {' '}
-              <FormControl onChange={e=>this.manageState("message",e.target.value)} type="text" placeholder="Enter message here" />
-            </FormGroup>
-            {' '}
-              <Button type="submit">Enter</Button>
-          </Form> */}
-
-
-       {/* <div className='column' id="admin-col-one">
-             <h1>Questions</h1>
-             <QuestionEntry/>
-           </div>
-
-           <div className='column' id="admin-col-two">
-             <h1>Users</h1>
-              function alertClicked() {
-               alert('You clicked the third ListGroupItem');}
-               <Users/>
-           </div>
-           </div> */}
       </Router>
 
     );

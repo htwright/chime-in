@@ -43,6 +43,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 	let idAccumulator = [];
 	req.body.data.forEach(obj => {
 		idAccumulator.push(obj.id);
+	}
 	// return client
 	// 	.messages
 	// 	.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
@@ -78,7 +79,6 @@ mRoutes.post("/send", ( req, res, next ) => {
 		.catch(( err, msg ) => {
 			console.log( err );
 		})
-});
 });
 
 mRoutes.post('/post', ( req, res ) => {
