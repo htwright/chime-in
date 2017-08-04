@@ -66,6 +66,8 @@ box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
 }
 
 a,
-.hero-about-links a{
+.hero-about-links a,
+h1,
+h2{
   color: #eee;
 }
