@@ -60,10 +60,10 @@ mRoutes.post("/send", ( req, res, next ) => {
 			knex('users').select().whereIn("id", idAccumulator).then(users=>{
 				users.forEach(user=>{
 					console.log(user.preferred);
-					if(user.preferred === "phone"){
+					if(user.preferred === "Text"){
 						//send a phone message
 						messages.send(req.body.message,user.phonenumber);
-					}else if(user.preferred ===  "email"){
+					}else if(user.preferred ===  "Email"){
 						//body message
 						let bodyText= "Hello, this is Simmetric.  A user has sent you a question.  Reply to this email with your response.  Please keep it to the provided options, otherwise the user might not be able to use it.  Here it is... \n\n"
 						sendEmail(user.email,bodyText+req.body.message);

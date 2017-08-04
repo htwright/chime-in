@@ -26,38 +26,6 @@ uRoutes.post("/test", ( req, res, next ) => {
   // console.log(req.body.id);
 })
 
-// uRoutes.post("/new", ( req, res, next ) => {
-// 	console.log('is this hitting?')
-// 	//added in a default state of verify to each user.
-// 	let userData = Object.assign( {
-// 		state: "verify"
-// 	}, req.body );
-// 	console.log( "User data is..." );
-// 	console.log(JSON.stringify( userData, null, 2 ));
-// 	knex( "users" )
-// 		.select( "id", "name", "phonenumber", "email" )
-// 		.where({ name: userData.name })
-// 		// .orWhere({ phonenumber: userData.phonenumber })
-// 		.orWhere({ email: userData.email })
-// 		.then(list => {
-// 			if ( list.length > 0 ) {
-// 				//update info
-// 				knex( "users" )
-// 					.select( )
-// 					.where({ id: list[0].id })
-// 					.update({ userData });
-// 			} else {
-// 				knex( "users" )
-// 					.insert( userData )
-// 					.then(el => {
-// 						console.log( "el is " );
-// 						console.log( el );
-// 					})
-// 			}
-// 			res.send( "done" );
-// 		})
-// })
-
 uRoutes.post("/new", ( req, res, next ) => {
 	console.log('is this hitting?')
   console.log(req.body.admin);

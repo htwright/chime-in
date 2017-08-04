@@ -20,9 +20,12 @@ class Landing extends Component {
   //   super(props);
   // }
 
-  doPhoneStuff(event,id, message){
+  doPhoneStuff(event,ids, message){
     event.preventDefault();
-    this.props.dispatch(sendMessage(id, message));
+    ids.forEach((id)=>{
+      this.props.dispatch(sendMessage(id, message));
+    })
+
   }
 
   // manageState(target,value){
@@ -45,7 +48,7 @@ class Landing extends Component {
           </div>
             <div>
               <h1>Create a Message</h1>
-              <Form onSubmit={(event)=>this.doPhoneStuff(event,this.props.ids ? this.props.ids.split(",") : this.props.activeUsers,this.props.message)} inline>
+              <Form onSubmit={(event)=>this.doPhoneStuff(event,this.props.activeUsers,this.props.message)} inline>
                 <FormGroup controlId="formInlinePassword">
                   <ControlLabel>Phone #</ControlLabel>
                   {' '}
