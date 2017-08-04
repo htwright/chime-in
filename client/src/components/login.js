@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import './LandingPage.css'
+
 
 let url = 'http://localhost:8080';
 if (process.env.NODE_ENV === 'production'){
@@ -77,9 +79,31 @@ export class LoginPage extends Component {
   render(){
     return (
       <div className="loginPage">
-        <h1>Login Page</h1>
-        <a href={'/api/auth/google'}>Login with Google</a>;
-        {this.renderPage()}
+        <nav className="navbar navbar-default navbar-static-top navbar-inverse"> 
+          <div className="container">
+            <p className="navbar-text">Simmetric</p>
+            <button className="btn navbar btn-primary navbar-right">
+              <a href={'/api/auth/google'}>Login with Google</a>
+            </button>
+
+            {this.renderPage()}
+
+          </div>
+        </nav>
+        <div className="container-fluid video-header">
+        <video autoPlay loop>
+          <source src="./res/video/hero_video.mp4"/>
+        </video>
+        </div>
+        <div className="overlay">
+          <div classname="container main-page">
+            <h1>Simmetric</h1>
+            <h2>Keeping you and your team connected and on the same page</h2>
+            <div className="hero-about-links">
+              <button className="btn btn-primary">What?</button><button className="btn btn-primary">Sign Up</button>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
