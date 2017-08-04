@@ -79,7 +79,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 });
 
 mRoutes.post('/post', ( req, res ) => {
-	console.log( req.body );
+	console.log( "REQ>BODY IS", req.body );
 	return fetchUserWithPhonenumber(req.body.From.substring( 1 )).then(data => {
 		data = data[0];
 		getUserCurrentQuestion( data.id ).then(currentQuestion => {
