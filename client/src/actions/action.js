@@ -85,7 +85,7 @@ export const addUserRequest = () => ({
 });
 
 
-export const sendMessage = (targetIDs, message) => dispatch => {
+export const sendMessage = (targetIDs, message, admin) => dispatch => {
   console.log("TARGET ID IS",targetIDs);
   let resultArray = targetIDs.map(id=>{
     console.log("ID IS", id);
@@ -102,7 +102,8 @@ export const sendMessage = (targetIDs, message) => dispatch => {
       body: JSON.stringify({
         data:elArray,
         message: message,
-        targets: targetIDs
+        targets: targetIDs,
+        admin: admin
       }),
       headers:{'content-type': 'application/json'}
     }).then(data =>console.log(data));

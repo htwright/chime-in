@@ -22,7 +22,7 @@ class Landing extends Component {
 
   doPhoneStuff(event,ids, message){
     event.preventDefault();
-      this.props.dispatch(sendMessage(ids, message));
+      this.props.dispatch(sendMessage(ids, message, this.state.admin));
 
 
   }
@@ -82,7 +82,8 @@ const mapStateToProps = state => ({
   questions: state.questions,
   ids: state.inputIds,
   activeUsers: state.activeUsers,
-  message: state.inputMessage
+  message: state.inputMessage,
+  admin: state.currentUser.id
 });
 
 export default connect(mapStateToProps)(Landing);

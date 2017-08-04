@@ -46,7 +46,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 	// 	.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
 	// 	});
 		return knex( 'questions' ).insert({
-			admin: 1,
+			admin: req.body.admin,
 			question: req.body.message,
 			responses: JSON.stringify({ }),
 			users: req.body.targets
