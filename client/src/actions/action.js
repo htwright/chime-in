@@ -88,6 +88,7 @@ export const addUserRequest = () => ({
 export const sendMessage = (targetIDs, message) => dispatch => {
   console.log(targetIDs);
   let resultArray = targetIDs.map(id=>{
+    console.log("ID IS", id);
     return fetch(`${url}/api/users/get/${id}`)
           .then(el=> el.text());
   })
