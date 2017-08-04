@@ -151,7 +151,7 @@ export const fetchUsers = (id = 1) => dispatch => {
     });
 };
 
-export const addUser = (user) => dispatch => {
+export const addUser = (user, adminId) => dispatch => {
   console.log(user);
   dispatch(addUserRequest());
   fetch(`${url}/api/users/new`, {
@@ -160,7 +160,8 @@ export const addUser = (user) => dispatch => {
       'name': user.name,
       'email': user.email,
       'phonenumber': user.phonenumber,
-      'preferred': user.preferred
+      'preferred': user.preferred,
+      'admin': adminId
     }),
     headers: {'content-type': 'application/json'}
   }).then(el=>console.log(el));

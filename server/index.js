@@ -100,10 +100,12 @@ app.get('/api/auth/logout', (req, res) => {
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
+      console.log(req.user)
     console.log('inside api/me')
       res.json({
         _id: req.user._id,
-        accesstoken: req.user.accesstoken
+        accesstoken: req.user.accesstoken,
+        id: req.user.id
     })}
 );
 

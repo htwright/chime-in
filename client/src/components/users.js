@@ -8,7 +8,8 @@ export class Users extends Component {
 
 
   componentDidMount(){
-    this.props.dispatch(fetchUsers());
+    console.log("CURRENT user..........",this.props.currentUser);
+    this.props.dispatch(fetchUsers(this.props.currentUser.id));
   }
 
   render() {
@@ -35,7 +36,8 @@ export class Users extends Component {
 
 //this makes the userList available to the App component
 export const mapStateToProps = state => ({
-  users: state.users
+  users: state.users,
+  currentUser: state.currentUser
 });
 
 export default connect(mapStateToProps)(Users);

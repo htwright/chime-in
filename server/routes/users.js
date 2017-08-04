@@ -59,27 +59,38 @@ uRoutes.post("/test", ( req, res, next ) => {
 
 uRoutes.post("/new", ( req, res, next ) => {
 	console.log('is this hitting?')
-	if ( knex('users').select().where({ name: req.body.name})) {
-		throw new Error('User already exists');
-		} else {
-		knex( "users" )
-			.insert({
-				name: req.body.name,
-				phonenumber: req.body.phonenumber,
-				email: req.body.email,
-				preferred: req.body.preferred
-			})
-			.then(user => {
-				if(user[0].preferred==="phone"){
-					console.log("sending verify message");
-					messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
-				}else if(user[0].preferred==="email"){
+  console.log(req.body.admin);
+  console.log(req.body.admin);
+	knex('users').select().where({ name: req.body.name}).then(result=>{
+		if(result.length>0){
+			throw new Error('User already exists');
+		}else{
+			return knex( "users" )
+				.insert({
+					name: req.body.name,
+					phonenumber: req.body.phonenumber,
+					email: req.body.email,
+					preferred: req.body.preferred
+				}).then(user => {
+					knex("users").select().where({name:req.body.name}).then(user=>{
+						console.log("USER",user)
+						console.log(user[0].preferred)
+						if(user[0].preferred==="Phone"){
+							console.log("sending verify message");
+							messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
+						}else if(user[0].preferred==="Email"){
+							console.log("bob's your uncle")
+							createVerifyStatus(user[0].id,req.body.admin, "verified");
+						}
 
-				}
-				res.status(200).json({message: 'Added a user'});
-			})
-			.catch(err => console.error( err ));
+						res.status(200).json({message: 'Added a user'});
+					})
+
+
+				})
+				.catch(err => console.error( err ));
 		}
+	})
 });
 
 

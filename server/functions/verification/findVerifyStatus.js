@@ -4,7 +4,7 @@ const knex = require( '../knex' )( );
 const findVerifyStatus = ( userId, adminId ) => {
 	// console.log(`user id: ${userId}, admin id: ${adminId}`)
 	return knex( 'verify' )
-		.where({ userid: userId, adminid: adminId })
+		.where({ userid: userId, adminid: parseInt(adminId) })
 		.then(data => {
 			if ( data.length === 0 )
 				return null;

@@ -20,7 +20,7 @@ export class AddUser extends Component {
   // const userInput = this.userName.value;
     console.log(userInput);
     this.form.reset();
-    return this.props.dispatch(addUser(userInput))
+    return this.props.dispatch(addUser(userInput,this.props.currentUser.id))
   }
 
   render() {
@@ -54,7 +54,8 @@ export class AddUser extends Component {
 }
 
 export const mapStateToProps = state => ({
-    users: state.users
+    users: state.users,
+    currentUser: state.currentUser
  })
 
 export default connect(mapStateToProps)(AddUser);
