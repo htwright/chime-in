@@ -40,10 +40,7 @@ mRoutes.get('/:id', ( req, res ) => {
 });
 
 mRoutes.post("/send", ( req, res, next ) => {
-	let idAccumulator = [];
-	req.body.data.forEach(obj => {
-		idAccumulator.push(obj.id);
-	});
+
 	// return client
 	// 	.messages
 	// 	.create({ to:obj.phonenumber, body:req.body.message, from: conf.TWILIO_PHONE})
@@ -52,12 +49,12 @@ mRoutes.post("/send", ( req, res, next ) => {
 			admin: 1,
 			question: req.body.message,
 			responses: JSON.stringify({ }),
-			users: req.body.targets
+			users: req.body.targetIDs
 		}).returning('id')
 		.then(questionId => {
 			idAccumulator.forEach(id => addQuestionToUser(id, questionId));
-			console.log("ID Accumulator......", idAccumulator)
-			knex('users').select().whereIn("id", idAccumulator).then(users=>{
+			console.log("TARGET IDS......", req.body.targetIDs)
+			knex('users').select().whereIn("id", req.body.targetIDs).then(users=>{
 				users.forEach(user=>{
 					console.log(user.preferred);
 					if(user.preferred === "Text"){
