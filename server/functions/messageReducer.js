@@ -13,15 +13,15 @@ const Message = new Messaging( );
 
 MessageReducer = ( req, res, next ) => {
 	let message = req.body;
-	//console.log("phone number is.............")
-	//console.log(message.From);
+	console.log("phone number is.............")
+	console.log(message.From);
 
 	fetchUser(message.From.substring( 1 )).then(user => {
     console.log('USER', user)
     user = user[0];
 		getUserCurrentQuestion( user.id ).then(currentQuestion => {
 			if ( currentQuestion ) {
-        console.log(currentQuestion);
+        console.log("Current Question is...",currentQuestion);
 				findVerifyStatus( user.id, currentQuestion.admin ).then(result => {
 					//now do stuff depending on whether the user verified that admin.
 
