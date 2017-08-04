@@ -16,7 +16,7 @@ video{
 }
 
 .navbar p{
-  font-size: 2em;
+  font-size: 20px;
   margin: 5px;
 }
 
@@ -51,8 +51,8 @@ border-radius: 50px;
 color: white;
 text-align: center;
 box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
-
 }
+
 .main-page h1{
   font-size: 5em;
   font-family: 'Limelight', cursive;
@@ -70,4 +70,13 @@ a,
 h1,
 h2{
   color: #eee;
+}
+
+h1,
+h2{
+  text-align: center;
+}
+
+h2{
+  padding-bottom: 50px;
 }

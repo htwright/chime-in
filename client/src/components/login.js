@@ -79,11 +79,6 @@ export class LoginPage extends Component {
   render(){
     return (
       <div className="loginPage">
-        <nav className="navbar navbar-default navbar-static-top navbar-inverse"> 
-          <div className="container">
-            <p className="navbar-text">Simmetric</p>
-          </div>
-        </nav>
         <div className="container-fluid video-header">
         <video autoPlay loop>
           <source src="./res/video/hero_video.mp4"/>
@@ -94,13 +89,18 @@ export class LoginPage extends Component {
             <h1>Simmetric</h1>
             <h2>Keeping you and your team connected and on the same page</h2>
             <div className="hero-about-links">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary btn-lg" bsSize="large">
                 <a href={'/api/auth/google'}>Login with Google</a>
               </button>
               {/* {this.renderPage()} */}
             </div>
           </div>
         </div>
+        <nav className="navbar navbar-fixed-bottom navbar-inverse"> 
+          <div className="container">
+            <p className="navbar-text">Developed by Harrison, TaChyla, Thien, & Zach</p>
+          </div>
+        </nav>
       </div>
     )
   }
