@@ -85,22 +85,26 @@ export const addUserRequest = () => ({
 });
 
 
-export const sendMessage = (targetID, message) => dispatch => {
-  console.log(targetID);
-  fetch(`${url}/api/users/get/${targetID}`)
-        .then(el=> el.text())
-        .then(el=>{
-          let elem = JSON.parse(el);
-          fetch(`${url}/api/messages/send`, {
-            method: 'POST',
-            body: JSON.stringify({
-              data:elem,
-              message: message,
-              targets: targetID
-            }),
-            headers:{'content-type': 'application/json'}
-          }).then(data =>console.log(data));
-        }).catch(err => console.error(err));
+export const sendMessage = (targetIDs, message) => dispatch => {
+  console.log(targetIDs);
+  let resultArray = targetIDs.map(id=>{
+    return fetch(`${url}/api/users/get/${id}`)
+          .then(el=> el.text());
+  })
+  Promise.all(resultArray).then(elArray=>{
+    let elArray = elArray.map(el=>{
+      elem = JSON.parse(el));
+    }
+    fetch(`${url}/api/messages/send`, {
+      method: 'POST',
+      body: JSON.stringify({
+        data:elArray,
+        message: message,
+        targets: targetIDs
+      }),
+      headers:{'content-type': 'application/json'}
+    }).then(data =>console.log(data));
+  }).catch(err => console.error(err));
 };
 
   export const sendEmail = (targetID, message) => dispatch => {

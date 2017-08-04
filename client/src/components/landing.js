@@ -22,7 +22,7 @@ class Landing extends Component {
 
   doPhoneStuff(event,ids, message){
     event.preventDefault();
-      this.props.dispatch(sendMessage(id.join(","), message));
+      this.props.dispatch(sendMessage(ids, message));
 
 
   }
