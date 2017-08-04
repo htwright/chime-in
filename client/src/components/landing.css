@@ -13,6 +13,23 @@
   padding: 20px;
   color: white;
 }
+h2{
+  color: #3B7EB5;
+}
+#add-user {
+  color: white;
+  background: #3B7EB5;
+  border: none;
+  border-radius: 6%;
+}
+
+h1{
+  color: black;
+}
+
+span {
+  margin: 10px;
+}
 
 #admin-questions,
 #admin-users {
@@ -36,9 +53,7 @@
 .logout {
   margin-left: 1000px;
 }
-.submit_sms {
-  margin-bottom: 50px;  
-}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

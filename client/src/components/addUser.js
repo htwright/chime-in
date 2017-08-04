@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {addUser} from '../actions/action';
 import {connect} from 'react-redux';
+import './landing.css';
 
 export class AddUser extends Component {
   constructor(props) {
@@ -42,11 +43,7 @@ export class AddUser extends Component {
             <option>Email</option>
           </select>
         </div>
-        {/* <div className="preference">
-  <label><input type="radio" name="preference"/>Text</label>
-  <label><input type="radio" name="preference"/>Email</label>
-</div> */}
-        <button type="submit">Add User</button>
+        <button id="add-user" type="submit">Add User</button>
       </form>
 
     )
