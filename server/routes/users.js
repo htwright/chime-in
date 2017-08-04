@@ -75,7 +75,7 @@ uRoutes.post("/new", ( req, res, next ) => {
 					knex("users").select().where({name:req.body.name}).then(user=>{
 						console.log("USER",user)
 						console.log(user[0].preferred)
-						if(user[0].preferred==="Phone"){
+						if(user[0].preferred==="Text"){
 							console.log("sending verify message");
 							messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
 						}else if(user[0].preferred==="Email"){
