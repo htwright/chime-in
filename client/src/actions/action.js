@@ -86,7 +86,7 @@ export const addUserRequest = () => ({
 
 
 export const sendMessage = (targetIDs, message) => dispatch => {
-  console.log(targetIDs);
+  console.log("TARGET ID IS"targetIDs);
   let resultArray = targetIDs.map(id=>{
     console.log("ID IS", id);
     return fetch(`${url}/api/users/get/${id}`)
@@ -96,6 +96,7 @@ export const sendMessage = (targetIDs, message) => dispatch => {
     elArray = elArray.map(el=>{
       return JSON.parse(el);
     });
+    console.log("EL ARRAY", elArray);
     fetch(`${url}/api/messages/send`, {
       method: 'POST',
       body: JSON.stringify({
