@@ -31,7 +31,7 @@ class App extends Component {
 
   componentDidMount() {
     const accessToken = Cookies.get('accessToken');
-    console.log('APP', accessToken);
+    
     if (accessToken) {
         fetch('/api/me', {
             headers: {
