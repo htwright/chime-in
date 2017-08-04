@@ -81,11 +81,9 @@ uRoutes.post("/new", ( req, res, next ) => {
 							console.log("sending verify message");
 							messages.send("Hello, this is Simmetric.  A user of our site would like to send you questions.  Type yes if this is OK, otherwise type no to prevent them from doing so.",user[0].phonenumber);
 						}else if(user[0].preferred==="Email"){
-							console.log("bob's your uncle")
 							createVerifyStatus(user[0].id,req.body.admin, "verified");
 							sendEmail(user[0].email,"You were just signed up for Simmetric.  There's no way to unsign up, so hold on for dear life!");
 						}
-
 						res.status(200).json({message: 'Added a user'});
 					})
 
