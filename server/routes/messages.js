@@ -81,6 +81,7 @@ mRoutes.post("/send", ( req, res, next ) => {
 mRoutes.post('/post', ( req, res ) => {
 	console.log( "REQ>BODY IS", req.body );
 	return fetchUserWithPhonenumber(req.body.From.substring( 1 )).then(data => {
+		messages.send("Thanks for your input! It has been logged.",data.phonenumber)
 		console.log("Data before",data)
 		data = data[0];
 		console.log("Data After",data)
