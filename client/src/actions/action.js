@@ -92,9 +92,9 @@ export const sendMessage = (targetIDs, message) => dispatch => {
           .then(el=> el.text());
   })
   Promise.all(resultArray).then(elArray=>{
-    let elArray = elArray.map(el=>{
-      elem = JSON.parse(el));
-    }
+    elArray = elArray.map(el=>{
+      return JSON.parse(el);
+    });
     fetch(`${url}/api/messages/send`, {
       method: 'POST',
       body: JSON.stringify({
