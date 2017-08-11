@@ -1,7 +1,7 @@
 # Chime-In
 ## A Simple user feedback app aimed at dispersed teams.
 
-Chime-In is an SMS user feedback app powered by Twilio, Postgres, React/Redux, Express and Graph.js.
+Chime-In is an SMS user feedback app powered by Twilio, Postgres, React/Redux, Express and Graph.js.  You can see it in action [here](https://mighty-depths-52749.herokuapp.com/)!
 
 ### What does it do?
 Send phone messages to users and get feedback.
